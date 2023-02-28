@@ -1,0 +1,30 @@
+﻿Compilación iniciada a las 28/02/2023 12:11:36.
+     1>Proyecto "F:\Q6\VJ\OpenGL_VS2015\2DGame\01-TBE\01-TBE\01-TBE.vcxproj" en el nodo 2 (Build destinos).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /I"..\..\..\libs\Simple OpenGL Image Library\src" /I..\..\..\libs\freeglut\include /I"..\..\..\libs\glew-1.13.0\include" /I..\..\..\libs\glm /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt Game.cpp main.cpp Scene.cpp Shader.cpp ShaderProgram.cpp Texture.cpp TileMap.cpp
+         TileMap.cpp
+         Texture.cpp
+         ShaderProgram.cpp
+         Shader.cpp
+         Scene.cpp
+         main.cpp
+         Game.cpp
+         Generando código...
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"F:\Q6\VJ\OpenGL_VS2015\2DGame\01-TBE\Debug\01-TBE.exe" /INCREMENTAL /NOLOGO /LIBPATH:"..\..\..\libs\Simple OpenGL Image Library\projects\VC9\Debug" /LIBPATH:..\..\..\libs\freeglut\lib /LIBPATH:"..\..\..\libs\glew-1.13.0\lib\Release\Win32" SOIL.lib glew32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"F:\Q6\VJ\OpenGL_VS2015\2DGame\01-TBE\Debug\01-TBE.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"F:\Q6\VJ\OpenGL_VS2015\2DGame\01-TBE\Debug\01-TBE.lib" /MACHINE:X86 Debug\Game.obj
+         Debug\main.obj
+         Debug\Scene.obj
+         Debug\Shader.obj
+         Debug\ShaderProgram.obj
+         Debug\Texture.obj
+         Debug\TileMap.obj
+     1>SOIL.lib(image_DXT.obj) : warning LNK4099: no se encontró PDB 'vc100.pdb' con 'SOIL.lib(image_DXT.obj)' o en 'F:\Q6\VJ\OpenGL_VS2015\2DGame\01-TBE\Debug\vc100.pdb'; se vinculará el objeto sin tener en cuenta información de depuración
+     1>SOIL.lib(image_helper.obj) : warning LNK4099: no se encontró PDB 'vc100.pdb' con 'SOIL.lib(image_helper.obj)' o en 'F:\Q6\VJ\OpenGL_VS2015\2DGame\01-TBE\Debug\vc100.pdb'; se vinculará el objeto sin tener en cuenta información de depuración
+     1>SOIL.lib(SOIL.obj) : warning LNK4099: no se encontró PDB 'vc100.pdb' con 'SOIL.lib(SOIL.obj)' o en 'F:\Q6\VJ\OpenGL_VS2015\2DGame\01-TBE\Debug\vc100.pdb'; se vinculará el objeto sin tener en cuenta información de depuración
+     1>SOIL.lib(stb_image_aug.obj) : warning LNK4099: no se encontró PDB 'vc100.pdb' con 'SOIL.lib(stb_image_aug.obj)' o en 'F:\Q6\VJ\OpenGL_VS2015\2DGame\01-TBE\Debug\vc100.pdb'; se vinculará el objeto sin tener en cuenta información de depuración
+         01-TBE.vcxproj -> F:\Q6\VJ\OpenGL_VS2015\2DGame\01-TBE\Debug\01-TBE.exe
+     1>Compilación del proyecto terminada "F:\Q6\VJ\OpenGL_VS2015\2DGame\01-TBE\01-TBE\01-TBE.vcxproj" (Build destinos).
+
+Compilación correcta.
+
+Tiempo transcurrido 00:00:24.57
