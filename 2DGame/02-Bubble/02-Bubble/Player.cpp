@@ -8,7 +8,7 @@
 
 #define JUMP_ANGLE_STEP 4
 #define JUMP_HEIGHT 28
-#define FALL_STEP 4
+#define FALL_STEP 2
 #define PLAYER_SIZE 16
 #define PLAYER_SPEED 1
 
@@ -105,11 +105,11 @@ void Player::update(int deltaTime)
 		{
 			
 			if (map->collisionMoveUp(posPlayer, glm::ivec2(PLAYER_SIZE, PLAYER_SIZE), &posPlayer.y)) {
-				posPlayer.y = startY;
+				if (jumpAngle < 90)
+					jumpAngle = 90;
 			}
-
+			posPlayer.y = int(startY - JUMP_HEIGHT * sin(3.14159f * jumpAngle / 180.f));
 			if (jumpAngle > 90) {
-				posPlayer.y = int(startY - JUMP_HEIGHT * sin(3.14159f * jumpAngle / 180.f));
 				bJumping = !map->collisionMoveDown(posPlayer, glm::ivec2(PLAYER_SIZE, PLAYER_SIZE), &posPlayer.y);
 			}
 		}
