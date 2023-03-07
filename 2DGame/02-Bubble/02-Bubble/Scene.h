@@ -5,6 +5,7 @@
 #include <glm/glm.hpp>
 #include "ShaderProgram.h"
 #include "Quad.h"
+#include "TexturedQuad.h"
 #include "TileMap.h"
 #include "Player.h"
 
@@ -29,6 +30,7 @@ private:
 
 private:
 	TileMap *map;
+	TileMap *map2;
 	Player *player;
 	ShaderProgram texProgram;
 	float currentTime;
