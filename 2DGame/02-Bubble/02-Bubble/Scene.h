@@ -4,6 +4,7 @@
 
 #include <glm/glm.hpp>
 #include "ShaderProgram.h"
+#include "Quad.h"
 #include "TileMap.h"
 #include "Player.h"
 
