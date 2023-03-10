@@ -15,6 +15,8 @@
 
 class TileMap
 {
+	const static int NO_COLLISION_BELOW[];
+	const static int NO_COLLISION_SIDES[];
 
 private:
 	TileMap(const string &levelFile, const glm::vec2 &minCoords, ShaderProgram &program);
@@ -30,14 +32,15 @@ public:
 	
 	int getTileSize() const { return tileSize; }
 
-	bool collisionMoveLeft(const glm::ivec2 &pos, const glm::ivec2 &size) const;
-	bool collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size) const;
+	bool collisionMoveLeft(const glm::ivec2 &pos, const glm::ivec2 &size, bool jumping) const;
+	bool collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size, bool jumping) const;
 	bool collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, int *posY) const;
 	bool collisionMoveUp(const glm::ivec2 &pos, const glm::ivec2 &size, int *posY) const;
 	
 private:
 	bool loadLevel(const string &levelFile);
 	void prepareArrays(const glm::vec2 &minCoords, ShaderProgram &program);
+	bool hasCollision(int tile, int tileBelow) const;
 
 private:
 	GLuint vao;
