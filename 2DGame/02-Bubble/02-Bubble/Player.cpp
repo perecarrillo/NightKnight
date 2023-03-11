@@ -11,6 +11,8 @@
 #define FALL_STEP 2
 #define PLAYER_SIZE 16
 #define PLAYER_SPEED 1
+#define INIT_PLAYER_X_TILES 27
+#define INIT_PLAYER_Y_TILES 18
 
 
 enum PlayerAnims
@@ -127,8 +129,10 @@ void Player::update(int deltaTime)
 			}
 		}
 	}
-	
-	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
+	if (map->collisionSpikes(posPlayer, glm::ivec2(PLAYER_SIZE, PLAYER_SIZE), &posPlayer.y)) {
+		sprite->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
+	}
+	else sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 }
 
 void Player::render()
