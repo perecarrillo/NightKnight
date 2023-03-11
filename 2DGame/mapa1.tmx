@@ -2,7 +2,7 @@
 <map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="32" height="22" tilewidth="8" tileheight="8" infinite="0" nextlayerid="5" nextobjectid="1">
  <tileset firstgid="1" source="tilesheet.tsx"/>
  <tileset firstgid="1681" source="../Tiles.tsx"/>
- <layer id="1" name="Capa de patrones 1" width="32" height="22" visible="0">
+ <layer id="1" name="Capa de patrones 1" width="32" height="22">
   <data encoding="csv">
 1544,1664,1665,1664,1665,1664,1665,1664,1665,1664,1665,1664,1665,1664,1665,1664,1665,1664,1665,1664,1665,1664,1665,1664,1665,1664,1665,1664,1665,1664,1665,1545,
 1546,1231,1232,1379,1378,1378,1378,1379,1380,1552,1378,1378,1378,1378,1378,1281,1282,1378,1378,1378,1379,1380,1552,1493,1494,1493,1494,1317,1318,1317,1318,1543,

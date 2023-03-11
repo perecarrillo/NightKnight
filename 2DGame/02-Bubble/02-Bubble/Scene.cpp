@@ -38,6 +38,13 @@ void Scene::init()
 	player->setTileMap(map);
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH/(3.5) - 1), float(SCREEN_HEIGHT/(3.5) - 1), 0.f);
 	currentTime = 0.0f;
+
+	//// Select which font you want to use
+	//if (!text.init("fonts/OpenSans-Regular.ttf"))
+	//	//if(!text.init("fonts/OpenSans-Bold.ttf"))
+	//	//if(!text.init("fonts/DroidSerif.ttf"))
+	//	cout << "Could not load font!!!" << endl;
+
 }
 
 void Scene::update(int deltaTime)
@@ -59,6 +66,9 @@ void Scene::render()
 	map2->render();
 	map->render();
 	player->render();
+
+	//text.render("Videogames!!!", glm::vec2(10, CAMERA_HEIGHT - 20), 32, glm::vec4(1, 1, 1, 1));
+
 }
 
 void Scene::initShaders()
