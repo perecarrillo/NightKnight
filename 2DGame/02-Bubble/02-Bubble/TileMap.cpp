@@ -9,7 +9,6 @@
 using namespace std;
 
 const int TileMap::NO_COLLISION_BELOW[] = { 1615,1616,1617,1618,1619,1620,	1613,1614 };
-const int TileMap::NO_COLLISION_SIDES[] = { 1615,1616,1617,1618,1619,1620 };
 
 TileMap *TileMap::createTileMap(const string &levelFile, const glm::vec2 &minCoords, ShaderProgram &program)
 {

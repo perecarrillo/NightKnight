@@ -16,7 +16,6 @@
 class TileMap
 {
 	const static int NO_COLLISION_BELOW[];
-	const static int NO_COLLISION_SIDES[];
 
 private:
 	TileMap(const string &levelFile, const glm::vec2 &minCoords, ShaderProgram &program);
