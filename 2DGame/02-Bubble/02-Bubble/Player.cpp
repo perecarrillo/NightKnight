@@ -14,8 +14,11 @@
 #define PLAYER_WIDTH 12
 #define PLAYER_WIDTH_OFFSET 2
 #define PLAYER_HEIGHT 16
+#define PLAYER_SIZE 16
 #define PLAYER_SPEED 1
 #define COYOTE_TIME 4
+#define INIT_PLAYER_X_TILES 1
+#define INIT_PLAYER_Y_TILES 1
 
 
 enum PlayerAnims
@@ -139,7 +142,10 @@ void Player::update(int deltaTime)
 		}
 	}
 
-	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
+	if (map->collisionSpikes(posPlayer, glm::ivec2(PLAYER_WIDTH, PLAYER_HEIGHT), &posPlayer.y)) {
+		setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
+	}
+	else sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 }
 
 void Player::render()
