@@ -5,14 +5,17 @@
 #include "Player.h"
 #include "Game.h"
 
+#include <algorithm>
+
 
 #define JUMP_ANGLE_STEP 4
 #define JUMP_HEIGHT 28
 #define FALL_STEP 2
-#define PLAYER_SIZE 16
+#define PLAYER_WIDTH 12
+#define PLAYER_WIDTH_OFFSET 2
+#define PLAYER_HEIGHT 16
 #define PLAYER_SPEED 1
-#define INIT_PLAYER_X_TILES 27
-#define INIT_PLAYER_Y_TILES 18
+#define COYOTE_TIME 4
 
 
 enum PlayerAnims
@@ -65,23 +68,23 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 void Player::update(int deltaTime)
 {
 	sprite->update(deltaTime);
-	if(Game::instance().getSpecialKey(GLUT_KEY_LEFT))
+	if (Game::instance().getSpecialKey(GLUT_KEY_LEFT))
 	{
-		if(sprite->animation() != MOVE_LEFT)
+		if (sprite->animation() != MOVE_LEFT)
 			sprite->changeAnimation(MOVE_LEFT);
 		posPlayer.x -= PLAYER_SPEED;
-		if(map->collisionMoveLeft(posPlayer, glm::ivec2(PLAYER_SIZE, PLAYER_SIZE)))
+		if (map->collisionMoveLeft(posPlayer + glm::ivec2(PLAYER_WIDTH_OFFSET, 0), glm::ivec2(PLAYER_WIDTH, PLAYER_HEIGHT), bJumping))
 		{
 			posPlayer.x += PLAYER_SPEED;
 			sprite->changeAnimation(STAND_LEFT);
 		}
 	}
-	else if(Game::instance().getSpecialKey(GLUT_KEY_RIGHT))
+	else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT))
 	{
-		if(sprite->animation() != MOVE_RIGHT)
+		if (sprite->animation() != MOVE_RIGHT)
 			sprite->changeAnimation(MOVE_RIGHT);
 		posPlayer.x += PLAYER_SPEED;
-		if(map->collisionMoveRight(posPlayer, glm::ivec2(PLAYER_SIZE, PLAYER_SIZE)))
+		if (map->collisionMoveRight(posPlayer + glm::ivec2(PLAYER_WIDTH_OFFSET, 0), glm::ivec2(PLAYER_WIDTH, PLAYER_HEIGHT), bJumping))
 		{
 			posPlayer.x -= PLAYER_SPEED;
 			sprite->changeAnimation(STAND_RIGHT);
@@ -89,50 +92,54 @@ void Player::update(int deltaTime)
 	}
 	else
 	{
-		if(sprite->animation() == MOVE_LEFT)
+		if (sprite->animation() == MOVE_LEFT)
 			sprite->changeAnimation(STAND_LEFT);
-		else if(sprite->animation() == MOVE_RIGHT)
+		else if (sprite->animation() == MOVE_RIGHT)
 			sprite->changeAnimation(STAND_RIGHT);
 	}
-	
-	if(bJumping)
+
+	if (bJumping)
 	{
+		++coyoteTime;
 		jumpAngle += JUMP_ANGLE_STEP;
-		if(jumpAngle == 180)
+		if (jumpAngle >= 180)
 		{
 			bJumping = false;
-			posPlayer.y = startY;
+			posPlayer.y = startY + jumpLost;
 		}
 		else
 		{
-			
-			if (map->collisionMoveUp(posPlayer, glm::ivec2(PLAYER_SIZE, PLAYER_SIZE), &posPlayer.y)) {
-				if (jumpAngle < 90)
-					jumpAngle = 90;
+
+			posPlayer.y = int((startY + jumpLost) - JUMP_HEIGHT * sin(3.14159f * jumpAngle / 180.f));
+			if (map->collisionMoveUp(posPlayer + glm::ivec2(PLAYER_WIDTH_OFFSET, 0), glm::ivec2(PLAYER_WIDTH, PLAYER_HEIGHT), &posPlayer.y)) {
+				jumpAngle = 90;
+				jumpLost += posPlayer.y - int(startY - JUMP_HEIGHT * sin(3.14159f * jumpAngle / 180.f));
 			}
-			posPlayer.y = int(startY - JUMP_HEIGHT * sin(3.14159f * jumpAngle / 180.f));
 			if (jumpAngle > 90) {
-				bJumping = !map->collisionMoveDown(posPlayer, glm::ivec2(PLAYER_SIZE, PLAYER_SIZE), &posPlayer.y);
+				bJumping = !map->collisionMoveDown(posPlayer + glm::ivec2(PLAYER_WIDTH_OFFSET, 0), glm::ivec2(PLAYER_WIDTH, PLAYER_HEIGHT), &posPlayer.y);
+				if (!bJumping) coyoteTime = 0;
 			}
 		}
 	}
 	else
 	{
 		posPlayer.y += FALL_STEP;
-		if(map->collisionMoveDown(posPlayer, glm::ivec2(PLAYER_SIZE, PLAYER_SIZE), &posPlayer.y))
+		bool collisionDown = map->collisionMoveDown(posPlayer + glm::ivec2(PLAYER_WIDTH_OFFSET, 0), glm::ivec2(PLAYER_WIDTH, PLAYER_HEIGHT), &posPlayer.y);
+		if (!collisionDown) ++coyoteTime;
+		if (collisionDown || coyoteTime < COYOTE_TIME)
 		{
-			if(Game::instance().getSpecialKey(GLUT_KEY_UP))
+			if (Game::instance().getSpecialKey(GLUT_KEY_UP))
 			{
+				coyoteTime = COYOTE_TIME;
 				bJumping = true;
 				jumpAngle = 0;
+				jumpLost = 0;
 				startY = posPlayer.y;
 			}
 		}
 	}
-	if (map->collisionSpikes(posPlayer, glm::ivec2(PLAYER_SIZE, PLAYER_SIZE), &posPlayer.y)) {
-		sprite->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
-	}
-	else sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
+
+	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 }
 
 void Player::render()
@@ -150,7 +157,3 @@ void Player::setPosition(const glm::vec2 &pos)
 	posPlayer = pos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 }
-
-
-
-

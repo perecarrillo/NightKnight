@@ -8,8 +8,8 @@
 #define SCREEN_X 32
 #define SCREEN_Y 32 //Offset pantalla
 
-#define INIT_PLAYER_X_TILES 27
-#define INIT_PLAYER_Y_TILES 18
+#define INIT_PLAYER_X_TILES 1
+#define INIT_PLAYER_Y_TILES 1
 
 
 Scene::Scene()
