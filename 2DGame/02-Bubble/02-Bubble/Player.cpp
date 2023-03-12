@@ -105,7 +105,7 @@ void Player::update(int deltaTime)
 		if(jumpAngle >= 180)
 		{
 			bJumping = false;
-			posPlayer.y = startY + jumpLost;
+			//posPlayer.y = startY + jumpLost;
 		}
 		else
 		{
