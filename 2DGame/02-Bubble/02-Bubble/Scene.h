@@ -8,6 +8,7 @@
 #include "TexturedQuad.h"
 #include "TileMap.h"
 #include "Player.h"
+#include "Text.h"
 
 
 // Scene contains all the entities of our game.
@@ -35,6 +36,8 @@ private:
 	ShaderProgram texProgram;
 	float currentTime;
 	glm::mat4 projection;
+
+	// Text text;
 
 };
 

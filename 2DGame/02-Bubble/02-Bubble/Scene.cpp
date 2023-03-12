@@ -8,9 +8,6 @@
 #define SCREEN_X 9
 #define SCREEN_Y 8 //Offset pantalla
 
-#define INIT_PLAYER_X_TILES 12
-#define INIT_PLAYER_Y_TILES 7
-
 
 Scene::Scene()
 {
@@ -34,10 +31,17 @@ void Scene::init()
 	map2 = TileMap::createTileMap("levels/levelBackground.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 	player = new Player();
 	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
+	player->setPosition(glm::vec2(player->getInitialPosition() * map->getTileSize()));
 	player->setTileMap(map);
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH/(3.5) - 1), float(SCREEN_HEIGHT/(3.5) - 1), 0.f);
 	currentTime = 0.0f;
+
+	//// Select which font you want to use
+	//if (!text.init("fonts/OpenSans-Regular.ttf"))
+	//	//if(!text.init("fonts/OpenSans-Bold.ttf"))
+	//	//if(!text.init("fonts/DroidSerif.ttf"))
+	//	cout << "Could not load font!!!" << endl;
+
 }
 
 void Scene::update(int deltaTime)
@@ -59,6 +63,9 @@ void Scene::render()
 	map2->render();
 	map->render();
 	player->render();
+
+	//text.render("Videogames!!!", glm::vec2(10, CAMERA_HEIGHT - 20), 32, glm::vec4(1, 1, 1, 1));
+
 }
 
 void Scene::initShaders()

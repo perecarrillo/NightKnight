@@ -14,8 +14,11 @@
 #define PLAYER_WIDTH 12
 #define PLAYER_WIDTH_OFFSET 2
 #define PLAYER_HEIGHT 16
+#define PLAYER_SIZE 16
 #define PLAYER_SPEED 1
 #define COYOTE_TIME 4
+#define INIT_PLAYER_X_TILES 11
+#define INIT_PLAYER_Y_TILES 11
 
 
 enum PlayerAnims
@@ -23,6 +26,9 @@ enum PlayerAnims
 	STAND_LEFT, STAND_RIGHT, MOVE_LEFT, MOVE_RIGHT
 };
 
+Player::Player() {
+	initialPosition = glm::ivec2(INIT_PLAYER_X_TILES, INIT_PLAYER_Y_TILES);
+}
 
 void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 {
@@ -68,23 +74,23 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 void Player::update(int deltaTime)
 {
 	sprite->update(deltaTime);
-	if(Game::instance().getSpecialKey(GLUT_KEY_LEFT))
+	if (Game::instance().getSpecialKey(GLUT_KEY_LEFT))
 	{
-		if(sprite->animation() != MOVE_LEFT)
+		if (sprite->animation() != MOVE_LEFT)
 			sprite->changeAnimation(MOVE_LEFT);
 		posPlayer.x -= PLAYER_SPEED;
-		if(map->collisionMoveLeft(posPlayer + glm::ivec2(PLAYER_WIDTH_OFFSET, 0) , glm::ivec2(PLAYER_WIDTH, PLAYER_HEIGHT), bJumping))
+		if (map->collisionMoveLeft(posPlayer + glm::ivec2(PLAYER_WIDTH_OFFSET, 0), glm::ivec2(PLAYER_WIDTH, PLAYER_HEIGHT), bJumping))
 		{
 			posPlayer.x += PLAYER_SPEED;
 			sprite->changeAnimation(STAND_LEFT);
 		}
 	}
-	else if(Game::instance().getSpecialKey(GLUT_KEY_RIGHT))
+	else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT))
 	{
-		if(sprite->animation() != MOVE_RIGHT)
+		if (sprite->animation() != MOVE_RIGHT)
 			sprite->changeAnimation(MOVE_RIGHT);
 		posPlayer.x += PLAYER_SPEED;
-		if(map->collisionMoveRight(posPlayer + glm::ivec2(PLAYER_WIDTH_OFFSET, 0), glm::ivec2(PLAYER_WIDTH, PLAYER_HEIGHT), bJumping))
+		if (map->collisionMoveRight(posPlayer + glm::ivec2(PLAYER_WIDTH_OFFSET, 0), glm::ivec2(PLAYER_WIDTH, PLAYER_HEIGHT), bJumping))
 		{
 			posPlayer.x -= PLAYER_SPEED;
 			sprite->changeAnimation(STAND_RIGHT);
@@ -92,25 +98,25 @@ void Player::update(int deltaTime)
 	}
 	else
 	{
-		if(sprite->animation() == MOVE_LEFT)
+		if (sprite->animation() == MOVE_LEFT)
 			sprite->changeAnimation(STAND_LEFT);
-		else if(sprite->animation() == MOVE_RIGHT)
+		else if (sprite->animation() == MOVE_RIGHT)
 			sprite->changeAnimation(STAND_RIGHT);
 	}
-	
-	if(bJumping)
+
+	if (bJumping)
 	{
 		++coyoteTime;
 		jumpAngle += JUMP_ANGLE_STEP;
-		if(jumpAngle >= 180)
+		if (jumpAngle >= 180)
 		{
 			bJumping = false;
 			//posPlayer.y = startY + jumpLost;
 		}
 		else
 		{
-			
-			posPlayer.y = int((startY+jumpLost) - JUMP_HEIGHT * sin(3.14159f * jumpAngle / 180.f));
+
+			posPlayer.y = int((startY + jumpLost) - JUMP_HEIGHT * sin(3.14159f * jumpAngle / 180.f));
 			if (map->collisionMoveUp(posPlayer + glm::ivec2(PLAYER_WIDTH_OFFSET, 0), glm::ivec2(PLAYER_WIDTH, PLAYER_HEIGHT), &posPlayer.y)) {
 				jumpAngle = 90;
 				jumpLost += posPlayer.y - int(startY - JUMP_HEIGHT * sin(3.14159f * jumpAngle / 180.f));
@@ -126,9 +132,9 @@ void Player::update(int deltaTime)
 		posPlayer.y += FALL_STEP;
 		bool collisionDown = map->collisionMoveDown(posPlayer + glm::ivec2(PLAYER_WIDTH_OFFSET, 0), glm::ivec2(PLAYER_WIDTH, PLAYER_HEIGHT), &posPlayer.y);
 		if (!collisionDown) ++coyoteTime;
-		if(collisionDown || coyoteTime < COYOTE_TIME)
+		if (collisionDown || coyoteTime < COYOTE_TIME)
 		{
-			if(Game::instance().getSpecialKey(GLUT_KEY_UP))
+			if (Game::instance().getSpecialKey(GLUT_KEY_UP))
 			{
 				coyoteTime = COYOTE_TIME;
 				bJumping = true;
@@ -138,8 +144,11 @@ void Player::update(int deltaTime)
 			}
 		}
 	}
-	
-	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
+
+	if (map->collisionSpikes(posPlayer, glm::ivec2(PLAYER_WIDTH, PLAYER_HEIGHT), &posPlayer.y)) {
+		setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
+	}
+	else sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 }
 
 void Player::render()
@@ -158,6 +167,7 @@ void Player::setPosition(const glm::vec2 &pos)
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 }
 
-
-
-
+glm::ivec2 Player::getInitialPosition()
+{
+	return initialPosition;
+}
