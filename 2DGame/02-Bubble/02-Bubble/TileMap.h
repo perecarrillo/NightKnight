@@ -6,6 +6,7 @@
 #include "Texture.h"
 #include "ShaderProgram.h"
 #include <vector>
+#include <set>
 
 
 // Class Tilemap is capable of loading a tile map from a text file in a very
@@ -16,7 +17,7 @@
 
 class TileMap
 {
-	const static int NO_COLLISION_BELOW[];
+	const static set<int> NO_COLLISION_BELOW;
 
 private:
 	TileMap(const string &levelFile, const glm::vec2 &minCoords, ShaderProgram &program);

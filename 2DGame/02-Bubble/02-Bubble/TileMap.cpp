@@ -8,7 +8,7 @@
 
 using namespace std;
 
-const int TileMap::NO_COLLISION_BELOW[] = { 1615,1616,1617,1618,1619,1620,	1613,1614 };
+const set<int> TileMap::NO_COLLISION_BELOW({ 1615,1616,1617,1618,1619,1620,	1613,1614 });
 
 TileMap *TileMap::createTileMap(const string &levelFile, const glm::vec2 &minCoords, ShaderProgram &program)
 {
@@ -265,7 +265,5 @@ bool TileMap::hasCollision(int tile, int tileBelow) const
 {
 	if (tile == 0) return false;
 	if (tileBelow != 0) return true;
-	for (int x : NO_COLLISION_BELOW)
-		if (x == tile) return false;
-	return true;
+	return NO_COLLISION_BELOW.find(tile) == NO_COLLISION_BELOW.end();
 }
