@@ -5,6 +5,7 @@
 #include <glm/glm.hpp>
 #include "Texture.h"
 #include "ShaderProgram.h"
+#include <vector>
 
 
 // Class Tilemap is capable of loading a tile map from a text file in a very
@@ -36,6 +37,7 @@ public:
 	bool collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, int *posY) const;
 	bool collisionMoveUp(const glm::ivec2 &pos, const glm::ivec2 &size, int *posY) const;
 	bool collisionSpikes(const glm::ivec2 &pos, const glm::ivec2 &size, int *posY) const;
+	vector<pair<int, int>> collisionRajola(const glm::ivec2 & pos, const glm::ivec2 & size, int * posY);
 	
 private:
 	bool loadLevel(const string &levelFile);

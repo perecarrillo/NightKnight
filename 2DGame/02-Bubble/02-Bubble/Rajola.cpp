@@ -17,6 +17,7 @@
 #define Rajola_SIZE 16
 #define Rajola_SPEED 1
 #define COYOTE_TIME 4
+
 #define INIT_RAJOLA_X_TILES 11
 #define INIT_RAJOLA_Y_TILES 11
 

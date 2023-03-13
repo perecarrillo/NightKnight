@@ -10,24 +10,11 @@
 #define NUM_TILES_X 32
 #define NUM_TILES_Y 26
 
-/* Null, because instance will be initialized on demand. */
-Scene* Scene::instance = 0;
-
-Scene* Scene::getInstance()
-{
-	if (instance == 0)
-	{
-		instance = new Scene();
-	}
-
-	return instance;
-}
 
 Scene::Scene()
 {
 	map = NULL;
 	player = NULL;
-	rajoles = vector<vector<bool>>(NUM_TILES_Y, vector<bool>(NUM_TILES_X, false));
 }
 
 Scene::~Scene()
@@ -49,12 +36,6 @@ void Scene::init()
 	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 	player->setPosition(glm::vec2(player->getInitialPosition() * map->getTileSize()));
 	player->setTileMap(map);
-
-	rajola = new Rajola();
-	rajola->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	rajola->setTileMap(map);
-
-	rajoles[8][11] = true;
 
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH/(3.5) - 1), float(SCREEN_HEIGHT/(3.5) - 1), 0.f);
 	currentTime = 0.0f;
@@ -86,15 +67,7 @@ void Scene::render()
 	map2->render();
 	map->render();
 
-	for (int i = 0; i < NUM_TILES_Y; ++i) {
-		for (int j = 0; j < NUM_TILES_X; ++j) {
-			if (rajoles[i][j]) {
-				rajola->changePosIni(glm::vec2(j, i));
-				rajola->setPosition(glm::vec2(rajola->getInitialPosition() * map->getTileSize()));
-				rajola->render();
-			}
-		}
-	}
+
 	player->render();
 	
 
@@ -132,8 +105,5 @@ void Scene::initShaders()
 	fShader.free();
 }
 
-void Scene::addRajola(int x, int y) {
-	rajoles[y][x] = true;
-}
 
 

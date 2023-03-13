@@ -4,6 +4,8 @@
 
 #include "Sprite.h"
 #include "TileMap.h"
+#include "Rajola.h"
+#include <vector>
 
 
 // Player is basically a Sprite that represents the player. As such it has
@@ -31,6 +33,8 @@ private:
 	Texture spritesheet;
 	Sprite *sprite;
 	TileMap *map;
+	Rajola *rajola;
+	vector<vector<bool>> rajoles;
 };
 
 

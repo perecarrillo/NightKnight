@@ -9,7 +9,6 @@
 #include "TileMap.h"
 #include "Player.h"
 #include "Text.h"
-#include "Rajola.h"
 #include <vector>
 
 
@@ -21,7 +20,6 @@ class Scene
 {
 
 public:
-	Scene * getInstance();
 	Scene();
 	~Scene();
 
@@ -31,19 +29,13 @@ public:
 	
 
 private:
-	static Scene *instance;
-
 	void initShaders();
-	void addRajola(int x, int y);
 	TileMap *map;
 	TileMap *map2;
 	Player *player;
-	Rajola *rajola;
 	ShaderProgram texProgram;
 	float currentTime;
-	glm::mat4 projection;
-	vector<vector<bool>> rajoles;
-	
+	glm::mat4 projection;	
 
 	// Text text;
 

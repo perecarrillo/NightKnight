@@ -245,6 +245,22 @@ bool TileMap::collisionSpikes(const glm::ivec2 &pos, const glm::ivec2 &size, int
 	return false;
 }
 
+vector<pair<int, int>> TileMap::collisionRajola(const glm::ivec2 & pos, const glm::ivec2 & size, int * posY)
+{
+	vector<pair<int, int>> rajoles;
+
+	int x0, x1, y;
+
+	x0 = (pos.x + 4) / tileSize;
+	x1 = (pos.x + size.x) / tileSize;
+	y = (pos.y + size.y + 1) / tileSize;
+
+	if ((map[(y)*mapSize.x + x0] == 1613 || map[(y)*mapSize.x + x0] == 1614)) rajoles.push_back(make_pair(x0, y));
+	if ((map[(y)*mapSize.x + x1] == 1613 || map[(y)*mapSize.x + x1] == 1614)) rajoles.push_back(make_pair(x1, y));
+
+	return rajoles;
+}
+
 bool TileMap::hasCollision(int tile, int tileBelow) const
 {
 	if (tile == 0) return false;
