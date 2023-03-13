@@ -9,6 +9,8 @@
 #include "TileMap.h"
 #include "Player.h"
 #include "Text.h"
+#include "Rajola.h"
+#include <vector>
 
 
 // Scene contains all the entities of our game.
@@ -19,23 +21,29 @@ class Scene
 {
 
 public:
+	Scene * getInstance();
 	Scene();
 	~Scene();
 
 	void init();
 	void update(int deltaTime);
 	void render();
+	
 
 private:
+	static Scene *instance;
+
 	void initShaders();
-
-private:
+	void addRajola(int x, int y);
 	TileMap *map;
 	TileMap *map2;
 	Player *player;
+	Rajola *rajola;
 	ShaderProgram texProgram;
 	float currentTime;
 	glm::mat4 projection;
+	vector<vector<bool>> rajoles;
+	
 
 	// Text text;
 
