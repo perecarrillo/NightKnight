@@ -26,12 +26,15 @@
 
 enum PlayerAnims
 {
-	STAND_LEFT, STAND_RIGHT, MOVE_LEFT, MOVE_RIGHT, DYING
+	STAND_LEFT, STAND_RIGHT, MOVE_LEFT, MOVE_RIGHT, DYING 
 };
 
 Player::Player() {
 	initialPosition = glm::ivec2(INIT_PLAYER_X_TILES, INIT_PLAYER_Y_TILES);
 	hearts = 5;
+	inmune = false;
+	show = true;
+	time = 0;
 }
 
 void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
@@ -53,7 +56,7 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	sprite->addKeyframe(DYING, glm::vec2(0.5f, 7 / 8.f));
 
 	sprite->setAnimationSpeed(STAND_LEFT, 1);
-	sprite->addKeyframe(STAND_LEFT, glm::vec2(0.5f, 0.f));
+	sprite->addKeyframe(STAND_LEFT, glm::vec2(0.f, 0.f));
 
 	sprite->setAnimationSpeed(STAND_RIGHT, 1);
 	sprite->addKeyframe(STAND_RIGHT, glm::vec2(0.25f, 0.f));
@@ -87,94 +90,103 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 void Player::update(int deltaTime)
 {
 	sprite->update(deltaTime);
-	if (Game::instance().getSpecialKey(GLUT_KEY_LEFT))
-	{
-		if (sprite->animation() != MOVE_LEFT)
-			sprite->changeAnimation(MOVE_LEFT);
-		posPlayer.x -= PLAYER_SPEED;
-		if (map->collisionMoveLeft(posPlayer + glm::ivec2(PLAYER_WIDTH_OFFSET, 0), glm::ivec2(PLAYER_WIDTH, PLAYER_HEIGHT), bJumping))
+	time += deltaTime;
+	if (time%800 < 400) show = false;
+	else show = true;
+	if (time - timeInmune > 6000) inmune = false;
+	if (sprite->animation() != DYING) {
+		if (Game::instance().getSpecialKey(GLUT_KEY_LEFT))
 		{
-			posPlayer.x += PLAYER_SPEED;
-			sprite->changeAnimation(STAND_LEFT);
-		}
-	}
-	else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT))
-	{
-		if (sprite->animation() != MOVE_RIGHT)
-			sprite->changeAnimation(MOVE_RIGHT);
-		posPlayer.x += PLAYER_SPEED;
-		if (map->collisionMoveRight(posPlayer + glm::ivec2(PLAYER_WIDTH_OFFSET, 0), glm::ivec2(PLAYER_WIDTH, PLAYER_HEIGHT), bJumping))
-		{
+			if (sprite->animation() != MOVE_LEFT)
+				sprite->changeAnimation(MOVE_LEFT);
 			posPlayer.x -= PLAYER_SPEED;
-			sprite->changeAnimation(STAND_RIGHT);
+			if (map->collisionMoveLeft(posPlayer + glm::ivec2(PLAYER_WIDTH_OFFSET, 0), glm::ivec2(PLAYER_WIDTH, PLAYER_HEIGHT), bJumping))
+			{
+				posPlayer.x += PLAYER_SPEED;
+				sprite->changeAnimation(STAND_LEFT);
+			}
 		}
-	}
-	else
-	{
-		if (sprite->animation() == MOVE_LEFT)
-			sprite->changeAnimation(STAND_LEFT);
-		else if (sprite->animation() == MOVE_RIGHT)
-			sprite->changeAnimation(STAND_RIGHT);
-	}
-
-	if (bJumping)
-	{
-		++coyoteTime;
-		jumpAngle += JUMP_ANGLE_STEP;
-		if (jumpAngle >= 180)
+		else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT))
 		{
-			bJumping = false;
-			//posPlayer.y = startY + jumpLost;
+			if (sprite->animation() != MOVE_RIGHT)
+				sprite->changeAnimation(MOVE_RIGHT);
+			posPlayer.x += PLAYER_SPEED;
+			if (map->collisionMoveRight(posPlayer + glm::ivec2(PLAYER_WIDTH_OFFSET, 0), glm::ivec2(PLAYER_WIDTH, PLAYER_HEIGHT), bJumping))
+			{
+				posPlayer.x -= PLAYER_SPEED;
+				sprite->changeAnimation(STAND_RIGHT);
+			}
 		}
 		else
 		{
-
-			posPlayer.y = int((startY + jumpLost) - JUMP_HEIGHT * sin(3.14159f * jumpAngle / 180.f));
-			if (map->collisionMoveUp(posPlayer + glm::ivec2(PLAYER_WIDTH_OFFSET, 0), glm::ivec2(PLAYER_WIDTH, PLAYER_HEIGHT), &posPlayer.y)) {
-				jumpAngle = 90;
-				jumpLost += posPlayer.y - int(startY - JUMP_HEIGHT * sin(3.14159f * jumpAngle / 180.f));
-			}
-			if (jumpAngle > 90) {
-				bJumping = !map->collisionMoveDown(posPlayer + glm::ivec2(PLAYER_WIDTH_OFFSET, 0), glm::ivec2(PLAYER_WIDTH, PLAYER_HEIGHT), &posPlayer.y);
-				if (!bJumping) coyoteTime = 0;
-			}
+			if (sprite->animation() == MOVE_LEFT)
+				sprite->changeAnimation(STAND_LEFT);
+			else if (sprite->animation() == MOVE_RIGHT)
+				sprite->changeAnimation(STAND_RIGHT);
 		}
-	}
-	else
-	{
-		posPlayer.y += FALL_STEP;
-		bool collisionDown = map->collisionMoveDown(posPlayer + glm::ivec2(PLAYER_WIDTH_OFFSET, 0), glm::ivec2(PLAYER_WIDTH, PLAYER_HEIGHT), &posPlayer.y);
-		if (!collisionDown) ++coyoteTime;
-		if (collisionDown || coyoteTime < COYOTE_TIME)
+
+		if (bJumping)
 		{
-			if (Game::instance().getSpecialKey(GLUT_KEY_UP))
+			++coyoteTime;
+			jumpAngle += JUMP_ANGLE_STEP;
+			if (jumpAngle >= 180)
 			{
-				coyoteTime = COYOTE_TIME;
-				bJumping = true;
-				jumpAngle = 0;
-				jumpLost = 0;
-				startY = posPlayer.y;
+				bJumping = false;
+				//posPlayer.y = startY + jumpLost;
+			}
+			else
+			{
+
+				posPlayer.y = int((startY + jumpLost) - JUMP_HEIGHT * sin(3.14159f * jumpAngle / 180.f));
+				if (map->collisionMoveUp(posPlayer + glm::ivec2(PLAYER_WIDTH_OFFSET, 0), glm::ivec2(PLAYER_WIDTH, PLAYER_HEIGHT), &posPlayer.y)) {
+					jumpAngle = 90;
+					jumpLost += posPlayer.y - int(startY - JUMP_HEIGHT * sin(3.14159f * jumpAngle / 180.f));
+				}
+				if (jumpAngle > 90) {
+					bJumping = !map->collisionMoveDown(posPlayer + glm::ivec2(PLAYER_WIDTH_OFFSET, 0), glm::ivec2(PLAYER_WIDTH, PLAYER_HEIGHT), &posPlayer.y);
+					if (!bJumping) coyoteTime = 0;
+				}
 			}
 		}
-	}
-	map->collisionRajola(posPlayer, glm::ivec2(PLAYER_WIDTH, PLAYER_HEIGHT), &posPlayer.y);
-
-	if (map->collisionSpikes(posPlayer, glm::ivec2(PLAYER_WIDTH, PLAYER_HEIGHT), &posPlayer.y)) {
-		if (sprite->animation() != DYING) {
+		else
+		{
+			posPlayer.y += FALL_STEP;
+			bool collisionDown = map->collisionMoveDown(posPlayer + glm::ivec2(PLAYER_WIDTH_OFFSET, 0), glm::ivec2(PLAYER_WIDTH, PLAYER_HEIGHT), &posPlayer.y);
+			if (!collisionDown) ++coyoteTime;
+			if (collisionDown || coyoteTime < COYOTE_TIME)
+			{
+				if (Game::instance().getSpecialKey(GLUT_KEY_UP))
+				{
+					coyoteTime = COYOTE_TIME;
+					bJumping = true;
+					jumpAngle = 0;
+					jumpLost = 0;
+					startY = posPlayer.y;
+				}
+			}
+		}
+		map->collisionRajola(posPlayer, glm::ivec2(PLAYER_WIDTH, PLAYER_HEIGHT), &posPlayer.y);
+		
+		if (map->collisionSpikes(posPlayer, glm::ivec2(PLAYER_WIDTH, PLAYER_HEIGHT), &posPlayer.y) && !inmune) {
 			sprite->changeAnimation(DYING);
 			if (hearts > 0) --hearts;
+			posPlayer.y += 4;
 		}
-		else if (sprite->getKeyFrame() > 6) {
-			sprite->changeAnimation(STAND_LEFT);
-			setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
-		}
+
+		sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 	}
-	else sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
+	else if (sprite->getKeyFrame() > 6) {
+		sprite->changeAnimation(STAND_LEFT);
+		setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
+		inmune = true;
+		timeInmune = time;
+	}
+
 }
 
 void Player::render()
-{
-	sprite->render();
+{	
+	if (!inmune || show) sprite->render();
 }
 
 void Player::setTileMap(TileMap *tileMap)

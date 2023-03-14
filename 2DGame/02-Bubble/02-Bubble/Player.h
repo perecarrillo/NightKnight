@@ -35,6 +35,10 @@ private:
 	Sprite *sprite;
 	TileMap *map;
 	int hearts;
+	bool inmune;
+	bool show;
+	int time;
+	int timeInmune;
 };
 
 
