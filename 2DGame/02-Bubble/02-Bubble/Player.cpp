@@ -26,7 +26,7 @@
 
 enum PlayerAnims
 {
-	STAND_LEFT, STAND_RIGHT, MOVE_LEFT, MOVE_RIGHT
+	STAND_LEFT, STAND_RIGHT, MOVE_LEFT, MOVE_RIGHT, DYING
 };
 
 Player::Player() {
@@ -37,15 +37,25 @@ Player::Player() {
 void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 {
 	bJumping = false;
-	spritesheet.loadFromFile("images/minero_vertical.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	spritesheet.loadFromFile("images/provabomba.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	spritesheet.setMagFilter(GL_NEAREST);
 	sprite = Sprite::createSprite(glm::ivec2(16, 16), glm::vec2(0.25f, 1 / 8.f), &spritesheet, &shaderProgram);
-	sprite->setNumberAnimations(4);
+	sprite->setNumberAnimations(5);
 
-	sprite->setAnimationSpeed(STAND_LEFT, 8);
-	sprite->addKeyframe(STAND_LEFT, glm::vec2(0.f, 0.f));
+	sprite->setAnimationSpeed(DYING, 8);
+	sprite->addKeyframe(DYING, glm::vec2(0.5f, 0.f));
+	sprite->addKeyframe(DYING, glm::vec2(0.5f, 1 / 8.f));
+	sprite->addKeyframe(DYING, glm::vec2(0.5f, 2 / 8.f));
+	sprite->addKeyframe(DYING, glm::vec2(0.5f, 3 / 8.f));
+	sprite->addKeyframe(DYING, glm::vec2(0.5f, 4 / 8.f));
+	sprite->addKeyframe(DYING, glm::vec2(0.5f, 5 / 8.f));
+	sprite->addKeyframe(DYING, glm::vec2(0.5f, 6 / 8.f));
+	sprite->addKeyframe(DYING, glm::vec2(0.5f, 7 / 8.f));
 
-	sprite->setAnimationSpeed(STAND_RIGHT, 8);
+	sprite->setAnimationSpeed(STAND_LEFT, 1);
+	sprite->addKeyframe(STAND_LEFT, glm::vec2(0.5f, 0.f));
+
+	sprite->setAnimationSpeed(STAND_RIGHT, 1);
 	sprite->addKeyframe(STAND_RIGHT, glm::vec2(0.25f, 0.f));
 
 	sprite->setAnimationSpeed(MOVE_LEFT, 8);
@@ -150,8 +160,14 @@ void Player::update(int deltaTime)
 	map->collisionRajola(posPlayer, glm::ivec2(PLAYER_WIDTH, PLAYER_HEIGHT), &posPlayer.y);
 
 	if (map->collisionSpikes(posPlayer, glm::ivec2(PLAYER_WIDTH, PLAYER_HEIGHT), &posPlayer.y)) {
-		if (hearts > 0) --hearts;
-		setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
+		if (sprite->animation() != DYING) {
+			sprite->changeAnimation(DYING);
+			if (hearts > 0) --hearts;
+		}
+		else if (sprite->getKeyFrame() > 6) {
+			sprite->changeAnimation(STAND_LEFT);
+			setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
+		}
 	}
 	else sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 }
