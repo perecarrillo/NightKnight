@@ -59,11 +59,6 @@ void Rajola::render()
 	sprite->render();
 }
 
-void Rajola::setTileMap(TileMap *tileMap)
-{
-	map = tileMap;
-}
-
 void Rajola::setPosition(const glm::vec2 &pos)
 {
 	posRajola = pos;

@@ -31,6 +31,7 @@ enum PlayerAnims
 
 Player::Player() {
 	initialPosition = glm::ivec2(INIT_PLAYER_X_TILES, INIT_PLAYER_Y_TILES);
+	hearts = 5;
 }
 
 void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
@@ -71,13 +72,6 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	sprite->changeAnimation(0);
 	tileMapDispl = tileMapPos;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
-
-	rajola = new Rajola();
-	rajola->init(tileMapPos, shaderProgram);
-	rajola->setTileMap(map);
-
-
-	rajoles = vector<vector<bool>>(NUM_TILES_Y, vector<bool>(NUM_TILES_X, false));
 }
 
 void Player::update(int deltaTime)
@@ -153,34 +147,17 @@ void Player::update(int deltaTime)
 			}
 		}
 	}
+	map->collisionRajola(posPlayer, glm::ivec2(PLAYER_WIDTH, PLAYER_HEIGHT), &posPlayer.y);
 
 	if (map->collisionSpikes(posPlayer, glm::ivec2(PLAYER_WIDTH, PLAYER_HEIGHT), &posPlayer.y)) {
+		if (hearts > 0) --hearts;
 		setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
 	}
 	else sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
-	vector<pair<int, int>> newRajoles = map->collisionRajola(posPlayer, glm::ivec2(PLAYER_WIDTH, PLAYER_HEIGHT), &posPlayer.y);
-	if (newRajoles.size() > 0) {
-		for (int i = 0; i < newRajoles.size(); ++i) {
-			int x = newRajoles[i].first;
-			int y = newRajoles[i].second;
-			if (x % 2 == 0) x -= 1;
-			rajoles[y][x] = true;
-		}
-	}
-
 }
 
 void Player::render()
 {
-	for (int i = 0; i < NUM_TILES_Y; ++i) {
-		for (int j = 0; j < NUM_TILES_X; ++j) {
-			if (rajoles[i][j]) {
-				rajola->changePosIni(glm::vec2(j, i));
-				rajola->setPosition(glm::vec2(rajola->getInitialPosition() * map->getTileSize()));
-				rajola->render();
-			}
-		}
-	}
 	sprite->render();
 }
 
@@ -198,4 +175,8 @@ void Player::setPosition(const glm::vec2 &pos)
 glm::ivec2 Player::getInitialPosition()
 {
 	return initialPosition;
+}
+
+int Player::getNumHearts() {
+	return hearts;
 }

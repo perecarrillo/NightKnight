@@ -6,6 +6,9 @@
 #include "Quad.h"
 
 
+#define NUM_TILES_X 32
+#define NUM_TILES_Y 26
+
 using namespace std;
 
 const set<int> TileMap::NO_COLLISION_BELOW({ 1615,1616,1617,1618,1619,1620,	1613,1614 });
@@ -22,6 +25,12 @@ TileMap::TileMap(const string &levelFile, const glm::vec2 &minCoords, ShaderProg
 {
 	loadLevel(levelFile);
 	prepareArrays(minCoords, program);
+
+	rajola = new Rajola();
+	rajola->init(minCoords, program);
+
+
+	rajoles = vector<vector<bool>>(NUM_TILES_Y, vector<bool>(NUM_TILES_X, false));
 }
 
 TileMap::~TileMap()
@@ -40,6 +49,17 @@ void TileMap::render() const
 	glEnableVertexAttribArray(texCoordLocation);
 	glDrawArrays(GL_TRIANGLES, 0, 6 * nTiles);
 	glDisable(GL_TEXTURE_2D);
+
+	for (int i = 0; i < NUM_TILES_Y; ++i) {
+		for (int j = 0; j < NUM_TILES_X; ++j) {
+			if (rajoles[i][j]) {
+				rajola->changePosIni(glm::vec2(j, i));
+				rajola->setPosition(glm::vec2(rajola->getInitialPosition() * this->getTileSize()));
+				rajola->render();
+			}
+		}
+	}
+
 }
 
 void TileMap::free()
@@ -245,20 +265,22 @@ bool TileMap::collisionSpikes(const glm::ivec2 &pos, const glm::ivec2 &size, int
 	return false;
 }
 
-vector<pair<int, int>> TileMap::collisionRajola(const glm::ivec2 & pos, const glm::ivec2 & size, int * posY)
+void TileMap::collisionRajola(const glm::ivec2 & pos, const glm::ivec2 & size, int * posY)
 {
-	vector<pair<int, int>> rajoles;
-
 	int x0, x1, y;
 
 	x0 = (pos.x + 4) / tileSize;
 	x1 = (pos.x + size.x) / tileSize;
 	y = (pos.y + size.y + 1) / tileSize;
 
-	if ((map[(y)*mapSize.x + x0] == 1613 || map[(y)*mapSize.x + x0] == 1614)) rajoles.push_back(make_pair(x0, y));
-	if ((map[(y)*mapSize.x + x1] == 1613 || map[(y)*mapSize.x + x1] == 1614)) rajoles.push_back(make_pair(x1, y));
-
-	return rajoles;
+	if ((map[(y)*mapSize.x + x0] == 1613 || map[(y)*mapSize.x + x0] == 1614)) {
+		if (x0 % 2 == 0) x0 -= 1;
+		rajoles[y][x0] = true;
+	}
+	if ((map[(y)*mapSize.x + x1] == 1613 || map[(y)*mapSize.x + x1] == 1614)) {
+		if (x1 % 2 == 0) x1 -= 1;
+		rajoles[y][x1] = true;
+	}
 }
 
 bool TileMap::hasCollision(int tile, int tileBelow) const

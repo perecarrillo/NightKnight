@@ -30,6 +30,7 @@ public:
 
 private:
 	void initShaders();
+	void printHearts();
 	TileMap *map;
 	TileMap *map2;
 	Player *player;
@@ -37,7 +38,11 @@ private:
 	float currentTime;
 	glm::mat4 projection;	
 
-	// Text text;
+	Quad *quad;
+	Texture texs[2];
+	TexturedQuad *texQuad[3];
+
+	Text text;
 
 };
 

@@ -3,7 +3,6 @@
 
 
 #include "Sprite.h"
-#include "TileMap.h"
 
 
 // Rajola is basically a Sprite that represents the tiles that the player needs to press. As such it has
@@ -19,7 +18,6 @@ public:
 	void update(int deltaTime);
 	void render();
 
-	void setTileMap(TileMap *tileMap);
 	void setPosition(const glm::vec2 &pos);
 	glm::ivec2 getInitialPosition();
 	void changePosIni(const glm::vec2 &pos);
@@ -31,8 +29,6 @@ private:
 	int jumpAngle, startY, jumpLost, coyoteTime;
 	Texture spritesheet;
 	Sprite *sprite;
-	TileMap *map;
-
 };
 
 

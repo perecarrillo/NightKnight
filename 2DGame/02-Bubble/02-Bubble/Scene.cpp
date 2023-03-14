@@ -40,11 +40,27 @@ void Scene::init()
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH/(3.5) - 1), float(SCREEN_HEIGHT/(3.5) - 1), 0.f);
 	currentTime = 0.0f;
 
-	//// Select which font you want to use
-	//if (!text.init("fonts/OpenSans-Regular.ttf"))
-	//	//if(!text.init("fonts/OpenSans-Bold.ttf"))
-	//	//if(!text.init("fonts/DroidSerif.ttf"))
-	//	cout << "Could not load font!!!" << endl;
+
+	glm::vec2 texCoords[2] = { glm::vec2(0.f, 0.f), glm::vec2(1.f, 1.f) };
+	glm::vec2 geom[2] = { glm::vec2(0.f, 0.f), glm::vec2(12.f, 12.f) };
+
+
+	texCoords[0] = glm::vec2(0.f, 0.f); texCoords[1] = glm::vec2(1.f, 1.f);
+	texQuad[0] = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
+	
+	// Load textures
+	texs[0].loadFromFile("images/heart.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	texs[0].setMagFilter(GL_NEAREST);
+
+	texs[1].loadFromFile("images/lostHeart.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	texs[1].setMagFilter(GL_NEAREST);
+
+
+	// Select which font you want to use
+	if (!text.init("fonts/OpenSans-Regular.ttf"))
+		//if(!text.init("fonts/OpenSans-Bold.ttf"))
+		//if(!text.init("fonts/DroidSerif.ttf"))
+		cout << "Could not load font!!!" << endl;
 
 }
 
@@ -71,7 +87,9 @@ void Scene::render()
 	player->render();
 	
 
-	//text.render("Videogames!!!", glm::vec2(10, CAMERA_HEIGHT - 20), 32, glm::vec4(1, 1, 1, 1));
+	text.render("Videogames!!!", glm::vec2(200, 300), 32, glm::vec4(1, 1, 1, 1));
+
+	printHearts();
 
 }
 
@@ -105,5 +123,16 @@ void Scene::initShaders()
 	fShader.free();
 }
 
+void Scene::printHearts() {
+	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
+	int num = player->getNumHearts();
+	glm::mat4 modelview;
+	for (int i = 0; i < 5; ++i) {
+		modelview = glm::translate(glm::mat4(1.0f), glm::vec3(20.f + i*12.f, 18.f, 0.f));
+		texProgram.setUniformMatrix4f("modelview", modelview);
+		if (i < num) texQuad[0]->render(texs[0]);
+		else  texQuad[0]->render(texs[1]);
+	}
+}
 
 
