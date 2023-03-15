@@ -37,10 +37,10 @@ void Menu::init()
 	texQuad[0] = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
 
 	// Load textures
-	texs[0].loadFromFile("images/gameover.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	texs[0].loadFromFile("images/menu.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	texs[0].setMagFilter(GL_NEAREST);
 
-	texs[1].loadFromFile("images/lostHeart.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	texs[1].loadFromFile("images/menu.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	texs[1].setMagFilter(GL_NEAREST);
 
 

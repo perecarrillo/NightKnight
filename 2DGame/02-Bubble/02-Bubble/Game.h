@@ -4,6 +4,7 @@
 
 #include "Scene.h"
 #include "Menu.h"
+#include "Lose.h"
 
 
 #define SCREEN_WIDTH 960 //1280
@@ -49,6 +50,7 @@ private:
 	bool keys[256], specialKeys[256]; // Store key states so that 
 	int state;                       // we can have access at any time
 	Menu menu;
+	Lose lose;
 
 };
 
