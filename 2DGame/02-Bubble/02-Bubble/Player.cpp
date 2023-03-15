@@ -42,7 +42,7 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	sprite = Sprite::createSprite(glm::ivec2(16, 16), glm::vec2(0.25f, 1 / 8.f), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(5);
 
-	sprite->setAnimationSpeed(DYING, 8);
+	sprite->setAnimationSpeed(DYING, 10);
 	sprite->addKeyframe(DYING, glm::vec2(0.5f, 0.f));
 	sprite->addKeyframe(DYING, glm::vec2(0.5f, 1 / 8.f));
 	sprite->addKeyframe(DYING, glm::vec2(0.5f, 2 / 8.f));
@@ -58,7 +58,7 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	sprite->setAnimationSpeed(STAND_RIGHT, 1);
 	sprite->addKeyframe(STAND_RIGHT, glm::vec2(0.25f, 0.f));
 
-	sprite->setAnimationSpeed(MOVE_LEFT, 8);
+	sprite->setAnimationSpeed(MOVE_LEFT, 16);
 	sprite->addKeyframe(MOVE_LEFT, glm::vec2(0.f, 0.f));
 	sprite->addKeyframe(MOVE_LEFT, glm::vec2(0.f, 1 / 8.f));
 	sprite->addKeyframe(MOVE_LEFT, glm::vec2(0.f, 2 / 8.f));
@@ -68,7 +68,7 @@ void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	sprite->addKeyframe(MOVE_LEFT, glm::vec2(0.f, 6 / 8.f));
 	sprite->addKeyframe(MOVE_LEFT, glm::vec2(0.f, 7 / 8.f));
 
-	sprite->setAnimationSpeed(MOVE_RIGHT, 8);
+	sprite->setAnimationSpeed(MOVE_RIGHT, 16);
 	sprite->addKeyframe(MOVE_RIGHT, glm::vec2(0.25f, 0.f));
 	sprite->addKeyframe(MOVE_RIGHT, glm::vec2(0.25f, 1 / 8.f));
 	sprite->addKeyframe(MOVE_RIGHT, glm::vec2(0.25f, 2 / 8.f));
@@ -88,9 +88,9 @@ void Player::update(int deltaTime)
 {
 	sprite->update(deltaTime);
 	time += deltaTime;
-	if (time%800 < 400) show = false;
+	if (time%500 < 250) show = false;
 	else show = true;
-	if (time - timeInmune > 6000) inmune = false;
+	if (time - timeInmune > 3000) inmune = false;
 	if (sprite->animation() != DYING) {
 		if (Game::instance().getSpecialKey(GLUT_KEY_LEFT))
 		{
