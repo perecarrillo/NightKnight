@@ -27,6 +27,8 @@ public:
 	void init();
 	void update(int deltaTime);
 	void render();
+	bool isGameOver();
+	void changeLevel(int n);
 	
 
 private:
@@ -46,6 +48,8 @@ private:
 	Text text;
 
 	Skeleton *skeleton;
+
+	int numLevel;
 
 };
 

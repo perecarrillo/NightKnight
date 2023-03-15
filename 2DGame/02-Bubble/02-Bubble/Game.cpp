@@ -2,31 +2,54 @@
 #include <GL/glut.h>
 #include "Game.h"
 
+enum State
+{
+	PLAYING, MENU, CREDITS, LOSE
+};
 
 void Game::init()
 {
 	bPlay = true;
 	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 	scene.init();
+	menu.init();
+	lose.init();
+	state = PLAYING;
 }
 
 bool Game::update(int deltaTime)
 {
-	scene.update(deltaTime);
-	
+	if (state == PLAYING) scene.update(deltaTime);	
+	if (scene.isGameOver()) state = LOSE;
 	return bPlay;
 }
 
 void Game::render()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	scene.render();
+	if (state == PLAYING) scene.render();
+	else if (state == MENU) menu.render();
+	else if (state == LOSE) lose.render();
 }
 
 void Game::keyPressed(int key)
 {
 	if(key == 27) // Escape code
 		bPlay = false;
+	if (key == 77) state = MENU; // key M
+	if (key == 83) { // key S
+		if (state != PLAYING && scene.isGameOver()) scene.init();
+		state = PLAYING;
+	}
+	if (key == 97 || key == 49) { // key 1
+		scene.changeLevel(1);
+		state = PLAYING;
+	}
+	if (key == 98 || key == 50) { // key 2
+		scene.changeLevel(2);
+		state = PLAYING;
+	}
+
 	keys[key] = true;
 }
 

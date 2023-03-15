@@ -54,6 +54,12 @@
     <ClInclude Include="TexturedQuad.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="Menu.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="Lose.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
     <ClInclude Include="Skeleton.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
@@ -96,6 +102,12 @@
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
     <ClCompile Include="TexturedQuad.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="Lose.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
     <ClCompile Include="Skeleton.cpp">
