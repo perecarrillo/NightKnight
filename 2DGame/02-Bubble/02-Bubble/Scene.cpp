@@ -30,8 +30,8 @@ Scene::~Scene()
 void Scene::init()
 {
 	initShaders();
-	map = TileMap::createTileMap("levels/level.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
-	map2 = TileMap::createTileMap("levels/levelBackground.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+	map = TileMap::createTileMap("levels/level2.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
+	map2 = TileMap::createTileMap("levels/level2Background.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 	player = new Player();
 	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 	player->setPosition(glm::vec2(player->getInitialPosition() * map->getTileSize()));
@@ -91,6 +91,16 @@ void Scene::render()
 
 	printHearts();
 
+}
+
+bool Scene::isGameOver()
+{
+	return player->getNumHearts() <= 0;
+}
+
+void Scene::changeLevel(int n)
+{
+	numLevel = n;
 }
 
 void Scene::initShaders()

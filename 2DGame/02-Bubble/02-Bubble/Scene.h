@@ -26,6 +26,8 @@ public:
 	void init();
 	void update(int deltaTime);
 	void render();
+	bool isGameOver();
+	void changeLevel(int n);
 	
 
 private:
@@ -43,6 +45,8 @@ private:
 	TexturedQuad *texQuad[3];
 
 	Text text;
+
+	int numLevel;
 
 };
 
