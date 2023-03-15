@@ -25,6 +25,7 @@ public:
 	void init();
 	void update(int deltaTime);
 	void render();
+	void setImage(int x);
 
 
 private:
@@ -38,6 +39,8 @@ private:
 	TexturedQuad *texQuad[3];
 
 	Text text;
+
+	int menu;
 
 };
 

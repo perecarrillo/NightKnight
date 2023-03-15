@@ -119,6 +119,11 @@ void Scene::changeLevel(int n)
 	init();
 }
 
+int Scene::getNumLevel()
+{
+	return numLevel;
+}
+
 void Scene::initShaders()
 {
 	Shader vShader, fShader;

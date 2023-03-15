@@ -29,6 +29,7 @@ public:
 	void render();
 	bool isGameOver();
 	void changeLevel(int n);
+	int getNumLevel();
 	
 
 private:

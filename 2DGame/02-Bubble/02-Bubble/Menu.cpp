@@ -10,16 +10,19 @@
 #define NUM_TILES_X 32
 #define NUM_TILES_Y 26
 
+enum State
+{
+	PLAYING, MENU, CREDITS, LOSE
+};
 
 Menu::Menu()
 {
+	menu = MENU;
 }
 
 Menu::~Menu()
 {
 }
-
-
 
 void Menu::init()
 {
@@ -40,7 +43,7 @@ void Menu::init()
 	texs[0].loadFromFile("images/menu.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	texs[0].setMagFilter(GL_NEAREST);
 
-	texs[1].loadFromFile("images/menu.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	texs[1].loadFromFile("images/gameover.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	texs[1].setMagFilter(GL_NEAREST);
 
 
@@ -73,8 +76,10 @@ void Menu::render()
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 	modelview = glm::translate(glm::mat4(1.0f), glm::vec3(9.f, 8.f, 0.f));
 	texProgram.setUniformMatrix4f("modelview", modelview);
-	texQuad[0]->render(texs[0]);
+	if (menu == MENU) texQuad[0]->render(texs[0]); // it will render one of the different menus
+	else if (menu == LOSE) texQuad[0]->render(texs[1]);
 }
+
 
 void Menu::initShaders()
 {
@@ -106,4 +111,7 @@ void Menu::initShaders()
 	fShader.free();
 }
 
+void Menu::setImage(int x) {
+	menu = x; //change the menu between LOSE, MENU, CREDITS...
+}
 

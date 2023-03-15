@@ -13,14 +13,16 @@ void Game::init()
 	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 	scene.init();
 	menu.init();
-	lose.init();
 	state = PLAYING;
 }
 
 bool Game::update(int deltaTime)
 {
 	if (state == PLAYING) scene.update(deltaTime);	
-	if (scene.isGameOver()) state = LOSE;
+	if (scene.isGameOver()) {
+		state = LOSE;
+		menu.setImage(LOSE);
+	}
 	return bPlay;
 }
 
@@ -28,25 +30,27 @@ void Game::render()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	if (state == PLAYING) scene.render();
-	else if (state == MENU) menu.render();
-	else if (state == LOSE) lose.render();
+	else menu.render();
 }
 
 void Game::keyPressed(int key)
 {
 	if(key == 27) // Escape code
 		bPlay = false;
-	if (key == 77) state = MENU; // key M
-	if (key == 83) { // key S
+	if ((key == 77) && state == PLAYING) {// key M
+		state = MENU;
+		menu.setImage(MENU);
+	}
+	if ((key == 83) && state == LOSE) { // key S
 		if (state != PLAYING && scene.isGameOver()) scene.init();
 		state = PLAYING;
 	}
-	if (key == 97 || key == 49) { // key 1
-		scene.changeLevel(1);
+	if ((key == 97 || key == 49) && state == MENU) { // key 1
+		if (scene.getNumLevel() != 1 || scene.isGameOver()) scene.changeLevel(1);
 		state = PLAYING;
 	}
-	if (key == 98 || key == 50) { // key 2
-		scene.changeLevel(2);
+	if ((key == 98 || key == 50) && state == MENU) { // key 2
+		if (scene.getNumLevel() != 2 || scene.isGameOver())scene.changeLevel(2);
 		state = PLAYING;
 	}
 
