@@ -37,7 +37,7 @@ Player::Player() {
 void Player::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 {
 	bJumping = false;
-	spritesheet.loadFromFile("images/provabomba.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	spritesheet.loadFromFile("images/Player.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	spritesheet.setMagFilter(GL_NEAREST);
 	sprite = Sprite::createSprite(glm::ivec2(16, 16), glm::vec2(0.25f, 1 / 8.f), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(5);
@@ -97,7 +97,7 @@ void Player::update(int deltaTime)
 			if (sprite->animation() != MOVE_LEFT)
 				sprite->changeAnimation(MOVE_LEFT);
 			posPlayer.x -= PLAYER_SPEED;
-			if (map->collisionMoveLeft(posPlayer + glm::ivec2(PLAYER_WIDTH_OFFSET, 0), glm::ivec2(PLAYER_WIDTH, PLAYER_HEIGHT)))
+			if (map->collisionMoveLeft(posPlayer + glm::vec2(PLAYER_WIDTH_OFFSET, 0), glm::ivec2(PLAYER_WIDTH, PLAYER_HEIGHT)))
 			{
 				posPlayer.x += PLAYER_SPEED;
 				sprite->changeAnimation(STAND_LEFT);
@@ -108,7 +108,7 @@ void Player::update(int deltaTime)
 			if (sprite->animation() != MOVE_RIGHT)
 				sprite->changeAnimation(MOVE_RIGHT);
 			posPlayer.x += PLAYER_SPEED;
-			if (map->collisionMoveRight(posPlayer + glm::ivec2(PLAYER_WIDTH_OFFSET, 0), glm::ivec2(PLAYER_WIDTH, PLAYER_HEIGHT)))
+			if (map->collisionMoveRight(posPlayer + glm::vec2(PLAYER_WIDTH_OFFSET, 0), glm::ivec2(PLAYER_WIDTH, PLAYER_HEIGHT)))
 			{
 				posPlayer.x -= PLAYER_SPEED;
 				sprite->changeAnimation(STAND_RIGHT);
@@ -135,12 +135,12 @@ void Player::update(int deltaTime)
 			{
 
 				posPlayer.y = int((startY + jumpLost) - JUMP_HEIGHT * sin(3.14159f * jumpAngle / 180.f));
-				if (map->collisionMoveUp(posPlayer + glm::ivec2(PLAYER_WIDTH_OFFSET, 0), glm::ivec2(PLAYER_WIDTH, PLAYER_HEIGHT), &posPlayer.y)) {
+				if (map->collisionMoveUp(posPlayer + glm::vec2(PLAYER_WIDTH_OFFSET, 0), glm::ivec2(PLAYER_WIDTH, PLAYER_HEIGHT), &posPlayer.y)) {
 					jumpAngle = 90;
 					jumpLost += posPlayer.y - int(startY - JUMP_HEIGHT * sin(3.14159f * jumpAngle / 180.f));
 				}
 				if (jumpAngle > 90) {
-					bJumping = !map->collisionMoveDown(posPlayer + glm::ivec2(PLAYER_WIDTH_OFFSET, 0), glm::ivec2(PLAYER_WIDTH, PLAYER_HEIGHT), &posPlayer.y);
+					bJumping = !map->collisionMoveDown(posPlayer + glm::vec2(PLAYER_WIDTH_OFFSET, 0), glm::ivec2(PLAYER_WIDTH, PLAYER_HEIGHT), &posPlayer.y, 0);
 					if (!bJumping) coyoteTime = 0;
 				}
 			}
@@ -148,7 +148,7 @@ void Player::update(int deltaTime)
 		else
 		{
 			posPlayer.y += FALL_STEP;
-			bool collisionDown = map->collisionMoveDown(posPlayer + glm::ivec2(PLAYER_WIDTH_OFFSET, 0), glm::ivec2(PLAYER_WIDTH, PLAYER_HEIGHT), &posPlayer.y);
+			bool collisionDown = map->collisionMoveDown(posPlayer + glm::vec2(PLAYER_WIDTH_OFFSET, 0), glm::ivec2(PLAYER_WIDTH, PLAYER_HEIGHT), &posPlayer.y, 0);
 			if (!collisionDown) ++coyoteTime;
 			if (collisionDown || coyoteTime < COYOTE_TIME)
 			{
@@ -162,9 +162,9 @@ void Player::update(int deltaTime)
 				}
 			}
 		}
-		map->collisionRajola(posPlayer + glm::ivec2(PLAYER_WIDTH_OFFSET, 0), glm::ivec2(PLAYER_WIDTH, PLAYER_HEIGHT), &posPlayer.y);
+		map->collisionRajola(posPlayer + glm::vec2(PLAYER_WIDTH_OFFSET, 0), glm::ivec2(PLAYER_WIDTH, PLAYER_HEIGHT));
 		
-		if (map->collisionSpikes(posPlayer + glm::ivec2(PLAYER_WIDTH_OFFSET, 0), glm::ivec2(PLAYER_WIDTH, PLAYER_HEIGHT), &posPlayer.y) && !inmune) {
+		if (map->collisionSpikes(posPlayer + glm::vec2(PLAYER_WIDTH_OFFSET, 0), glm::ivec2(PLAYER_WIDTH, PLAYER_HEIGHT)) && !inmune) {
 			sprite->changeAnimation(DYING);
 			if (hearts > 0) --hearts;
 			posPlayer.y += 4;

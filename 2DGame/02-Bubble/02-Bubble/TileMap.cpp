@@ -206,7 +206,7 @@ bool TileMap::collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size) 
 	return false;
 }
 
-bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, int *posY) const
+bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, float *posY, int offset_y) const
 {
 	int x0, x1, y;
 
@@ -217,9 +217,9 @@ bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, i
 	{
 		if (map[y*mapSize.x + x] != 0)
 		{
-			if (*posY - tileSize * y + size.y <= 2)
+			if (*posY - tileSize * y + size.y + offset_y <= 2)
 			{
-				*posY = tileSize * y - size.y;
+				*posY = tileSize * y - size.y - offset_y;
 				return true;
 			}
 		}
@@ -228,7 +228,7 @@ bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, i
 	return false;
 }
 
-bool TileMap::collisionMoveUp(const glm::ivec2 &pos, const glm::ivec2 &size, int *posY) const
+bool TileMap::collisionMoveUp(const glm::ivec2 &pos, const glm::ivec2 &size, float *posY) const
 {
 	int x0, x1, y;
 
@@ -251,7 +251,7 @@ bool TileMap::collisionMoveUp(const glm::ivec2 &pos, const glm::ivec2 &size, int
 	return false;
 }
 
-bool TileMap::collisionSpikes(const glm::ivec2 &pos, const glm::ivec2 &size, int *posY) const
+bool TileMap::collisionSpikes(const glm::ivec2 &pos, const glm::ivec2 &size) const
 {
 	int x0, x1, y;
 
@@ -265,7 +265,7 @@ bool TileMap::collisionSpikes(const glm::ivec2 &pos, const glm::ivec2 &size, int
 	return false;
 }
 
-void TileMap::collisionRajola(const glm::ivec2 & pos, const glm::ivec2 & size, int * posY)
+void TileMap::collisionRajola(const glm::ivec2 & pos, const glm::ivec2 & size)
 {
 	int x0, x1, y;
 
@@ -273,7 +273,7 @@ void TileMap::collisionRajola(const glm::ivec2 & pos, const glm::ivec2 & size, i
 	x1 = (pos.x + size.x) / tileSize;
 	y = (pos.y + size.y + 1) / tileSize;
 
-	if (*posY - tileSize * y + size.y <= 2) {
+	if (pos.y - tileSize * y + size.y <= 2) {
 		if ((map[(y)*mapSize.x + x0] == 1613 || map[(y)*mapSize.x + x0] == 1614)) {
 			if (map[(y)*mapSize.x + x0] == 1614) x0 -= 1;
 			rajoles[y][x0] = true;
