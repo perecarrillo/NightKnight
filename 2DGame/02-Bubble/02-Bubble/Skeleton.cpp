@@ -5,7 +5,7 @@
 #define SKELETON_HEIGHT 14
 #define SKELETON_SPEED 0.5
 #define INIT_SKELETON_X_TILES 20
-#define INIT_SKELETON_Y_TILES 6
+#define INIT_SKELETON_Y_TILES 7
 
 enum SkeletonAnims
 {
