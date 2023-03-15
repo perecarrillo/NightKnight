@@ -41,7 +41,7 @@ void Scene::init()
 	player->setTileMap(map);
 
 	skeleton = new Skeleton();
-	skeleton->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+	skeleton->init("images/skeleton.png", 4, glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 	skeleton->setPosition(glm::vec2(skeleton->getInitialPosition() * map->getTileSize()));
 	skeleton->setTileMap(map);
 

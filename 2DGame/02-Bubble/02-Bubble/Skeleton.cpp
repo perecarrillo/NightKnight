@@ -9,7 +9,7 @@
 
 enum SkeletonAnims
 {
-	MOVE_LEFT, MOVE_RIGHT
+	MOVE_LEFT, MOVE_RIGHT, STAND_LEFT, STAND_RIGHT
 };
 
 Skeleton::Skeleton()
@@ -18,25 +18,25 @@ Skeleton::Skeleton()
 	actualMovement = {0, movement[0].second};
 }
 
-void Skeleton::init(const glm::ivec2 & tileMapPos, ShaderProgram & shaderProgram)
+void Skeleton::init(string textureFile, int numberOfAnimations, const glm::ivec2 & tileMapPos, ShaderProgram & shaderProgram)
 {
-	spritesheet.loadFromFile("images/skeleton.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	spritesheet.loadFromFile(textureFile, TEXTURE_PIXEL_FORMAT_RGBA);
 	spritesheet.setMagFilter(GL_NEAREST);
-	sprite = Sprite::createSprite(glm::ivec2(16, 16), glm::vec2(0.25f, 1 / 8.f), &spritesheet, &shaderProgram);
-	sprite->setNumberAnimations(5);
+	float disp = 1.0f / numberOfAnimations;
 
-	sprite->setAnimationSpeed(MOVE_LEFT, 8);
-	sprite->addKeyframe(MOVE_LEFT, glm::vec2(0, 0.f));
-	sprite->addKeyframe(MOVE_LEFT, glm::vec2(0, 1 / 8.f));
-	sprite->addKeyframe(MOVE_LEFT, glm::vec2(0, 2 / 8.f));
-	sprite->addKeyframe(MOVE_LEFT, glm::vec2(0, 3 / 8.f));
-
-	sprite->setAnimationSpeed(MOVE_RIGHT, 8);
-	sprite->addKeyframe(MOVE_RIGHT, glm::vec2(0.25f, 0.f));
-	sprite->addKeyframe(MOVE_RIGHT, glm::vec2(0.25f, 1 / 8.f));
-	sprite->addKeyframe(MOVE_RIGHT, glm::vec2(0.25f, 2 / 8.f));
-	sprite->addKeyframe(MOVE_RIGHT, glm::vec2(0.25f, 3 / 8.f));
-
+	sprite = Sprite::createSprite(glm::ivec2(16, 16), glm::vec2(disp, 1 / 8.f), &spritesheet, &shaderProgram);
+	sprite->setNumberAnimations(numberOfAnimations);
+	for (int i = 0; i < numberOfAnimations; ++i) {
+		sprite->setAnimationSpeed(SkeletonAnims(i), 8);
+		sprite->addKeyframe(SkeletonAnims(i), glm::vec2(disp*i, 0.f));
+		sprite->addKeyframe(SkeletonAnims(i), glm::vec2(disp*i, 1 / 8.f));
+		sprite->addKeyframe(SkeletonAnims(i), glm::vec2(disp*i, 2 / 8.f));
+		sprite->addKeyframe(SkeletonAnims(i), glm::vec2(disp*i, 3 / 8.f));
+		sprite->addKeyframe(SkeletonAnims(i), glm::vec2(disp*i, 4 / 8.f));
+		sprite->addKeyframe(SkeletonAnims(i), glm::vec2(disp*i, 5 / 8.f));
+		sprite->addKeyframe(SkeletonAnims(i), glm::vec2(disp*i, 6 / 8.f));
+		sprite->addKeyframe(SkeletonAnims(i), glm::vec2(disp*i, 7 / 8.f));
+	}
 
 	sprite->changeAnimation(0);
 	tileMapDispl = tileMapPos;
@@ -52,26 +52,21 @@ void Skeleton::update(int deltaTime)
 		if (sprite->animation() != MOVE_LEFT)
 			sprite->changeAnimation(MOVE_LEFT);
 		positionFloat.x -= SKELETON_SPEED;
-		if (map->collisionMoveLeft(positionFloat, glm::ivec2(SKELETON_WIDTH, SKELETON_HEIGHT)))
-		{
-			positionFloat.x += SKELETON_SPEED;
-			//sprite->changeAnimation(STAND_LEFT);
-		}
+		
 	}
 	else if (movement[actualMovement.first].first == RIGHT)
 	{
 		if (sprite->animation() != MOVE_RIGHT)
 			sprite->changeAnimation(MOVE_RIGHT);
 		positionFloat.x += SKELETON_SPEED;
-		if (map->collisionMoveRight(positionFloat, glm::ivec2(SKELETON_WIDTH, SKELETON_HEIGHT)))
-		{
-			positionFloat.x -= SKELETON_SPEED;
-			//sprite->changeAnimation(STAND_RIGHT);
-		}
+		
 	}
 	else if (movement[actualMovement.first].first == STOP)
 	{
-		//sprite->changeAnimation(STAND);
+		if (sprite->animation() == MOVE_LEFT)
+			sprite->changeAnimation(STAND_LEFT);
+		else if (sprite->animation() == MOVE_RIGHT)
+			sprite->changeAnimation(STAND_RIGHT);
 	}
 
 	--actualMovement.second;
