@@ -15,6 +15,7 @@ Scene::Scene()
 {
 	map = NULL;
 	player = NULL;
+	skeleton = NULL;
 }
 
 Scene::~Scene()
@@ -23,6 +24,8 @@ Scene::~Scene()
 		delete map;
 	if(player != NULL)
 		delete player;
+	if (skeleton != NULL)
+		delete skeleton;
 }
 
 
@@ -36,6 +39,11 @@ void Scene::init()
 	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 	player->setPosition(glm::vec2(player->getInitialPosition() * map->getTileSize()));
 	player->setTileMap(map);
+
+	skeleton = new Skeleton();
+	skeleton->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+	skeleton->setPosition(glm::vec2(skeleton->getInitialPosition() * map->getTileSize()));
+	skeleton->setTileMap(map);
 
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH/(3.5) - 1), float(SCREEN_HEIGHT/(3.5) - 1), 0.f);
 	currentTime = 0.0f;
@@ -68,6 +76,7 @@ void Scene::update(int deltaTime)
 {
 	currentTime += deltaTime;
 	player->update(deltaTime);
+	skeleton->update(deltaTime);
 }
 
 void Scene::render()
@@ -84,6 +93,7 @@ void Scene::render()
 	map->render();
 
 
+	skeleton->render();
 	player->render();
 	
 

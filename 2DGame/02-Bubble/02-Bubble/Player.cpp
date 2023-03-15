@@ -20,9 +20,6 @@
 #define INIT_PLAYER_X_TILES 11
 #define INIT_PLAYER_Y_TILES 11
 
-#define NUM_TILES_X 32
-#define NUM_TILES_Y 26
-
 
 enum PlayerAnims
 {
@@ -92,7 +89,7 @@ void Player::update(int deltaTime)
 		if (sprite->animation() != MOVE_LEFT)
 			sprite->changeAnimation(MOVE_LEFT);
 		posPlayer.x -= PLAYER_SPEED;
-		if (map->collisionMoveLeft(posPlayer + glm::ivec2(PLAYER_WIDTH_OFFSET, 0), glm::ivec2(PLAYER_WIDTH, PLAYER_HEIGHT), bJumping))
+		if (map->collisionMoveLeft(posPlayer + glm::ivec2(PLAYER_WIDTH_OFFSET, 0), glm::ivec2(PLAYER_WIDTH, PLAYER_HEIGHT)))
 		{
 			posPlayer.x += PLAYER_SPEED;
 			sprite->changeAnimation(STAND_LEFT);
@@ -103,7 +100,7 @@ void Player::update(int deltaTime)
 		if (sprite->animation() != MOVE_RIGHT)
 			sprite->changeAnimation(MOVE_RIGHT);
 		posPlayer.x += PLAYER_SPEED;
-		if (map->collisionMoveRight(posPlayer + glm::ivec2(PLAYER_WIDTH_OFFSET, 0), glm::ivec2(PLAYER_WIDTH, PLAYER_HEIGHT), bJumping))
+		if (map->collisionMoveRight(posPlayer + glm::ivec2(PLAYER_WIDTH_OFFSET, 0), glm::ivec2(PLAYER_WIDTH, PLAYER_HEIGHT)))
 		{
 			posPlayer.x -= PLAYER_SPEED;
 			sprite->changeAnimation(STAND_RIGHT);
@@ -157,9 +154,9 @@ void Player::update(int deltaTime)
 			}
 		}
 	}
-	map->collisionRajola(posPlayer, glm::ivec2(PLAYER_WIDTH, PLAYER_HEIGHT), &posPlayer.y);
+	map->collisionRajola(posPlayer + glm::ivec2(PLAYER_WIDTH_OFFSET, 0), glm::ivec2(PLAYER_WIDTH, PLAYER_HEIGHT), &posPlayer.y);
 
-	if (map->collisionSpikes(posPlayer, glm::ivec2(PLAYER_WIDTH, PLAYER_HEIGHT), &posPlayer.y)) {
+	if (map->collisionSpikes(posPlayer + glm::ivec2(PLAYER_WIDTH_OFFSET, 0), glm::ivec2(PLAYER_WIDTH, PLAYER_HEIGHT), &posPlayer.y)) {
 		if (sprite->animation() != DYING) {
 			sprite->changeAnimation(DYING);
 			if (hearts > 0) --hearts;

@@ -10,6 +10,7 @@
 #include "Player.h"
 #include "Text.h"
 #include <vector>
+#include "Skeleton.h"
 
 
 // Scene contains all the entities of our game.
@@ -43,6 +44,8 @@ private:
 	TexturedQuad *texQuad[3];
 
 	Text text;
+
+	Skeleton *skeleton;
 
 };
 

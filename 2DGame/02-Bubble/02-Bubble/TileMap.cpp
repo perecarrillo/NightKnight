@@ -174,7 +174,7 @@ void TileMap::prepareArrays(const glm::vec2 &minCoords, ShaderProgram &program)
 // Method collisionMoveDown also corrects Y coordinate if the box is
 // already intersecting a tile below.
 
-bool TileMap::collisionMoveLeft(const glm::ivec2 &pos, const glm::ivec2 &size, bool jumping) const
+bool TileMap::collisionMoveLeft(const glm::ivec2 &pos, const glm::ivec2 &size) const
 {
 	int x, y0, y1;
 
@@ -190,7 +190,7 @@ bool TileMap::collisionMoveLeft(const glm::ivec2 &pos, const glm::ivec2 &size, b
 	return false;
 }
 
-bool TileMap::collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size, bool jumping) const
+bool TileMap::collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size) const
 {
 	int x, y0, y1;
 
@@ -255,7 +255,7 @@ bool TileMap::collisionSpikes(const glm::ivec2 &pos, const glm::ivec2 &size, int
 {
 	int x0, x1, y;
 
-	x0 = (pos.x + 4) / tileSize; 
+	x0 = (pos.x) / tileSize; 
 	x1 = (pos.x + size.x) / tileSize; 
 	y = (pos.y + size.y + 1) / tileSize;
 
@@ -269,7 +269,7 @@ void TileMap::collisionRajola(const glm::ivec2 & pos, const glm::ivec2 & size, i
 {
 	int x0, x1, y;
 
-	x0 = (pos.x + 4) / tileSize;
+	x0 = (pos.x) / tileSize;
 	x1 = (pos.x + size.x) / tileSize;
 	y = (pos.y + size.y + 1) / tileSize;
 
