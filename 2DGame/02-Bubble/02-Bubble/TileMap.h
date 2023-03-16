@@ -8,6 +8,9 @@
 #include <vector>
 #include <set>
 #include "Rajola.h"
+#include "TexturedQuad.h"
+#include "Quad.h"
+#include <glm/gtc/matrix_transform.hpp>
 
 
 
@@ -46,6 +49,7 @@ private:
 	bool loadLevel(const string &levelFile);
 	void prepareArrays(const glm::vec2 &minCoords, ShaderProgram &program);
 	bool hasCollision(int tile, int tileBelow) const;
+	void printRajoles();
 
 private:
 	GLuint vao;
@@ -59,6 +63,11 @@ private:
 	int *map;
 	Rajola *rajola;
 	vector<vector<bool>> rajoles;
+
+	ShaderProgram texProgram;
+	Quad *quad;
+	Texture texs[2];
+	TexturedQuad *texQuad[3];
 
 };
 
