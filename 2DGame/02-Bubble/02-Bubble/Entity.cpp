@@ -79,6 +79,7 @@ void Entity::update(int deltaTime)
 
 void Entity::render()
 {
+
 	sprite->render();
 }
 
