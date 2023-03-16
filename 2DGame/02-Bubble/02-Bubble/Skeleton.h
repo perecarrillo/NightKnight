@@ -9,12 +9,12 @@
 
 class Skeleton : public Entity
 {
-	enum movements
+	enum Movements
 	{
 		LEFT, RIGHT, STOP
 	};
 
-	enum SkeletonAnims
+	enum Animations
 	{
 		MOVE_LEFT, MOVE_RIGHT, STAND_LEFT, STAND_RIGHT
 	};

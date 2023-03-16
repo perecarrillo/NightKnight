@@ -46,9 +46,14 @@ void Scene::init()
 	player->setTileMap(map);
 
 	skeleton = new Skeleton();
-	skeleton->init("images/skeleton.png", 4, glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+	skeleton->init("images/skeleton.png", glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 	skeleton->setPosition(glm::vec2(skeleton->getInitialPosition() * map->getTileSize()));
 	skeleton->setTileMap(map);
+
+	rata = new Rata();
+	rata->init("images/Rata.png", glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+	rata->setPosition(glm::vec2(rata->getInitialPosition() * map->getTileSize()));
+	rata->setTileMap(map);
 
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH/(3.5) - 1), float(SCREEN_HEIGHT/(3.5) - 1), 0.f);
 	currentTime = 0.0f;
@@ -82,6 +87,7 @@ void Scene::update(int deltaTime)
 	currentTime += deltaTime;
 	player->update(deltaTime);
 	skeleton->update(deltaTime);
+	rata->update(deltaTime);
 }
 
 void Scene::render()
@@ -99,6 +105,7 @@ void Scene::render()
 
 
 	skeleton->render();
+	rata->render();
 	player->render();
 	
 

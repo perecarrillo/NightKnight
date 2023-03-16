@@ -11,6 +11,7 @@
 #include "Text.h"
 #include <vector>
 #include "Skeleton.h"
+#include "Rata.h"
 
 
 // Scene contains all the entities of our game.
@@ -49,6 +50,8 @@ private:
 	Text text;
 
 	Skeleton *skeleton;
+
+	Rata *rata;
 
 	int numLevel;
 

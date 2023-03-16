@@ -6,25 +6,20 @@ Entity::Entity()
 }
 	
 
-void Entity::init(string textureFile, int numberOfAnimations, const glm::ivec2 & tileMapPos, ShaderProgram & shaderProgram)
+void Entity::init(string textureFile, const glm::ivec2 & tileMapPos, ShaderProgram & shaderProgram)
 {
 
 	spritesheet.loadFromFile(textureFile, TEXTURE_PIXEL_FORMAT_RGBA);
 	spritesheet.setMagFilter(GL_NEAREST);
 	float disp = 1.0f / numberOfAnimations;
 
-	sprite = Sprite::createSprite(glm::ivec2(16, 16), glm::vec2(disp, 1 / 8.f), &spritesheet, &shaderProgram);
+	sprite = Sprite::createSprite(spriteSize, glm::vec2(disp, 1.0f / animationLength), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(numberOfAnimations);
 	for (int i = 0; i < numberOfAnimations; ++i) {
-		sprite->setAnimationSpeed(Animations(i), 8);
-		sprite->addKeyframe(Animations(i), glm::vec2(disp*i, 0.f));
-		sprite->addKeyframe(Animations(i), glm::vec2(disp*i, 1 / 8.f));
-		sprite->addKeyframe(Animations(i), glm::vec2(disp*i, 2 / 8.f));
-		sprite->addKeyframe(Animations(i), glm::vec2(disp*i, 3 / 8.f));
-		sprite->addKeyframe(Animations(i), glm::vec2(disp*i, 4 / 8.f));
-		sprite->addKeyframe(Animations(i), glm::vec2(disp*i, 5 / 8.f));
-		sprite->addKeyframe(Animations(i), glm::vec2(disp*i, 6 / 8.f));
-		sprite->addKeyframe(Animations(i), glm::vec2(disp*i, 7 / 8.f));
+		sprite->setAnimationSpeed(Animations(i), animationLength);
+		for (int j = 0; j < animationLength; ++j) {
+			sprite->addKeyframe(Animations(i), glm::vec2(disp*i, float(j) / animationLength));
+		}
 	}
 
 	sprite->changeAnimation(0);
@@ -62,6 +57,13 @@ void Entity::update(int deltaTime)
 			sprite->changeAnimation(STAND_RIGHT);
 		}
 
+	}
+	else
+	{
+		if (sprite->animation() == MOVE_LEFT)
+			sprite->changeAnimation(STAND_LEFT);
+		else if (sprite->animation() == MOVE_RIGHT)
+			sprite->changeAnimation(STAND_RIGHT);
 	}
 
 	position.y += FALL_STEP;
