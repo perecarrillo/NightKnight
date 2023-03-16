@@ -13,6 +13,10 @@
 #include "Skeleton.h"
 #include "Rata.h"
 
+#include <iostream>
+#include <fstream>
+#include <sstream>
+
 
 // Scene contains all the entities of our game.
 // It is responsible for updating and render them.
@@ -24,6 +28,8 @@ class Scene
 public:
 	Scene();
 	~Scene();
+
+	void loadScene();
 
 	void init();
 	void update(int deltaTime);
@@ -52,8 +58,10 @@ private:
 	Skeleton *skeleton;
 
 	Rata *rata;
+	vector<Skeleton> skeletons;
 
-	int numLevel;
+	int numLevel, numRajoles, numSkeletons;
+	glm::vec2 posCofre, posClau, posJugador;
 
 };
 

@@ -15,7 +15,6 @@ Scene::Scene()
 {
 	map = NULL;
 	player = NULL;
-	skeleton = NULL;
 	numLevel = 1;
 }
 
@@ -25,11 +24,67 @@ Scene::~Scene()
 		delete map;
 	if(player != NULL)
 		delete player;
-	if (skeleton != NULL)
-		delete skeleton;
 }
 
+void Scene::loadScene() {
+	string levelFile = "scenes/Scene" + std::to_string(numLevel) + ".txt";
+	ifstream fin;
+	string line, tilesheetFile;
+	stringstream sstream;
+	int tile;
 
+	fin.open(levelFile.c_str());
+	// Posici� jugador
+	getline(fin, line);
+	sstream.str(line);
+	sstream >> posJugador.x >> posJugador.y;
+	player = new Player(posJugador.x, posJugador.y);
+	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+	player->setPosition(glm::vec2(player->getInitialPosition() * map->getTileSize()));
+	player->setTileMap(map);
+
+	// Nombre de rajoles del nivell
+	getline(fin, line);
+	sstream.str(line);
+	sstream >> numRajoles;
+
+	// Posici� del cofre
+	getline(fin, line);
+	sstream.str(line);
+	sstream >> posCofre.x >> posCofre.y;
+
+	// Posici� de la rajola
+	getline(fin, line);
+	sstream.str(line);
+	sstream >> posClau.x >> posClau.y;
+
+	// Nombre d'enemics de cada tipus
+	getline(fin, line);
+	sstream.str(line);
+	sstream >> numSkeletons;
+
+	// Posici� inicial de cada enemics i inicialitzaci� d'aquests
+	/*skeletons = vector<Skeleton> ();
+	for (int i = 0; i < numSkeletons; ++i) {
+		getline(fin, line);
+		sstream.str(line);
+		int posX, posY;
+		sstream >> posX >> posY;
+		Skeleton sk = Skeleton(posX, posY);
+		sk.init("images/Skeleton.png", 4, glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+		sk.setPosition(glm::vec2(sk.getInitialPosition() * map->getTileSize()));
+		sk.setTileMap(map);
+		skeletons.push_back(sk);
+	}*/
+	skeleton = new Skeleton();
+	skeleton->init("images/skeleton.png", glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+	skeleton->setPosition(glm::vec2(skeleton->getInitialPosition() * map->getTileSize()));
+	skeleton->setTileMap(map);
+
+	
+
+	fin.close();
+}
 
 void Scene::init()
 {
@@ -40,10 +95,6 @@ void Scene::init()
 	//map2 = TileMap::createTileMap("levels/level2Background.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 	map = TileMap::createTileMap(fileMap, glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 	map2 = TileMap::createTileMap(fileBackground, glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
-	player = new Player();
-	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	player->setPosition(glm::vec2(player->getInitialPosition() * map->getTileSize()));
-	player->setTileMap(map);
 
 	skeleton = new Skeleton();
 	skeleton->init("images/skeleton.png", glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
@@ -73,6 +124,7 @@ void Scene::init()
 	texs[1].loadFromFile("images/lostHeart.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	texs[1].setMagFilter(GL_NEAREST);
 
+	loadScene();
 
 	// Select which font you want to use
 	if (!text.init("fonts/OpenSans-Regular.ttf"))
@@ -86,6 +138,7 @@ void Scene::update(int deltaTime)
 {
 	currentTime += deltaTime;
 	player->update(deltaTime);
+	//for (int i = 0; i < numSkeletons; ++i) skeletons[i].update(deltaTime);
 	skeleton->update(deltaTime);
 	rata->update(deltaTime);
 }
@@ -103,11 +156,10 @@ void Scene::render()
 	map2->render();
 	map->render();
 
-
 	skeleton->render();
 	rata->render();
 	player->render();
-	
+	//for (int i = 0; i < numSkeletons; ++i) skeletons[i].render();
 
 	text.render("Videogames!!!", glm::vec2(200, 300), 32, glm::vec4(1, 1, 1, 1));
 

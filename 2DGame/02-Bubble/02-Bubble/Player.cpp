@@ -17,8 +17,8 @@
 #define PLAYER_SIZE 16
 #define PLAYER_SPEED 1
 #define COYOTE_TIME 4
-#define INIT_PLAYER_X_TILES 11
-#define INIT_PLAYER_Y_TILES 11
+//#define INIT_PLAYER_X_TILES 11
+//#define INIT_PLAYER_Y_TILES 11
 
 
 enum PlayerAnims
@@ -26,8 +26,17 @@ enum PlayerAnims
 	STAND_LEFT, STAND_RIGHT, MOVE_LEFT, MOVE_RIGHT, DYING 
 };
 
+
 Player::Player() {
-	initialPosition = glm::ivec2(INIT_PLAYER_X_TILES, INIT_PLAYER_Y_TILES);
+	initialPosition = glm::ivec2(11, 11);
+	hearts = 5;
+	inmune = false;
+	show = true;
+	time = 0;
+}
+
+Player::Player(int x, int y) {
+	initialPosition = glm::ivec2(x, y);
 	hearts = 5;
 	inmune = false;
 	show = true;
@@ -174,7 +183,7 @@ void Player::update(int deltaTime)
 	}
 	else if (sprite->getKeyFrame() > 6) {
 		sprite->changeAnimation(STAND_LEFT);
-		setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize(), INIT_PLAYER_Y_TILES * map->getTileSize()));
+		setPosition(glm::vec2(initialPosition.x * map->getTileSize(), initialPosition.y * map->getTileSize()));
 		inmune = true;
 		timeInmune = time;
 	}

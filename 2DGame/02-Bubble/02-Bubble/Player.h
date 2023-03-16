@@ -16,6 +16,7 @@ class Player
 
 public:
 	Player();
+	Player(int x, int y);
 	void init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram);
 	void update(int deltaTime);
 	void render();

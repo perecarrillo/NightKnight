@@ -22,6 +22,7 @@ class Skeleton : public Entity
 
 public:
 	Skeleton();
+	Skeleton(int x, int y);
 };
 
 #endif
