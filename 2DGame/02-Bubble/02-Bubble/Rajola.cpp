@@ -8,15 +8,11 @@
 #include <algorithm>
 
 
-#define JUMP_ANGLE_STEP 4
-#define JUMP_HEIGHT 28
-#define FALL_STEP 2
+
 #define Rajola_WIDTH 12
 #define Rajola_WIDTH_OFFSET 2
 #define Rajola_HEIGHT 16
 #define Rajola_SIZE 16
-#define Rajola_SPEED 1
-#define COYOTE_TIME 4
 
 #define INIT_RAJOLA_X_TILES 11
 #define INIT_RAJOLA_Y_TILES 11
@@ -33,7 +29,6 @@ Rajola::Rajola() {
 
 void Rajola::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 {
-	bJumping = false;
 	spritesheet.loadFromFile("images/rajola.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	spritesheet.setMagFilter(GL_NEAREST);
 	sprite = Sprite::createSprite(glm::ivec2(16, 8), glm::vec2(1.f, 1.f), &spritesheet, &shaderProgram);
@@ -49,10 +44,6 @@ void Rajola::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 
 }
 
-void Rajola::update(int deltaTime)
-{
-	sprite->update(deltaTime);
-}
 
 void Rajola::render()
 {

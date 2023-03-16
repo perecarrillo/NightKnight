@@ -15,7 +15,6 @@ class Rajola
 public:
 	Rajola();
 	void init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram);
-	void update(int deltaTime);
 	void render();
 
 	void setPosition(const glm::vec2 &pos);
@@ -24,9 +23,7 @@ public:
 
 private:
 	glm::ivec2 initialPosition;
-	bool bJumping;
 	glm::ivec2 tileMapDispl, posRajola;
-	int jumpAngle, startY, jumpLost, coyoteTime;
 	Texture spritesheet;
 	Sprite *sprite;
 };

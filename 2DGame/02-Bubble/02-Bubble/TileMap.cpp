@@ -291,3 +291,17 @@ bool TileMap::hasCollision(int tile, int tileBelow) const
 	if (tileBelow != 0) return true;
 	return NO_COLLISION_BELOW.find(tile) == NO_COLLISION_BELOW.end();
 }
+
+void TileMap::printRajoles() {
+	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
+	glm::mat4 modelview;
+	for (int i = 0; i < NUM_TILES_Y; ++i) {
+		for (int j = 0; j < NUM_TILES_X; ++j) {
+			if (rajoles[i][j]) {
+				modelview = glm::translate(glm::mat4(1.0f), glm::vec3(8.f + j*8.f, 9.f + i*8.f, 1.f));
+				texProgram.setUniformMatrix4f("modelview", modelview);
+				texQuad[0]->render(texs[0]);
+			}
+		}
+	}
+}
