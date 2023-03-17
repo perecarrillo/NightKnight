@@ -42,6 +42,7 @@ public:
 private:
 	void initShaders();
 	void printHearts();
+	void checkCollisions();
 	TileMap *map;
 	TileMap *map2;
 	Player *player;
@@ -55,9 +56,6 @@ private:
 
 	Text text;
 
-	Skeleton *skeleton;
-
-	Rata *rata;
 	vector<Entity *> enemies;
 
 	int numLevel, numRajoles;

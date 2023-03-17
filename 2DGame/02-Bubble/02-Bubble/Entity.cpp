@@ -101,3 +101,19 @@ glm::ivec2 Entity::getInitialPosition()
 {
 	return initialPosition;
 }
+
+glm::ivec2 Entity::getSpriteSize()
+{
+	return spriteSize;
+}
+
+//We reduce by 2 px the boundingBox because we can
+glm::ivec2 Entity::getBoundingBoxMin()
+{
+	return glm::ivec2(position.x + WIDTH_OFFSET + 1, position.y + HEIGHT_OFFSET);
+}
+
+glm::ivec2 Entity::getBoundingBoxMax()
+{
+	return glm::ivec2(position.x + WIDTH_OFFSET + WIDTH + WIDTH_OFFSET - 1, position.y + HEIGHT + HEIGHT_OFFSET);
+}

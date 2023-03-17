@@ -17,6 +17,9 @@ public:
 	virtual void setTileMap(TileMap *tileMap);
 	virtual void setPosition(const glm::vec2 &pos);
 	virtual glm::ivec2 getInitialPosition();
+	virtual glm::ivec2 getSpriteSize();
+	virtual glm::ivec2 getBoundingBoxMin();
+	virtual glm::ivec2 getBoundingBoxMax();
 
 protected:
 	virtual enum Movements

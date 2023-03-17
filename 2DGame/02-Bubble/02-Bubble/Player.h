@@ -26,7 +26,11 @@ public:
 	void setTileMap(TileMap *tileMap);
 	void setPosition(const glm::vec2 &pos);
 	glm::ivec2 getInitialPosition();
-	
+	glm::ivec2 getBoundingBoxMin();
+	glm::ivec2 getBoundingBoxMax();
+	void loseHeart();
+	bool isInmune();
+
 private:
 	glm::ivec2 initialPosition;
 	bool bJumping;

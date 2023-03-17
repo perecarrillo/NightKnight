@@ -23,6 +23,9 @@ public:
 	
 	void update(int deltaTime);
 
+	glm::ivec2 Rata::getBoundingBoxMin();
+	glm::ivec2 Rata::getBoundingBoxMax();
+
 private:
 	int WIDTH_OFFSET_LEFT;
 };

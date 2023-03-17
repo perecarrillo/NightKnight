@@ -99,16 +99,6 @@ void Scene::init()
 	map = TileMap::createTileMap(fileMap, glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 	map2 = TileMap::createTileMap(fileBackground, glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 
-	/*skeleton = new Skeleton();
-	skeleton->init("images/skeleton.png", glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	skeleton->setPosition(glm::vec2(skeleton->getInitialPosition() * map->getTileSize()));
-	skeleton->setTileMap(map);
-
-	rata = new Rata();
-	rata->init("images/RataGran.png", glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	rata->setPosition(glm::vec2(rata->getInitialPosition() * map->getTileSize()));
-	rata->setTileMap(map);*/
-
 	loadScene();
 
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH/(3.5) - 1), float(SCREEN_HEIGHT/(3.5) - 1), 0.f);
@@ -142,12 +132,27 @@ void Scene::update(int deltaTime)
 {
 	currentTime += deltaTime;
 	player->update(deltaTime);
-	//skeleton->update(deltaTime);
-	//rata->update(deltaTime);
 	for (int i = 0; i < enemies.size(); ++i)
 		enemies[i]->update(deltaTime);
+	checkCollisions();
 	if (map->numRajolesPressed() >= numRajoles) allPressed = true;
 }
+
+void Scene::checkCollisions()
+{
+	//Mirarem les colisions Player - Enemy i Player/Enemy - Boxes
+	glm::ivec2 playerMin = player->getBoundingBoxMin();
+	glm::ivec2 playerMax = player->getBoundingBoxMax();
+	for (Entity *enemy : enemies) {
+		glm::ivec2 enemyMin = enemy->getBoundingBoxMin();
+		glm::ivec2 enemyMax = enemy->getBoundingBoxMax();
+		if (!player->isInmune() && (playerMin.x < enemyMax.x && enemyMin.x < playerMax.x) && (playerMin.y < enemyMax.y && enemyMin.y < playerMax.y)) {
+			cout << "Collision"<<endl;
+			player->loseHeart();
+		}
+	}
+}
+
 
 void Scene::render()
 {
@@ -162,8 +167,6 @@ void Scene::render()
 	map2->render();
 	map->render();
 
-	//skeleton->render();
-	//rata->render();
 	for (int i = 0; i < enemies.size(); ++i)
 		enemies[i]->render();
 	player->render();

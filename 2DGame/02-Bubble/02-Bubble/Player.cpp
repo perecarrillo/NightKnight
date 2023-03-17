@@ -28,7 +28,7 @@ enum PlayerAnims
 
 
 Player::Player() {
-	initialPosition = glm::ivec2(11, 11);
+	initialPosition = glm::ivec2(0, 0);
 	hearts = 5;
 	inmune = false;
 	show = true;
@@ -99,7 +99,7 @@ void Player::update(int deltaTime)
 	time += deltaTime;
 	if (time%500 < 250) show = false;
 	else show = true;
-	if (time - timeInmune > 3000) inmune = false;
+	if (!inmune || time - timeInmune > 3000) inmune = false;
 	if (sprite->animation() != DYING) {
 		if (Game::instance().getSpecialKey(GLUT_KEY_LEFT))
 		{
@@ -209,6 +209,29 @@ void Player::setPosition(const glm::vec2 &pos)
 glm::ivec2 Player::getInitialPosition()
 {
 	return initialPosition;
+}
+
+glm::ivec2 Player::getBoundingBoxMin()
+{
+	return glm::ivec2(posPlayer.x + PLAYER_WIDTH_OFFSET, posPlayer.y);
+}
+
+glm::ivec2 Player::getBoundingBoxMax()
+{
+	return glm::ivec2(posPlayer.x + PLAYER_WIDTH_OFFSET + PLAYER_WIDTH, posPlayer.y + PLAYER_HEIGHT);
+}
+
+void Player::loseHeart()
+{
+	if (hearts > 0)
+		--hearts;
+	inmune = true;
+	timeInmune = time;
+}
+
+bool Player::isInmune()
+{
+	return inmune;
 }
 
 int Player::getNumHearts() {
