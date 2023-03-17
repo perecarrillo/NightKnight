@@ -12,7 +12,7 @@
 
 enum State
 {
-	PLAYING, MENU, CREDITS, LOSE
+	PLAYING, MENU, CREDITS, LOSE, PAUSE
 };
 
 Menu::Menu()
@@ -46,6 +46,9 @@ void Menu::init()
 	texs[1].loadFromFile("images/gameover.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	texs[1].setMagFilter(GL_NEAREST);
 
+	texs[2].loadFromFile("images/pause.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	texs[2].setMagFilter(GL_NEAREST);
+
 
 	// Select which font you want to use
 	if (!text.init("fonts/OpenSans-Regular.ttf"))
@@ -78,6 +81,7 @@ void Menu::render()
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	if (menu == MENU) texQuad[0]->render(texs[0]); // it will render one of the different menus
 	else if (menu == LOSE) texQuad[0]->render(texs[1]);
+	else if (menu == PAUSE)  texQuad[0]->render(texs[2]);
 }
 
 

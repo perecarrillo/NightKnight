@@ -23,6 +23,8 @@ TileMap *TileMap::createTileMap(const string &levelFile, const glm::vec2 &minCoo
 
 TileMap::TileMap(const string &levelFile, const glm::vec2 &minCoords, ShaderProgram &program)
 {
+	contRajoles = 0;
+
 	loadLevel(levelFile);
 	prepareArrays(minCoords, program);
 
@@ -276,14 +278,21 @@ void TileMap::collisionRajola(const glm::ivec2 & pos, const glm::ivec2 & size)
 	if (pos.y - tileSize * y + size.y <= 2) {
 		if ((map[(y)*mapSize.x + x0] == 1613 || map[(y)*mapSize.x + x0] == 1614)) {
 			if (map[(y)*mapSize.x + x0] == 1614) x0 -= 1;
-			rajoles[y][x0] = true;
+			if (!rajoles[y][x0]) {
+				rajoles[y][x0] = true;
+				++contRajoles;
+			}
 		}
 		if ((map[(y)*mapSize.x + x1] == 1613 || map[(y)*mapSize.x + x1] == 1614)) {
 			if (map[(y)*mapSize.x + x1] == 1614) x1 -= 1;
-			rajoles[y][x1] = true;
+			if (!rajoles[y][x1]) {
+				rajoles[y][x1] = true;
+				++contRajoles;
+			}
 		}
 	}
 }
+
 
 bool TileMap::hasCollision(int tile, int tileBelow) const
 {
@@ -304,4 +313,9 @@ void TileMap::printRajoles() {
 			}
 		}
 	}
+}
+
+int TileMap::numRajolesPressed()
+{
+	return contRajoles;
 }

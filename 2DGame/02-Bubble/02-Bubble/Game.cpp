@@ -4,7 +4,7 @@
 
 enum State
 {
-	PLAYING, MENU, CREDITS, LOSE
+	PLAYING, MENU, CREDITS, LOSE, PAUSE
 };
 
 void Game::init()
@@ -37,12 +37,20 @@ void Game::keyPressed(int key)
 {
 	if(key == 27) // Escape code
 		bPlay = false;
-	if ((key == 77) && state == PLAYING) {// key M
+	if ((key == 77) && (state == LOSE || state == PAUSE)) {// key M
+		scene.init();
 		state = MENU;
 		menu.setImage(MENU);
 	}
-	if ((key == 83) && state == LOSE) { // key S
-		if (state != PLAYING && scene.isGameOver()) scene.init();
+	if ((key == 82) && (state == LOSE || state == PAUSE)) { // key R
+		scene.init();
+		state = PLAYING;
+	}
+	if ((key == 80) && state == PLAYING) { // key P
+		state = PAUSE;
+		menu.setImage(PAUSE);
+	}
+	if ((key == 67) && state == PAUSE) { // key C
 		state = PLAYING;
 	}
 	if ((key == 97 || key == 49) && state == MENU) { // key 1
@@ -51,6 +59,10 @@ void Game::keyPressed(int key)
 	}
 	if ((key == 98 || key == 50) && state == MENU) { // key 2
 		if (scene.getNumLevel() != 2 || scene.isGameOver())scene.changeLevel(2);
+		state = PLAYING;
+	}
+	if ((key == 99 || key == 51) && state == MENU) { // key 3
+		if (scene.getNumLevel() != 3 || scene.isGameOver())scene.changeLevel(3);
 		state = PLAYING;
 	}
 
