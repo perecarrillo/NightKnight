@@ -58,9 +58,10 @@ private:
 	Skeleton *skeleton;
 
 	Rata *rata;
-	vector<Skeleton> skeletons;
+	vector<Entity *> enemies;
 
-	int numLevel, numRajoles, numSkeletons;
+	int numLevel, numRajoles;
+	int numSkeletons, numRates;
 	glm::vec2 posCofre, posClau, posJugador;
 
 };

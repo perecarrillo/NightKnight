@@ -61,25 +61,27 @@ void Scene::loadScene() {
 	// Nombre d'enemics de cada tipus
 	getline(fin, line);
 	sstream.str(line);
-	sstream >> numSkeletons;
+	sstream >> numSkeletons >> numRates;
 
+	int numEnemies = numSkeletons + numRates;
 	// Posici� inicial de cada enemics i inicialitzaci� d'aquests
-	/*skeletons = vector<Skeleton> ();
-	for (int i = 0; i < numSkeletons; ++i) {
+	enemies = vector<Entity *> (numEnemies);
+	for (int i = 0; i < numEnemies; ++i) {
+		int posX, posY;
 		getline(fin, line);
 		sstream.str(line);
-		int posX, posY;
 		sstream >> posX >> posY;
-		Skeleton sk = Skeleton(posX, posY);
-		sk.init("images/Skeleton.png", 4, glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-		sk.setPosition(glm::vec2(sk.getInitialPosition() * map->getTileSize()));
-		sk.setTileMap(map);
-		skeletons.push_back(sk);
-	}*/
-	skeleton = new Skeleton();
-	skeleton->init("images/skeleton.png", glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	skeleton->setPosition(glm::vec2(skeleton->getInitialPosition() * map->getTileSize()));
-	skeleton->setTileMap(map);
+		if (i < numSkeletons) {
+			enemies[i] = new Skeleton(posX, posY);
+			enemies[i]->init("images/Skeleton.png", glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+		}
+		else if (i - numSkeletons < numRates) {
+			enemies[i] = new Rata(posX, posY);
+			enemies[i]->init("images/RataGran.png", glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+		}
+		enemies[i]->setPosition(glm::vec2(enemies[i]->getInitialPosition() * map->getTileSize()));
+		enemies[i]->setTileMap(map);
+	}
 
 	
 
@@ -96,15 +98,15 @@ void Scene::init()
 	map = TileMap::createTileMap(fileMap, glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 	map2 = TileMap::createTileMap(fileBackground, glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
 
-	skeleton = new Skeleton();
+	/*skeleton = new Skeleton();
 	skeleton->init("images/skeleton.png", glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 	skeleton->setPosition(glm::vec2(skeleton->getInitialPosition() * map->getTileSize()));
 	skeleton->setTileMap(map);
 
 	rata = new Rata();
-	rata->init("images/Rata.png", glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+	rata->init("images/RataGran.png", glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 	rata->setPosition(glm::vec2(rata->getInitialPosition() * map->getTileSize()));
-	rata->setTileMap(map);
+	rata->setTileMap(map);*/
 
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH/(3.5) - 1), float(SCREEN_HEIGHT/(3.5) - 1), 0.f);
 	currentTime = 0.0f;
@@ -138,9 +140,10 @@ void Scene::update(int deltaTime)
 {
 	currentTime += deltaTime;
 	player->update(deltaTime);
-	//for (int i = 0; i < numSkeletons; ++i) skeletons[i].update(deltaTime);
-	skeleton->update(deltaTime);
-	rata->update(deltaTime);
+	//skeleton->update(deltaTime);
+	//rata->update(deltaTime);
+	for (int i = 0; i < enemies.size(); ++i)
+		enemies[i]->update(deltaTime);
 }
 
 void Scene::render()
@@ -156,10 +159,11 @@ void Scene::render()
 	map2->render();
 	map->render();
 
-	skeleton->render();
-	rata->render();
+	//skeleton->render();
+	//rata->render();
+	for (int i = 0; i < enemies.size(); ++i)
+		enemies[i]->render();
 	player->render();
-	//for (int i = 0; i < numSkeletons; ++i) skeletons[i].render();
 
 	text.render("Videogames!!!", glm::vec2(200, 300), 32, glm::vec4(1, 1, 1, 1));
 

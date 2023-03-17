@@ -1,13 +1,13 @@
 #include "Rata.h"
 
 
-Rata::Rata()
+Rata::Rata(int x, int y)
 {
-	initialPosition = glm::ivec2(19, 5);
+	initialPosition = glm::ivec2(x, y);
 	position = initialPosition;
 	speed = 0.8;
 	movement = { { LEFT,120 }, {RIGHT, 120} };
-	animationLength = 5;
+	animationLength = 10;
 	numberOfAnimations = 5;
 	WIDTH = 12;
 	WIDTH_OFFSET = 20;

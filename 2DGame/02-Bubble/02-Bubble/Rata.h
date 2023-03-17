@@ -18,7 +18,8 @@ class Rata : public Entity
 
 
 public:
- 	Rata();
+ 	//Rata();
+	Rata(int x, int y);
 	
 	void update(int deltaTime);
 
