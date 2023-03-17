@@ -64,14 +64,13 @@ void Scene::loadScene() {
 	sstream >> numSkeletons;
 
 	// Posici� inicial de cada enemics i inicialitzaci� d'aquests
-	/*skeletons = vector<Skeleton> ();
-	for (int i = 0; i < numSkeletons; ++i) {
+	/*for (int i = 0; i < numSkeletons; ++i) {
 		getline(fin, line);
 		sstream.str(line);
 		int posX, posY;
 		sstream >> posX >> posY;
 		Skeleton sk = Skeleton(posX, posY);
-		sk.init("images/Skeleton.png", 4, glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+		sk.init("images/Skeleton.png", glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 		sk.setPosition(glm::vec2(sk.getInitialPosition() * map->getTileSize()));
 		sk.setTileMap(map);
 		skeletons.push_back(sk);
@@ -88,6 +87,7 @@ void Scene::loadScene() {
 
 void Scene::init()
 {
+	allPressed = false;
 	initShaders();
 	string fileMap = "levels/level" + std::to_string(numLevel) + ".txt";
 	string fileBackground = "levels/level" + std::to_string(numLevel) + "Background.txt";
@@ -105,6 +105,8 @@ void Scene::init()
 	rata->init("images/Rata.png", glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 	rata->setPosition(glm::vec2(rata->getInitialPosition() * map->getTileSize()));
 	rata->setTileMap(map);
+
+	loadScene();
 
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH/(3.5) - 1), float(SCREEN_HEIGHT/(3.5) - 1), 0.f);
 	currentTime = 0.0f;
@@ -124,7 +126,6 @@ void Scene::init()
 	texs[1].loadFromFile("images/lostHeart.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	texs[1].setMagFilter(GL_NEAREST);
 
-	loadScene();
 
 	// Select which font you want to use
 	if (!text.init("fonts/OpenSans-Regular.ttf"))
@@ -141,6 +142,7 @@ void Scene::update(int deltaTime)
 	//for (int i = 0; i < numSkeletons; ++i) skeletons[i].update(deltaTime);
 	skeleton->update(deltaTime);
 	rata->update(deltaTime);
+	if (map->numRajolesPressed() >= numRajoles) allPressed = true;
 }
 
 void Scene::render()

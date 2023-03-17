@@ -63,6 +63,8 @@ private:
 	int numLevel, numRajoles, numSkeletons;
 	glm::vec2 posCofre, posClau, posJugador;
 
+	bool allPressed;
+
 };
 
 
