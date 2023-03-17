@@ -61,6 +61,10 @@ void Game::keyPressed(int key)
 		if (scene.getNumLevel() != 2 || scene.isGameOver())scene.changeLevel(2);
 		state = PLAYING;
 	}
+	if ((key == 99 || key == 51) && state == MENU) { // key 3
+		if (scene.getNumLevel() != 3 || scene.isGameOver())scene.changeLevel(3);
+		state = PLAYING;
+	}
 
 	keys[key] = true;
 }
