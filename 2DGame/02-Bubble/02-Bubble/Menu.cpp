@@ -33,11 +33,14 @@ void Menu::init()
 
 
 	glm::vec2 texCoords[2] = { glm::vec2(0.f, 0.f), glm::vec2(1.f, 1.f) };
-	glm::vec2 geom[2] = { glm::vec2(0.f, 0.f), glm::vec2(256.f, 208.f) };
+	glm::vec2 geom[2] = { glm::vec2(0.f, 0.f), glm::vec2(192.f, 156.f) };
 
-
-	texCoords[0] = glm::vec2(0.f, 0.f); texCoords[1] = glm::vec2(1.f, 1.f);
 	texQuad[0] = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
+
+	//geom[1] = glm::vec2(256.f, 208.f);
+	glm::vec2 geom2[2] = { glm::vec2(0.f, 0.f), glm::vec2(256.f, 208.f) };
+
+	texQuad[1] = TexturedQuad::createTexturedQuad(geom2, texCoords, texProgram);
 
 	// Load textures
 	texs[0].loadFromFile("images/menu.png", TEXTURE_PIXEL_FORMAT_RGBA);
@@ -49,12 +52,8 @@ void Menu::init()
 	texs[2].loadFromFile("images/pause.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	texs[2].setMagFilter(GL_NEAREST);
 
-
-	// Select which font you want to use
-	if (!text.init("fonts/OpenSans-Regular.ttf"))
-		//if(!text.init("fonts/OpenSans-Bold.ttf"))
-		//if(!text.init("fonts/DroidSerif.ttf"))
-		cout << "Could not load font!!!" << endl;
+	texs[3].loadFromFile("images/background.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	texs[3].setMagFilter(GL_NEAREST);
 
 }
 
@@ -74,10 +73,13 @@ void Menu::render()
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 
-	text.render("Videogames!!!", glm::vec2(200, 300), 32, glm::vec4(1, 1, 1, 1));
-
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
+	 //Painting the background
 	modelview = glm::translate(glm::mat4(1.0f), glm::vec3(9.f, 8.f, 0.f));
+	texProgram.setUniformMatrix4f("modelview", modelview);
+	if (menu != PLAYING) texQuad[1]->render(texs[3]);
+
+	modelview = glm::translate(glm::mat4(1.0f), glm::vec3(9.f + 32.f, 8.f + 26.f, 0.f)); //centering the menu in the viewport
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	if (menu == MENU) texQuad[0]->render(texs[0]); // it will render one of the different menus
 	else if (menu == LOSE) texQuad[0]->render(texs[1]);

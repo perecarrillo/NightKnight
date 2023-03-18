@@ -4,7 +4,12 @@
 Entity::Entity()
 {
 }
-	
+
+
+Entity::Entity(int x, int y)
+{
+	initialPosition = glm::vec2(x, y);
+}
 
 void Entity::init(string textureFile, const glm::ivec2 & tileMapPos, ShaderProgram & shaderProgram)
 {

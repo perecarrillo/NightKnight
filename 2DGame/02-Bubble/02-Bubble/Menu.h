@@ -35,10 +35,8 @@ private:
 	glm::mat4 projection;
 
 	Quad *quad;
-	Texture texs[3];
+	Texture texs[4];
 	TexturedQuad *texQuad[3];
-
-	Text text;
 
 	int menu;
 

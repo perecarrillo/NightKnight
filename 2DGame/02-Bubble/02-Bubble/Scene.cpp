@@ -53,10 +53,12 @@ void Scene::loadScene() {
 	sstream.str(line);
 	sstream >> posCofre.x >> posCofre.y;
 
-	// Posici� de la rajola
+	// Posici� de la clau
 	getline(fin, line);
 	sstream.str(line);
 	sstream >> posClau.x >> posClau.y;
+	//key = new Entity(posClau.x, posClau.y);
+	//key->init("images/Key.png", glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 
 	// Nombre d'enemics de cada tipus
 	getline(fin, line);
@@ -167,6 +169,7 @@ void Scene::render()
 	map2->render();
 	map->render();
 
+	//key->render();
 	for (int i = 0; i < enemies.size(); ++i)
 		enemies[i]->render();
 	player->render();

@@ -62,6 +62,8 @@ private:
 	int numSkeletons, numRates;
 	glm::vec2 posCofre, posClau, posJugador;
 
+	Entity *key;
+
 	bool allPressed;
 
 };

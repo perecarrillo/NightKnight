@@ -181,6 +181,7 @@ void Player::update(int deltaTime)
 
 		sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 	}
+	// if the player has died and we are rendering the die animation after rendering the last frame we will restart the player position
 	else if (sprite->getKeyFrame() > 6) {
 		sprite->changeAnimation(STAND_LEFT);
 		setPosition(glm::vec2(initialPosition.x * map->getTileSize(), initialPosition.y * map->getTileSize()));

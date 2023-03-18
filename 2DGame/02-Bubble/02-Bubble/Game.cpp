@@ -29,8 +29,8 @@ bool Game::update(int deltaTime)
 void Game::render()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	if (state == PLAYING) scene.render();
-	else menu.render();
+	scene.render();
+	if (state != PLAYING) menu.render();
 }
 
 void Game::keyPressed(int key)
