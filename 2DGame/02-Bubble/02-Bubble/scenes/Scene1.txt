@@ -1,7 +1,7 @@
 11 11 -- posició inicial jugador
 25 -- nombre de rajoles
 19 7 -- posició cofre
-12 20 -- posició clau
+16 20 -- posició clau
 2 2 -- nombre enemics (esquelets, rates, ratpenats)
 8 8 -- posicio esquelet 1
 8 15 -- posicio esquelet 2

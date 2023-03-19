@@ -12,6 +12,7 @@
 #include <vector>
 #include "Skeleton.h"
 #include "Rata.h"
+#include "Key.h"
 
 #include <iostream>
 #include <fstream>
@@ -62,7 +63,7 @@ private:
 	int numSkeletons, numRates;
 	glm::vec2 posCofre, posClau, posJugador;
 
-	Entity *key;
+	Key *key;
 
 	bool allPressed;
 
