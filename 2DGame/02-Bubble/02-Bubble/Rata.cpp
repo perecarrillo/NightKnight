@@ -6,7 +6,7 @@ Rata::Rata(int x, int y)
 	initialPosition = glm::ivec2(x, y);
 	position = initialPosition;
 	speed = 0.8;
-	movement = { { LEFT,110 }, {STOP, 50}, {RIGHT, 110}, {STOP, 50} };
+	movement = { { LEFT,112 }, {STOP, 150}, {RIGHT, 112}, {STOP, 100} };
 	animationLength = 10;
 	numberOfAnimations = 5;
 	WIDTH = 12;
