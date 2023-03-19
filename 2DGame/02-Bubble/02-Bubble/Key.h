@@ -9,19 +9,7 @@
 
 class Key : public Entity
 {
-	enum Movements
-	{
-		STOP
-	};
-
-	enum Animations
-	{
-		STAND_LEFT
-	};
-
-
 public:
-	Key();
 	Key(int x, int y);
 };
 

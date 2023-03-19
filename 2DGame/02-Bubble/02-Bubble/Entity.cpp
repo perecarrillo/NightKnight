@@ -29,7 +29,7 @@ void Entity::init(string textureFile, const glm::ivec2 & tileMapPos, ShaderProgr
 		}
 	}
 
-	sprite->changeAnimation(0);
+	//sprite->changeAnimation(0);
 	tileMapDispl = tileMapPos;
 
 	if (movement.size() > 0)
