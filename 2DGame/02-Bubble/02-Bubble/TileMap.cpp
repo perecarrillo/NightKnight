@@ -55,8 +55,7 @@ void TileMap::render() const
 	for (int i = 0; i < NUM_TILES_Y; ++i) {
 		for (int j = 0; j < NUM_TILES_X; ++j) {
 			if (rajoles[i][j]) {
-				rajola->changePosIni(glm::vec2(j, i));
-				rajola->setPosition(glm::vec2(rajola->getInitialPosition() * this->getTileSize()));
+				rajola->setPosition(glm::vec2(j * tileSize, i * tileSize));
 				rajola->render();
 			}
 		}

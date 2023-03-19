@@ -18,11 +18,8 @@ public:
 	void render();
 
 	void setPosition(const glm::vec2 &pos);
-	glm::ivec2 getInitialPosition();
-	void changePosIni(const glm::vec2 &pos);
 
 private:
-	glm::ivec2 initialPosition;
 	glm::ivec2 tileMapDispl, posRajola;
 	Texture spritesheet;
 	Sprite *sprite;
@@ -30,5 +27,3 @@ private:
 
 
 #endif // _RAJOLA_INCLUDE
-
-

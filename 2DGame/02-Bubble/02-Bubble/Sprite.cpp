@@ -70,7 +70,7 @@ void Sprite::free()
 void Sprite::setNumberOfLastAnimation(int nAnimation)
 {
 	animations.clear();
-	animations.resize(nAnimation);
+	animations.resize(nAnimation + 1);
 }
 
 void Sprite::setAnimationSpeed(int animId, int keyframesPerSec)
