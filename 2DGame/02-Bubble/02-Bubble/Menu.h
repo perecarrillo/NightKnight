@@ -30,7 +30,7 @@ public:
 
 private:
 	void initShaders();
-	ShaderProgram texProgram;
+	ShaderProgram texProgram, simpleProgram;
 	float currentTime;
 	glm::mat4 projection;
 

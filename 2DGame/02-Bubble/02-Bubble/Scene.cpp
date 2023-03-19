@@ -57,8 +57,10 @@ void Scene::loadScene() {
 	getline(fin, line);
 	sstream.str(line);
 	sstream >> posClau.x >> posClau.y;
-	//key = new Entity(posClau.x, posClau.y);
-	//key->init("images/Key.png", glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+	key = new Key(posClau.x, posClau.y);
+	key->init("images/Key.png", glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+	key->setPosition(glm::vec2(key->getInitialPosition() * map->getTileSize()));
+	key->setTileMap(map);
 
 	// Nombre d'enemics de cada tipus
 	getline(fin, line);
@@ -137,6 +139,7 @@ void Scene::update(int deltaTime)
 	for (int i = 0; i < enemies.size(); ++i)
 		enemies[i]->update(deltaTime);
 	checkCollisions();
+	key->update(deltaTime);
 	if (map->numRajolesPressed() >= numRajoles) allPressed = true;
 }
 
@@ -169,7 +172,7 @@ void Scene::render()
 	map2->render();
 	map->render();
 
-	//key->render();
+	key->render();
 	for (int i = 0; i < enemies.size(); ++i)
 		enemies[i]->render();
 	player->render();
