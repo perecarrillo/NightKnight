@@ -67,10 +67,10 @@ void Sprite::free()
 	glDeleteBuffers(1, &vbo);
 }
 
-void Sprite::setNumberAnimations(int nAnimations)
+void Sprite::setNumberOfLastAnimation(int nAnimation)
 {
 	animations.clear();
-	animations.resize(nAnimations);
+	animations.resize(nAnimation);
 }
 
 void Sprite::setAnimationSpeed(int animId, int keyframesPerSec)

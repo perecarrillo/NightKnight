@@ -5,6 +5,11 @@
 #include "TileMap.h"
 #include <vector>
 
+enum Animations 
+{
+	MOVE_LEFT, MOVE_RIGHT, STAND_LEFT, STAND_RIGHT, START_JUMP_LEFT, START_JUMP_RIGHT, JUMP_LEFT, JUMP_RIGHT, DYING
+};
+
 class Entity
 {
 
@@ -23,16 +28,6 @@ public:
 	virtual glm::ivec2 getBoundingBoxMax();
 
 protected:
-	virtual enum Movements
-	{
-		LEFT, RIGHT, STOP
-	};
-
-	virtual enum Animations
-	{
-		MOVE_LEFT, MOVE_RIGHT, STAND_LEFT, STAND_RIGHT
-	};
-
 	float speed = 0.5; //Should be changed at constructor
 	glm::ivec2 initialPosition = glm::ivec2(1, 1); //Should be changed at constructor
 	vector<pair<int, int>> movement;// Must be changed at constructor for ex: { { LEFT,150 },{ STOP, 50 },{ RIGHT, 150 },{ STOP, 50 } };
@@ -43,7 +38,7 @@ protected:
 	int HEIGHT_OFFSET = 0;
 	glm::ivec2 spriteSize = glm::ivec2(16, 16);
 	int animationLength = 8;
-	int numberOfAnimations = 4;
+	vector<Animations> animationsUsed;
 	
 	glm::ivec2 tileMapDispl;
 	glm::vec2 position;

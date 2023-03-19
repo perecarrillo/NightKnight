@@ -9,19 +9,9 @@
 
 class Skeleton : public Entity
 {
-	enum Movements
-	{
-		LEFT, RIGHT, STOP
-	};
-
-	enum Animations
-	{
-		MOVE_LEFT, MOVE_RIGHT, STAND_LEFT, STAND_RIGHT
-	};
-	
 
 public:
-	Skeleton();
+	//Skeleton();
 	Skeleton(int x, int y);
 };
 

@@ -32,7 +32,7 @@ void Rajola::init(const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram)
 	spritesheet.loadFromFile("images/rajola.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	spritesheet.setMagFilter(GL_NEAREST);
 	sprite = Sprite::createSprite(glm::ivec2(16, 8), glm::vec2(1.f, 1.f), &spritesheet, &shaderProgram);
-	sprite->setNumberAnimations(1);
+	sprite->setNumberOfLastAnimation(1);
 
 	sprite->setAnimationSpeed(PRESSED, 1);
 	sprite->addKeyframe(PRESSED, glm::vec2(0.f, 0.f));

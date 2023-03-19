@@ -39,7 +39,7 @@ void Scene::loadScene() {
 	sstream.str(line);
 	sstream >> posJugador.x >> posJugador.y;
 	player = new Player(posJugador.x, posJugador.y);
-	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+	player->init("images/Player.png", glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 	player->setPosition(glm::vec2(player->getInitialPosition() * map->getTileSize()));
 	player->setTileMap(map);
 

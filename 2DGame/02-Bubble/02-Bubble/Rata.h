@@ -5,17 +5,6 @@
 
 class Rata : public Entity
 {
-	enum Movements
-	{
-		LEFT, RIGHT, STOP, JUMP
-	};
-
-	enum Animations
-	{
-		MOVE_LEFT, MOVE_RIGHT, STAND_LEFT, STAND_RIGHT, START_JUMP_LEFT, START_JUMP_RIGHT, JUMP_LEFT, JUMP_RIGHT
-	};
-
-
 
 public:
  	//Rata();

@@ -6,9 +6,9 @@ Rata::Rata(int x, int y)
 	initialPosition = glm::ivec2(x, y);
 	position = initialPosition;
 	speed = 0.8;
-	movement = { { LEFT,112 }, {STOP, 150}, {RIGHT, 112}, {STOP, 100} };
+	movement = { { MOVE_LEFT,112 }, { STAND_LEFT, 150}, { MOVE_RIGHT, 112}, { STAND_RIGHT, 100} };
 	animationLength = 10;
-	numberOfAnimations = 5;
+	animationsUsed = { MOVE_LEFT, MOVE_RIGHT, STAND_LEFT, STAND_RIGHT, JUMP_LEFT};
 	WIDTH = 12;
 	WIDTH_OFFSET = 18;
 	WIDTH_OFFSET_LEFT = 14;
@@ -20,7 +20,7 @@ Rata::Rata(int x, int y)
 void Rata::update(int deltaTime)
 {
 	sprite->update(deltaTime);
-	if (movement[actualMovement.first].first == LEFT)
+	if (movement[actualMovement.first].first == MOVE_LEFT)
 	{
 		if (sprite->animation() != MOVE_LEFT)
 			sprite->changeAnimation(MOVE_LEFT);
@@ -32,7 +32,7 @@ void Rata::update(int deltaTime)
 		}
 
 	}
-	else if (movement[actualMovement.first].first == RIGHT)
+	else if (movement[actualMovement.first].first == MOVE_RIGHT)
 	{
 		if (sprite->animation() != MOVE_RIGHT)
 			sprite->changeAnimation(MOVE_RIGHT);

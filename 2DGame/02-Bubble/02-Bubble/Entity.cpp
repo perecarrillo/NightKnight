@@ -1,4 +1,5 @@
 #include "Entity.h"
+#include <algorithm>
 
 
 Entity::Entity()
@@ -16,21 +17,23 @@ void Entity::init(string textureFile, const glm::ivec2 & tileMapPos, ShaderProgr
 
 	spritesheet.loadFromFile(textureFile, TEXTURE_PIXEL_FORMAT_RGBA);
 	spritesheet.setMagFilter(GL_NEAREST);
+	int numberOfAnimations = animationsUsed.size();
 	float disp = 1.0f / numberOfAnimations;
 
 	sprite = Sprite::createSprite(spriteSize, glm::vec2(disp, 1.0f / animationLength), &spritesheet, &shaderProgram);
-	sprite->setNumberAnimations(numberOfAnimations);
+	sprite->setNumberOfLastAnimation(*max_element(animationsUsed.begin(), animationsUsed.end()) + 1);
 	for (int i = 0; i < numberOfAnimations; ++i) {
-		sprite->setAnimationSpeed(Animations(i), animationLength);
+		sprite->setAnimationSpeed(animationsUsed[i], animationLength);
 		for (int j = 0; j < animationLength; ++j) {
-			sprite->addKeyframe(Animations(i), glm::vec2(disp*i, float(j) / animationLength));
+			sprite->addKeyframe(animationsUsed[i], glm::vec2(disp*i, float(j) / animationLength));
 		}
 	}
 
 	sprite->changeAnimation(0);
 	tileMapDispl = tileMapPos;
 
-	actualMovement = { 0, movement[0].second };
+	if (movement.size() > 0)
+		actualMovement = { 0, movement[0].second };
 	position = initialPosition;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + int(position.x)), float(tileMapDispl.y + int(position.y))));
 
@@ -39,7 +42,7 @@ void Entity::init(string textureFile, const glm::ivec2 & tileMapPos, ShaderProgr
 void Entity::update(int deltaTime)
 {
 	sprite->update(deltaTime);
-	if (movement[actualMovement.first].first == LEFT)
+	if (movement[actualMovement.first].first == MOVE_LEFT)
 	{
 		if (sprite->animation() != MOVE_LEFT)
 			sprite->changeAnimation(MOVE_LEFT);
@@ -51,7 +54,7 @@ void Entity::update(int deltaTime)
 		}
 
 	}
-	else if (movement[actualMovement.first].first == RIGHT)
+	else if (movement[actualMovement.first].first == MOVE_RIGHT)
 	{
 		if (sprite->animation() != MOVE_RIGHT)
 			sprite->changeAnimation(MOVE_RIGHT);

@@ -27,7 +27,7 @@ public:
 	void render() const;
 	void free();
 
-	void setNumberAnimations(int nAnimations);
+	void setNumberOfLastAnimation(int nAnimation);
 	void setAnimationSpeed(int animId, int keyframesPerSec);
 	void addKeyframe(int animId, const glm::vec2 &frame);
 	void changeAnimation(int animId);
