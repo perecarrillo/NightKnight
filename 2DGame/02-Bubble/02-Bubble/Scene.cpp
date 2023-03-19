@@ -172,7 +172,7 @@ void Scene::render()
 	map2->render();
 	map->render();
 
-	key->render();
+	if (allPressed) key->render();
 	for (int i = 0; i < enemies.size(); ++i)
 		enemies[i]->render();
 	player->render();
