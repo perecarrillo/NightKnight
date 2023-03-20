@@ -81,7 +81,7 @@ void Scene::loadScene() {
 		}
 		else if (i - numSkeletons < numRates) {
 			enemies[i] = new Rata(posX, posY);
-			enemies[i]->init("images/RataGran.png", glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+			enemies[i]->init("images/Rata.png", glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 		}
 		enemies[i]->setPosition(glm::vec2(enemies[i]->getInitialPosition() * map->getTileSize()));
 		enemies[i]->setTileMap(map);
@@ -159,7 +159,7 @@ void Scene::checkCollisions()
 }
 
 
-void Scene::render()
+void Scene::render(bool playing)
 {
 	glm::mat4 modelview;
 
@@ -169,6 +169,10 @@ void Scene::render()
 	modelview = glm::mat4(1.0f);
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
+	if (playing)
+		texProgram.setUniform1f("opacity", 1);
+	else
+		texProgram.setUniform1f("opacity", 0.3);
 	map2->render();
 	map->render();
 

@@ -52,8 +52,7 @@ void Menu::init()
 	texs[2].loadFromFile("images/pause.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	texs[2].setMagFilter(GL_NEAREST);
 
-	texs[3].loadFromFile("images/background.png", TEXTURE_PIXEL_FORMAT_RGBA);
-	texs[3].setMagFilter(GL_NEAREST);
+	
 
 }
 
@@ -66,18 +65,6 @@ void Menu::render()
 {
 	glm::mat4 modelview;
 
-	simpleProgram.use();
-	simpleProgram.setUniformMatrix4f("projection", projection);
-	simpleProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
-	modelview = glm::mat4(1.0f);
-	simpleProgram.setUniformMatrix4f("modelview", modelview);
-	simpleProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
-
-
-	 //Painting the background
-	modelview = glm::translate(glm::mat4(1.0f), glm::vec3(9.f, 8.f, 0.f));
-	simpleProgram.setUniformMatrix4f("modelview", modelview);
-	if (menu != PLAYING) texQuad[1]->render(texs[3]);
 
 	texProgram.use();
 	texProgram.setUniformMatrix4f("projection", projection);
@@ -87,6 +74,7 @@ void Menu::render()
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 	modelview = glm::translate(glm::mat4(1.0f), glm::vec3(9.f + 32.f, 8.f + 26.f, 0.f)); //centering the menu in the viewport
 	texProgram.setUniformMatrix4f("modelview", modelview);
+	texProgram.setUniform1f("opacity", 1);
 	if (menu == MENU) texQuad[0]->render(texs[0]); // it will render one of the different menus
 	else if (menu == LOSE) texQuad[0]->render(texs[1]);
 	else if (menu == PAUSE)  texQuad[0]->render(texs[2]);
@@ -97,31 +85,6 @@ void Menu::initShaders()
 {
 	Shader vShader, fShader;
 
-	vShader.initFromFile(VERTEX_SHADER, "shaders/simple.vert");
-	if (!vShader.isCompiled())
-	{
-		cout << "Vertex Shader Error" << endl;
-		cout << "" << vShader.log() << endl << endl;
-	}
-	fShader.initFromFile(FRAGMENT_SHADER, "shaders/simple.frag");
-	if (!fShader.isCompiled())
-	{
-		cout << "Fragment Shader Error" << endl;
-		cout << "" << fShader.log() << endl << endl;
-	}
-	simpleProgram.init();
-	simpleProgram.addShader(vShader);
-	simpleProgram.addShader(fShader);
-	simpleProgram.link();
-	if (!simpleProgram.isLinked())
-	{
-		cout << "Shader Linking Error" << endl;
-		cout << "" << simpleProgram.log() << endl << endl;
-	}
-	simpleProgram.bindFragmentOutput("outColor");
-
-	vShader.free();
-	fShader.free();
 	vShader.initFromFile(VERTEX_SHADER, "shaders/texture.vert");
 	if (!vShader.isCompiled())
 	{

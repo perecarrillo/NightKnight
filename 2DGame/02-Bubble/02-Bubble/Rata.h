@@ -17,6 +17,11 @@ public:
 
 private:
 	int WIDTH_OFFSET_LEFT;
+	bool jumpingLeft, jumpingRight;
+	int jumpAngle, startY;
+	float jumpingSpeed;
+
+	void nextAnimation();
 };
 
 

@@ -14,5 +14,5 @@ void main()
 
 	//outColor = color * texColor;
 	//outColor.a = 0.4;
-	outColor = vec4(1,0.8,0.3,0.3);
+	outColor = vec4(0,0.0,0,0.3);
 }

@@ -34,7 +34,7 @@ public:
 
 	void init();
 	void update(int deltaTime);
-	void render();
+	void render(bool playing);
 	bool isGameOver();
 	void changeLevel(int n);
 	int getNumLevel();
