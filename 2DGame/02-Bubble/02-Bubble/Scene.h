@@ -13,6 +13,7 @@
 #include "Skeleton.h"
 #include "Rata.h"
 #include "Key.h"
+#include "Chest.h"
 
 #include <iostream>
 #include <fstream>
@@ -36,8 +37,10 @@ public:
 	void update(int deltaTime);
 	void render(bool playing);
 	bool isGameOver();
+	bool isWin();
 	void changeLevel(int n);
 	int getNumLevel();
+	void makeKeyAppear();
 	
 
 private:
@@ -64,8 +67,12 @@ private:
 	glm::vec2 posCofre, posClau, posJugador;
 
 	Key *key;
+	Chest *chest;
 
 	bool allPressed;
+	bool unlockChest;
+	bool openChest;
+	bool win;
 
 };
 

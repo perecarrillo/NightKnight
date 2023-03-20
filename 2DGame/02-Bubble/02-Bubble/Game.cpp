@@ -23,6 +23,8 @@ bool Game::update(int deltaTime)
 		state = LOSE;
 		menu.setImage(LOSE);
 	}
+	int level = scene.getNumLevel();
+	if (scene.isWin() && level < 3) scene.changeLevel(++level);
 	return bPlay;
 }
 
@@ -53,16 +55,19 @@ void Game::keyPressed(int key)
 	if ((key == 67) && state == PAUSE) { // key C
 		state = PLAYING;
 	}
+	if ((key == 75) && state == PLAYING) { // key K
+		scene.makeKeyAppear();
+	}
 	if ((key == 97 || key == 49) && state == MENU) { // key 1
 		if (scene.getNumLevel() != 1 || scene.isGameOver()) scene.changeLevel(1);
 		state = PLAYING;
 	}
 	if ((key == 98 || key == 50) && state == MENU) { // key 2
-		if (scene.getNumLevel() != 2 || scene.isGameOver())scene.changeLevel(2);
+		if (scene.getNumLevel() != 2 || scene.isGameOver()) scene.changeLevel(2);
 		state = PLAYING;
 	}
 	if ((key == 99 || key == 51) && state == MENU) { // key 3
-		if (scene.getNumLevel() != 3 || scene.isGameOver())scene.changeLevel(3);
+		if (scene.getNumLevel() != 3 || scene.isGameOver()) scene.changeLevel(3);
 		state = PLAYING;
 	}
 

@@ -52,6 +52,10 @@ void Scene::loadScene() {
 	getline(fin, line);
 	sstream.str(line);
 	sstream >> posCofre.x >> posCofre.y;
+	chest = new Chest(posCofre.x, posCofre.y);
+	chest->init("images/Chest.png", glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+	chest->setPosition(glm::vec2(chest->getInitialPosition() * map->getTileSize()));
+	chest->setTileMap(map);
 
 	// Posici� de la clau
 	getline(fin, line);
@@ -95,6 +99,9 @@ void Scene::loadScene() {
 void Scene::init()
 {
 	allPressed = false;
+	unlockChest = false;
+	openChest = false;
+	win = false;
 	initShaders();
 	string fileMap = "levels/level" + std::to_string(numLevel) + ".txt";
 	string fileBackground = "levels/level" + std::to_string(numLevel) + "Background.txt";
@@ -140,6 +147,8 @@ void Scene::update(int deltaTime)
 		enemies[i]->update(deltaTime);
 	checkCollisions();
 	key->update(deltaTime);
+	chest->update(deltaTime);
+	if (chest->isOpened()) win = true;
 	if (map->numRajolesPressed() >= numRajoles) allPressed = true;
 }
 
@@ -154,6 +163,22 @@ void Scene::checkCollisions()
 		if (!player->isInmune() && (playerMin.x < enemyMax.x && enemyMin.x < playerMax.x) && (playerMin.y < enemyMax.y && enemyMin.y < playerMax.y)) {
 			cout << "Collision"<<endl;
 			player->loseHeart();
+		}
+	}
+	if (allPressed) {
+		glm::ivec2 enemyMin = key->getBoundingBoxMin();
+		glm::ivec2 enemyMax = key->getBoundingBoxMax();
+		if (!player->isInmune() && (playerMin.x < enemyMax.x && enemyMin.x < playerMax.x) && (playerMin.y < enemyMax.y && enemyMin.y < playerMax.y)) {
+			unlockChest = true;
+			chest->unlockChest();
+		}
+	}
+	if (unlockChest) {
+		glm::ivec2 enemyMin = chest->getBoundingBoxMin();
+		glm::ivec2 enemyMax = chest->getBoundingBoxMax();
+		if (!player->isInmune() && (playerMin.x < enemyMax.x && enemyMin.x < playerMax.x) && (playerMin.y < enemyMax.y && enemyMin.y < playerMax.y)) {
+			openChest = true;
+			chest->openChest();
 		}
 	}
 }
@@ -176,7 +201,8 @@ void Scene::render(bool playing)
 	map2->render();
 	map->render();
 
-	if (allPressed) key->render();
+	if (allPressed && !unlockChest) key->render();
+	if(!openChest) chest->render();
 	for (int i = 0; i < enemies.size(); ++i)
 		enemies[i]->render();
 	player->render();
@@ -192,6 +218,11 @@ bool Scene::isGameOver()
 	return player->getNumHearts() <= 0;
 }
 
+bool Scene::isWin()
+{
+	return win;
+}
+
 void Scene::changeLevel(int n)
 {
 	numLevel = n;
@@ -202,6 +233,7 @@ int Scene::getNumLevel()
 {
 	return numLevel;
 }
+
 
 void Scene::initShaders()
 {
@@ -243,6 +275,10 @@ void Scene::printHearts() {
 		if (i < num) texQuad[0]->render(texs[0]);
 		else  texQuad[0]->render(texs[1]);
 	}
+}
+
+void Scene::makeKeyAppear() {
+	allPressed = true;
 }
 
 

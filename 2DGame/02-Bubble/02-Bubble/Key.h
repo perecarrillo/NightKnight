@@ -9,7 +9,9 @@
 
 class Key : public Entity
 {
+
 public:
+	//Key();
 	Key(int x, int y);
 };
 
