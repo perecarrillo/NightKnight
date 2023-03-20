@@ -17,6 +17,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="Key.h" />
     <ClInclude Include="Menu.h" />
+    <ClInclude Include="MovingSlab.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Quad.h" />
     <ClInclude Include="Rajola.h" />
@@ -37,6 +38,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="MovingSlab.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Quad.cpp" />
     <ClCompile Include="Rajola.cpp" />

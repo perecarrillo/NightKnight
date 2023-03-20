@@ -14,6 +14,7 @@
 #include "Rata.h"
 #include "Key.h"
 #include "Chest.h"
+#include "MovingSlab.h"
 
 #include <iostream>
 #include <fstream>
@@ -61,6 +62,9 @@ private:
 	Text text;
 
 	vector<Entity *> enemies;
+
+	int numMovingPlatforms;
+	vector<MovingSlab *> movingPlatforms;
 
 	int numLevel, numRajoles;
 	int numSkeletons, numRates;
