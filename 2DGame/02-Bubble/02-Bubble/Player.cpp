@@ -43,25 +43,27 @@ void Player::update(int deltaTime)
 	if (sprite->animation() != DYING) {
 		if (Game::instance().getSpecialKey(GLUT_KEY_LEFT))
 		{
-			if (sprite->animation() != MOVE_LEFT)
-				sprite->changeAnimation(MOVE_LEFT);
 			position.x -= speed;
 			if (map->collisionMoveLeft(position + glm::vec2(WIDTH_OFFSET, 0), glm::ivec2(WIDTH, HEIGHT)))
 			{
 				position.x += speed;
-				sprite->changeAnimation(STAND_LEFT);
+				if (sprite->animation() != STAND_LEFT)
+					sprite->changeAnimation(STAND_LEFT);
 			}
+			else if (sprite->animation() != MOVE_LEFT)
+				sprite->changeAnimation(MOVE_LEFT);
 		}
 		else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT))
 		{
-			if (sprite->animation() != MOVE_RIGHT)
-				sprite->changeAnimation(MOVE_RIGHT);
 			position.x += speed;
 			if (map->collisionMoveRight(position + glm::vec2(WIDTH_OFFSET, 0), glm::ivec2(WIDTH, HEIGHT)))
 			{
 				position.x -= speed;
-				sprite->changeAnimation(STAND_RIGHT);
+				if (sprite->animation() != STAND_RIGHT)
+					sprite->changeAnimation(STAND_RIGHT);
 			}
+			else if (sprite->animation() != MOVE_RIGHT)
+				sprite->changeAnimation(MOVE_RIGHT);
 		}
 		else
 		{

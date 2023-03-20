@@ -44,26 +44,28 @@ void Entity::update(int deltaTime)
 	sprite->update(deltaTime);
 	if (movement[actualMovement.first].first == MOVE_LEFT)
 	{
-		if (sprite->animation() != MOVE_LEFT)
-			sprite->changeAnimation(MOVE_LEFT);
 		position.x -= speed;
 		if (map->collisionMoveLeft(position + glm::vec2(WIDTH_OFFSET, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT)))
 		{
 			position.x += speed;
-			sprite->changeAnimation(STAND_LEFT);
+			if (sprite->animation() != STAND_LEFT)
+				sprite->changeAnimation(STAND_LEFT);
 		}
+		else if (sprite->animation() != MOVE_LEFT)
+			sprite->changeAnimation(MOVE_LEFT);
 
 	}
 	else if (movement[actualMovement.first].first == MOVE_RIGHT)
 	{
-		if (sprite->animation() != MOVE_RIGHT)
-			sprite->changeAnimation(MOVE_RIGHT);
 		position.x += speed;
 		if (map->collisionMoveRight(position + glm::vec2(WIDTH_OFFSET, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT)))
 		{
 			position.x -= speed;
-			sprite->changeAnimation(STAND_RIGHT);
+			if (sprite->animation() != STAND_RIGHT)
+				sprite->changeAnimation(STAND_RIGHT);
 		}
+		else if (sprite->animation() != MOVE_RIGHT)
+			sprite->changeAnimation(MOVE_RIGHT);
 
 	}
 	else

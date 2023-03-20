@@ -1,6 +1,5 @@
 #include "Rata.h"
 
-#define JUMP_ANGLE_STEP 5
 #define JUMP_HEIGHT 8
 
 using namespace std;
@@ -12,7 +11,7 @@ Rata::Rata(int x, int y)
 	position = initialPosition;
 	speed = 0.8;
 	jumpingSpeed = 1.3;
-	movement = { { MOVE_LEFT,112 }, {JUMP_LEFT, 100}, {STAND_LEFT, 250}, {JUMP_RIGHT, 10}, { MOVE_RIGHT, 112}, { STAND_RIGHT, 100} };
+	movement = { { MOVE_LEFT,112 }, {JUMP_LEFT, 5}, {STAND_LEFT, 250}, {JUMP_RIGHT, 5}, { MOVE_RIGHT, 112}, {JUMP_RIGHT, 5}, {MOVE_RIGHT, 250}, {MOVE_LEFT, 20}, {JUMP_LEFT, 3} };
 	animationLength = 10;
 	animationsUsed = { MOVE_LEFT, MOVE_RIGHT, STAND_LEFT, STAND_RIGHT, JUMP_LEFT, JUMP_RIGHT};
 	WIDTH = 12;
@@ -31,8 +30,6 @@ void Rata::update(int deltaTime)
 	sprite->update(deltaTime);
 	if (movement[actualMovement.first].first == MOVE_LEFT)
 	{
-		if (sprite->animation() != MOVE_LEFT)
-			sprite->changeAnimation(MOVE_LEFT);
 		position.x -= speed;
 		if (map->collisionMoveLeft(position + glm::vec2(WIDTH_OFFSET_LEFT, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT)))
 		{
@@ -40,12 +37,12 @@ void Rata::update(int deltaTime)
 			if (sprite->animation() != STAND_LEFT)
 				sprite->changeAnimation(STAND_LEFT);
 		}
+		else if (sprite->animation() != MOVE_LEFT)
+			sprite->changeAnimation(MOVE_LEFT);
 
 	}
 	else if (movement[actualMovement.first].first == MOVE_RIGHT)
 	{
-		if (sprite->animation() != MOVE_RIGHT)
-			sprite->changeAnimation(MOVE_RIGHT);
 		position.x += speed;
 		if (map->collisionMoveRight(position + glm::vec2(WIDTH_OFFSET, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT)))
 		{
@@ -53,6 +50,8 @@ void Rata::update(int deltaTime)
 			if (sprite->animation() != STAND_RIGHT)
 				sprite->changeAnimation(STAND_RIGHT);
 		}
+		else if (sprite->animation() != MOVE_RIGHT)
+			sprite->changeAnimation(MOVE_RIGHT);
 
 	}
 	else
@@ -140,12 +139,14 @@ void Rata::update(int deltaTime)
 				jumpingLeft = true;
 				jumpAngle = 0;
 				startY = position.y;
+				JUMP_ANGLE_STEP = movement[actualMovement.first].second;
 			}
 			else if (movement[actualMovement.first].first == JUMP_RIGHT)
 			{
 				jumpingRight = true;
 				jumpAngle = 0;
 				startY = position.y;
+				JUMP_ANGLE_STEP = movement[actualMovement.first].second;
 			}
 		}
 

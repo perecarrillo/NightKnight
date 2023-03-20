@@ -20,6 +20,7 @@ private:
 	bool jumpingLeft, jumpingRight;
 	int jumpAngle, startY;
 	float jumpingSpeed;
+	int JUMP_ANGLE_STEP;
 
 	void nextAnimation();
 };
