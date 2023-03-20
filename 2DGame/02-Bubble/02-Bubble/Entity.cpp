@@ -34,7 +34,6 @@ void Entity::init(string textureFile, const glm::ivec2 & tileMapPos, ShaderProgr
 
 	if (movement.size() > 0)
 		actualMovement = { 0, movement[0].second };
-	position = initialPosition;
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + int(position.x)), float(tileMapDispl.y + int(position.y))));
 
 }

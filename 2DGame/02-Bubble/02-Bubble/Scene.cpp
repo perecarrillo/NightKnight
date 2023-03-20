@@ -62,6 +62,27 @@ void Scene::loadScene() {
 	key->setPosition(glm::vec2(key->getInitialPosition() * map->getTileSize()));
 	key->setTileMap(map);
 
+	// Nombre rajoles que es mouen
+	getline(fin, line);
+	sstream.str(line);
+	sstream >> numMovingPlatforms;
+	// Posicions inicials i finals de cada rajola
+	movingPlatforms = vector<MovingSlab *> (numMovingPlatforms);
+	for (int i = 0; i < numMovingPlatforms; ++i) {
+		int firstX, firstY;
+		int lastX, lastY;
+		getline(fin, line);
+		sstream.str(line);
+		sstream >> firstX >> firstY;
+		getline(fin, line);
+		sstream.str(line);
+		sstream >> lastX >> lastY;
+		movingPlatforms[i] = new MovingSlab(firstX, firstY, lastX, lastY, map->getTileSize());
+		movingPlatforms[i]->init("images/MovingSlab.png", glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+		movingPlatforms[i]->setTileMap(map);
+	}
+
+
 	// Nombre d'enemics de cada tipus
 	getline(fin, line);
 	sstream.str(line);
@@ -135,9 +156,13 @@ void Scene::init()
 void Scene::update(int deltaTime)
 {
 	currentTime += deltaTime;
+	for (MovingSlab * ms : movingPlatforms) {
+		ms->update(deltaTime);
+	}
 	player->update(deltaTime);
-	for (int i = 0; i < enemies.size(); ++i)
-		enemies[i]->update(deltaTime);
+	for (Entity * enemy : enemies) {
+		enemy->update(deltaTime);
+	}
 	checkCollisions();
 	key->update(deltaTime);
 	if (map->numRajolesPressed() >= numRajoles) allPressed = true;
@@ -177,8 +202,12 @@ void Scene::render(bool playing)
 	map->render();
 
 	if (allPressed) key->render();
-	for (int i = 0; i < enemies.size(); ++i)
-		enemies[i]->render();
+	for (MovingSlab * ms : movingPlatforms) {
+		ms->render();
+	}
+	for (Entity * enemy : enemies) {
+		enemy->render();
+	}
 	player->render();
 
 	text.render("Videogames!!!", glm::vec2(200, 300), 32, glm::vec4(1, 1, 1, 1));
