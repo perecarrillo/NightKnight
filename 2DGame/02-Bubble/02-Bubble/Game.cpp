@@ -40,23 +40,23 @@ void Game::keyPressed(int key)
 {
 	if(key == 27) // Escape code
 		bPlay = false;
-	if ((key == 77) && (state == LOSE || state == PAUSE)) {// key M
+	if ((key == 77 || key == 109) && (state == LOSE || state == PAUSE)) {// key M/m
 		scene.init();
 		state = MENU;
 		menu.setImage(MENU);
 	}
-	if ((key == 82) && (state == LOSE || state == PAUSE)) { // key R
+	if ((key == 82 || key == 114) && (state == LOSE || state == PAUSE)) { // key R/r
 		scene.init();
 		state = PLAYING;
 	}
-	if ((key == 80) && state == PLAYING) { // key P
+	if ((key == 80 || key == 112) && state == PLAYING) { // key P/p
 		state = PAUSE;
 		menu.setImage(PAUSE);
 	}
-	if ((key == 67) && state == PAUSE) { // key C
+	if ((key == 67 || key == 99) && state == PAUSE) { // key C/c
 		state = PLAYING;
 	}
-	if ((key == 75) && state == PLAYING) { // key K
+	if ((key == 75 || key == 107) && state == PLAYING) { // key K/k
 		scene.makeKeyAppear();
 	}
 	if ((key == 97 || key == 49) && state == MENU) { // key 1
