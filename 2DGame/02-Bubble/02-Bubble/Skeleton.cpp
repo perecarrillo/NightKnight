@@ -8,7 +8,7 @@ Skeleton::Skeleton(int x, int y) {
 	initialPosition = glm::ivec2(x, y);
 	position = initialPosition;
 	speed = 0.5;
-	movement = { { MOVE_LEFT,150 },{ STAND_LEFT, 150 },{ MOVE_RIGHT, 150 },{ STAND_RIGHT, 50 } };
+	movement = { { MOVE_LEFT,-1 }, { STAND_RIGHT, 50 }, { MOVE_RIGHT, -1 }, { STAND_LEFT, 50 } };
 	WIDTH = 10;
 	HEIGHT = 13;
 	HEIGHT_OFFSET = 3;
