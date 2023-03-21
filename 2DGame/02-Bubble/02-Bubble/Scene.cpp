@@ -239,6 +239,8 @@ void Scene::render(bool playing)
 
 	text.render("Videogames!!!", glm::vec2(200, 300), 32, glm::vec4(1, 1, 1, 1));
 
+	texProgram.use();
+
 	printHearts();
 
 }
