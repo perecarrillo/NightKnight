@@ -26,6 +26,7 @@ public:
 	virtual glm::ivec2 getSpriteSize();
 	virtual glm::ivec2 getBoundingBoxMin();
 	virtual glm::ivec2 getBoundingBoxMax();
+	virtual void nextAnimation();
 
 protected:
 	float speed = 0.5; //Should be changed at constructor
