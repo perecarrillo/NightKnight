@@ -42,6 +42,10 @@ public:
 	void changeLevel(int n);
 	int getNumLevel();
 	void makeKeyAppear();
+
+	int getNumHearts();
+
+	void setNumHearts(int num);
 	
 
 private:

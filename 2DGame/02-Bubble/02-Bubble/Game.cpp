@@ -25,8 +25,7 @@ bool Game::update(int deltaTime)
 	}
 	int level = scene.getNumLevel();
 
-	if (scene.isWin()) cout << "hola" << endl;
-	if (scene.isWin() && level < 3) scene.changeLevel(++level);
+	if (scene.isWin() && level < 3) changeLevel(++level);
 	return bPlay;
 }
 
@@ -111,6 +110,12 @@ bool Game::getKey(int key) const
 bool Game::getSpecialKey(int key) const
 {
 	return specialKeys[key];
+}
+
+void Game::changeLevel(int level) {
+	int hearts = scene.getNumHearts();
+	scene.changeLevel(level);
+	scene.setNumHearts(hearts);
 }
 
 

@@ -22,6 +22,8 @@ public:
 	void render();
 	
 	int getNumHearts();
+
+	void setNumHearts(int num);
 	
 	void loseHeart();
 	bool isInmune();

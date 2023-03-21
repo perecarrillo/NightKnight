@@ -311,4 +311,12 @@ void Scene::makeKeyAppear() {
 	allPressed = true;
 }
 
+int Scene::getNumHearts() {
+	return player->getNumHearts();
+}
+
+void Scene::setNumHearts(int num) {
+	player->setNumHearts(num);
+}
+
 

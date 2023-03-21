@@ -154,3 +154,7 @@ bool Player::isInmune()
 int Player::getNumHearts() {
 	return hearts;
 }
+
+void Player::setNumHearts(int num) {
+	hearts = num;
+}
