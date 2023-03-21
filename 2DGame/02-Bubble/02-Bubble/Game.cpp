@@ -24,6 +24,8 @@ bool Game::update(int deltaTime)
 		menu.setImage(LOSE);
 	}
 	int level = scene.getNumLevel();
+
+	if (scene.isWin()) cout << "hola" << endl;
 	if (scene.isWin() && level < 3) scene.changeLevel(++level);
 	return bPlay;
 }

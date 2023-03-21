@@ -174,6 +174,7 @@ void Scene::update(int deltaTime)
 	key->update(deltaTime);
 	chest->update(deltaTime);
 	if (chest->isOpened()) win = true;
+	if (openChest) win = true;
 	if (map->numRajolesPressed() >= numRajoles) allPressed = true;
 }
 
@@ -193,7 +194,7 @@ void Scene::checkCollisions()
 	if (allPressed) {
 		glm::ivec2 enemyMin = key->getBoundingBoxMin();
 		glm::ivec2 enemyMax = key->getBoundingBoxMax();
-		if (!player->isInmune() && (playerMin.x < enemyMax.x && enemyMin.x < playerMax.x) && (playerMin.y < enemyMax.y && enemyMin.y < playerMax.y)) {
+		if ((playerMin.x < enemyMax.x && enemyMin.x < playerMax.x) && (playerMin.y < enemyMax.y && enemyMin.y < playerMax.y)) {
 			unlockChest = true;
 			chest->unlockChest();
 		}
@@ -201,7 +202,7 @@ void Scene::checkCollisions()
 	if (unlockChest) {
 		glm::ivec2 enemyMin = chest->getBoundingBoxMin();
 		glm::ivec2 enemyMax = chest->getBoundingBoxMax();
-		if (!player->isInmune() && (playerMin.x < enemyMax.x && enemyMin.x < playerMax.x) && (playerMin.y < enemyMax.y && enemyMin.y < playerMax.y)) {
+		if ((playerMin.x < enemyMax.x && enemyMin.x < playerMax.x) && (playerMin.y < enemyMax.y && enemyMin.y < playerMax.y)) {
 			openChest = true;
 			chest->openChest();
 		}

@@ -1,4 +1,4 @@
-25 18 -- posició inicial jugador
+25 17 -- posició inicial jugador
 25 -- nombre de rajoles
 19 7 -- posició cofre
 12 20 -- posició clau

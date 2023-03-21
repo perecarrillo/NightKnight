@@ -7,7 +7,6 @@ Chest::Chest(int x, int y) {
 	//cout << initialPosition.x<<' '<< initialPosition.y << endl;
 	initialPosition = glm::ivec2(x, y);
 	position = initialPosition;
-	speed = 0.1;
 	movement = { { LOCKED,150 },{ UNLOCKED, 150 },{ OPENING, 150 }, {OPENED, 150} };
 	WIDTH = 16;
 	HEIGHT = 16;
