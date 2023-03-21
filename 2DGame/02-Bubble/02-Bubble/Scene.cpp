@@ -66,6 +66,16 @@ void Scene::loadScene() {
 	key->setPosition(glm::vec2(key->getInitialPosition() * map->getTileSize()));
 	key->setTileMap(map);
 
+	// Posici� stopwatch
+	getline(fin, line);
+	sstream.str(line);
+	int x, y;
+	sstream >> x >> y;
+	/*stopwatch = new StopWatch(x, y);
+	stopwatch->init("images/StopWatch.png", glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+	stopwatch->setPosition(glm::vec2(key->getInitialPosition() * map->getTileSize()));
+	stopwatch->setTileMap(map);*/
+
 	// Nombre rajoles que es mouen
 	getline(fin, line);
 	sstream.str(line);
@@ -122,6 +132,7 @@ void Scene::init()
 	allPressed = false;
 	unlockChest = false;
 	openChest = false;
+	takenStopwatch = false;
 	win = false;
 	initShaders();
 	string fileMap = "levels/level" + std::to_string(numLevel) + ".txt";
@@ -153,7 +164,7 @@ void Scene::init()
 
 
 	// Select which font you want to use
-	if (!text.init("fonts/OpenSans-Regular.ttf"))
+	if (!text.init("fonts/Supply Center.ttf"))
 		//if(!text.init("fonts/OpenSans-Bold.ttf"))
 		//if(!text.init("fonts/DroidSerif.ttf"))
 		cout << "Could not load font!!!" << endl;
@@ -207,6 +218,13 @@ void Scene::checkCollisions()
 			chest->openChest();
 		}
 	}
+	/*if (currentTime > 5000 && !takenStopwatch) {
+		glm::ivec2 enemyMin = chest->getBoundingBoxMin();
+		glm::ivec2 enemyMax = chest->getBoundingBoxMax();
+		if ((playerMin.x < enemyMax.x && enemyMin.x < playerMax.x) && (playerMin.y < enemyMax.y && enemyMin.y < playerMax.y)) {
+			takenStopwatch = true;
+		}
+	}*/
 }
 
 
@@ -229,6 +247,7 @@ void Scene::render(bool playing)
 
 	if (allPressed && !unlockChest) key->render();
 	if(!openChest) chest->render();
+	//if (currentTime > 5000 && !takenStopwatch) stopwatch->render();
 	for (MovingSlab * ms : movingPlatforms) {
 		ms->render();
 	}
@@ -237,7 +256,12 @@ void Scene::render(bool playing)
 	}
 	player->render();
 
-	text.render("Videogames!!!", glm::vec2(200, 300), 32, glm::vec4(1, 1, 1, 1));
+	// Print time
+	string textTime = std::to_string(60 - int(currentTime / 1000));
+	// Print shadow 
+	text.render(textTime, glm::vec2(455 + 3, 100 + 3), 40, glm::vec4(0, 0, 0, 1));
+	if (playing) text.render(textTime, glm::vec2(455, 100), 40, glm::vec4(1, 1, 1, 1));
+	else text.render(textTime, glm::vec2(455, 100), 40, glm::vec4(0.3f, 0.3f, 0.3f, 1));
 
 	texProgram.use();
 
@@ -247,7 +271,7 @@ void Scene::render(bool playing)
 
 bool Scene::isGameOver()
 {
-	return player->getNumHearts() <= 0;
+	return (player->getNumHearts() <= 0 || currentTime > 60000);
 }
 
 bool Scene::isWin()

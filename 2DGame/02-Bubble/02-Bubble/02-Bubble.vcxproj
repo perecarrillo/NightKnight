@@ -49,6 +49,8 @@
     <ClCompile Include="Skeleton.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Key.cpp" />
+    <ClCompile Include="StopWatch.cpp" />
+    <ClCompile Include="StopWatch.h" />
     <ClCompile Include="Text.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TexturedQuad.cpp" />

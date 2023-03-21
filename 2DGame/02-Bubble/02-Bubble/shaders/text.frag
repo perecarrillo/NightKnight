@@ -3,6 +3,7 @@
 uniform vec4 color;
 uniform sampler2D tex;
 uniform vec2 minTexCoord, maxTexCoord;
+uniform float opacity;
 
 in vec2 texCoordFrag;
 out vec4 outColor;
@@ -13,6 +14,6 @@ void main()
 	// inside the font texture atlas. Use that texel to determine transparency
 	// combining it with the incoming color.
 	vec2 texCoord = texCoordFrag * (maxTexCoord - minTexCoord) + minTexCoord;
-	outColor = color * vec4(1, 1, 1, texture(tex, texCoord).r);
+	outColor = color * vec4(1, 1, 1, texture(tex, texCoord).r) * opacity;
 }
 

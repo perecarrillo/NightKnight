@@ -2,6 +2,7 @@
 42 -- nombre de rajoles
 8 13 -- posició cofre
 10 20 -- posició clau
+10 10 -- posició stopwatch
 0 -- nombre rajoles que es mouen
 2 2 -- nombre enemics (esquelets, rates, ratpenats)
 8 8 -- posicio esquelet 1

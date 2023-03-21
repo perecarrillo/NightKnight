@@ -15,6 +15,7 @@
 #include "Key.h"
 #include "Chest.h"
 #include "MovingSlab.h"
+#include "StopWatch.h"
 
 #include <iostream>
 #include <fstream>
@@ -76,11 +77,13 @@ private:
 
 	Key *key;
 	Chest *chest;
+	StopWatch *stopwatch;
 
 	bool allPressed;
 	bool unlockChest;
 	bool openChest;
 	bool win;
+	bool takenStopwatch;
 
 };
 
