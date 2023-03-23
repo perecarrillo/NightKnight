@@ -9,6 +9,7 @@ class Rata : public Entity
 public:
  	//Rata();
 	Rata(int x, int y);
+	Rata(int x, int y, vector<pair<int, int>> movement);
 	
 	void update(int deltaTime);
 
@@ -21,8 +22,18 @@ private:
 	int jumpAngle, startY;
 	float jumpingSpeed;
 	int JUMP_ANGLE_STEP;
+	int JUMP_HEIGHT;
 
+	bool useAI;
+	bool movingLeft;
+	bool jumping;
+
+
+	void setUp();
 	void nextAnimation();
+	void updateAI(int deltaTime);
+	void updatePredefinedMovements(int deltaTime);
+	void calculateJumpParameters(pair<int, int> jumpTo);
 };
 
 

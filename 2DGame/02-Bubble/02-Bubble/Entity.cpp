@@ -31,7 +31,7 @@ void Entity::init(string textureFile, const glm::ivec2 & tileMapPos, ShaderProgr
 		}
 	}
 
-	//sprite->changeAnimation(0);
+	sprite->changeAnimation(*min_element(animationsUsed.begin(), animationsUsed.end()));
 	tileMapDispl = tileMapPos;
 
 	if (movement.size() > 0)

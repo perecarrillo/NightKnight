@@ -292,6 +292,25 @@ void TileMap::collisionRajola(const glm::ivec2 & pos, const glm::ivec2 & size)
 	}
 }
 
+pair<int, int> TileMap::closestJumpPosition(const glm::ivec2 & pos, const glm::ivec2 & size, bool left) const
+{
+	int x, y;
+	x = (pos.x + size.x / 2.) / tileSize;
+	if (left) x -= 5;
+	else x += 5;
+	y = (pos.y + size.y + 1) / tileSize;
+
+	for (int i = 0; i <= 2; ++i)
+	{
+		if (y + i < mapSize.x && map[(y + i)*mapSize.x + (x)] != 0 && map[((y - 1) + i)*mapSize.x + (x)] == 0)
+			return{ x, y + i };
+
+		if (i != 0 && y - i > 0 && map[(y - i)*mapSize.x + (x)] != 0 && map[((y - 1) - i)*mapSize.x + (x)] == 0)
+			return{ x, y - i };
+	}
+	return{ -1, -1 };
+}
+
 
 bool TileMap::hasCollision(int tile, int tileBelow) const
 {
