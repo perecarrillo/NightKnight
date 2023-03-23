@@ -211,7 +211,7 @@ void Scene::checkCollisions()
 	if (unlockChest) {
 		glm::ivec2 enemyMin = chest->getBoundingBoxMin();
 		glm::ivec2 enemyMax = chest->getBoundingBoxMax();
-		if ((playerMin.x < enemyMax.x && enemyMin.x < playerMax.x) && (playerMin.y < enemyMax.y && enemyMin.y < playerMax.y)) {
+		if ((playerMin.x < enemyMax.x && enemyMin.x < playerMax.x) && (playerMin.y < enemyMax.y && enemyMin.y < playerMin.y)) {
 			openChest = true;
 			chest->openChest();
 		}
