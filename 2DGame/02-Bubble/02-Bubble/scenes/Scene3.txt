@@ -9,5 +9,5 @@
 2 2 -- nombre enemics (esquelets, rates, ratpenats)
 8 8 -- posicio esquelet 1
 8 15 -- posicio esquelet 2
-8 8 -- pos rata 1
-8 15 --pos rata 2
+2 4 -- pos rata 1
+8 8 --pos rata 2

@@ -6,5 +6,5 @@
 0 -- nombre rajoles que es mouen
 2 1 -- nombre enemics (esquelets, rates, ratpenats)
 27 22 -- posicio esquelet 1
-22 10 -- posicio esquelet 2
+22 11 -- posicio esquelet 2
 19 5 -- pos rata 1
