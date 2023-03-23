@@ -47,12 +47,17 @@ public:
 	int getNumHearts();
 
 	void setNumHearts(int num);
+
+	int getNumCoins();
+
+	void setNumCoins(int num);
 	
 
 private:
 	void initShaders();
 	void printHearts();
 	void checkCollisions();
+	void finishLevel();
 	TileMap *map;
 	TileMap *map2;
 	Player *player;

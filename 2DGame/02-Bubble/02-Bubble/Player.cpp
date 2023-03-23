@@ -29,6 +29,7 @@ Player::Player(int x, int y) {
 	animationLength = 8;
 	bJumping = false;
 	speed = 1;
+	coins = 0;
 
 }
 
@@ -157,4 +158,12 @@ int Player::getNumHearts() {
 
 void Player::setNumHearts(int num) {
 	hearts = num;
+}
+
+int Player::getNumCoins() {
+	return coins;
+}
+
+void Player::setNumCoins(int num) {
+	coins = num;
 }

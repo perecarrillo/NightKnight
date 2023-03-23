@@ -114,8 +114,10 @@ bool Game::getSpecialKey(int key) const
 
 void Game::changeLevel(int level) {
 	int hearts = scene.getNumHearts();
+	int coins = scene.getNumCoins();
 	scene.changeLevel(level);
 	scene.setNumHearts(hearts);
+	scene.setNumCoins(coins);
 }
 
 

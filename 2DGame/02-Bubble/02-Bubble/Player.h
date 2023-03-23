@@ -24,6 +24,10 @@ public:
 	int getNumHearts();
 
 	void setNumHearts(int num);
+
+	int getNumCoins();
+
+	void setNumCoins(int num);
 	
 	void loseHeart();
 	bool isInmune();
@@ -36,6 +40,7 @@ private:
 	bool show;
 	int time;
 	int timeInmune;
+	int coins;
 };
 
 

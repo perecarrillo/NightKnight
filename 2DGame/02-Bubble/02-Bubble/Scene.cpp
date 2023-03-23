@@ -182,7 +182,7 @@ void Scene::update(int deltaTime)
 	checkCollisions();
 	key->update(deltaTime);
 	chest->update(deltaTime);
-	if (chest->isOpened()) win = true;
+	if (chest->isOpened()) finishLevel();
 	if (openChest) win = true;
 	if (map->numRajolesPressed() >= numRajoles) allPressed = true;
 }
@@ -260,6 +260,12 @@ void Scene::render(bool playing)
 	text.render(textTime, glm::vec2(455 + 3, 100 + 3), 40, glm::vec4(0, 0, 0, 1));
 	if (playing) text.render(textTime, glm::vec2(455, 100), 40, glm::vec4(1, 1, 1, 1));
 	else text.render(textTime, glm::vec2(455, 100), 40, glm::vec4(0.3f, 0.3f, 0.3f, 1));
+
+	// Print num level
+	string textLevel = "Level " + std::to_string(numLevel);
+	text.render(textLevel, glm::vec2(750 + 3, 100 + 3), 40, glm::vec4(0, 0, 0, 1));
+	if (playing) text.render(textLevel, glm::vec2(750, 100), 40, glm::vec4(1, 1, 1, 1));
+	else text.render(textLevel, glm::vec2(750, 100), 40, glm::vec4(0.3f, 0.3f, 0.3f, 1));
 
 	texProgram.use();
 
@@ -342,5 +348,22 @@ int Scene::getNumHearts() {
 void Scene::setNumHearts(int num) {
 	player->setNumHearts(num);
 }
+
+int Scene::getNumCoins()
+{
+	return player->getNumCoins();
+}
+
+void Scene::setNumCoins(int num)
+{
+	player->setNumCoins(num);
+}
+
+void Scene::finishLevel()
+{
+	
+	win = true;
+}
+
 
 

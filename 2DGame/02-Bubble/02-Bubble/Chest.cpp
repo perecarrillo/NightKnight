@@ -22,13 +22,22 @@ void Chest::update(int deltaTime)
 {
 	sprite->update(deltaTime);
 	time += deltaTime;
-	if (sprite->animation() == LOCKED && unlock) sprite->changeAnimation(UNLOCKED);
-	else if (sprite->animation() == UNLOCKED && open) sprite->changeAnimation(OPENING);
+	if (sprite->animation() == LOCKED) cout << "hola";
+	if (sprite->animation() == LOCKED && unlock) {
+		cout << "unlock" << endl;
+		sprite->changeAnimation(UNLOCKED);
+	}
+	else if (sprite->animation() == UNLOCKED && open) {
+		cout << "open" << endl;
+		sprite->changeAnimation(OPENING);
+	}
 	else if (sprite->animation() == OPENING && sprite->getKeyFrame() > 4) {
+		cout << "opened" << endl;
 		sprite->changeAnimation(OPENED);
 		opened = true;
 	}
 }
+
 
 void Chest::openChest() {
 	open = true;
