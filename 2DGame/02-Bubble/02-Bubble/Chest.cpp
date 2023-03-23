@@ -16,26 +16,25 @@ Chest::Chest(int x, int y) {
 	open = false;
 	unlock = false;
 	opened = false;
+	speed = 0.1;
 }
 
 void Chest::update(int deltaTime)
 {
 	sprite->update(deltaTime);
 	time += deltaTime;
-	if (sprite->animation() == LOCKED) cout << "hola";
 	if (sprite->animation() == LOCKED && unlock) {
-		cout << "unlock" << endl;
 		sprite->changeAnimation(UNLOCKED);
 	}
 	else if (sprite->animation() == UNLOCKED && open) {
-		cout << "open" << endl;
 		sprite->changeAnimation(OPENING);
 	}
 	else if (sprite->animation() == OPENING && sprite->getKeyFrame() > 4) {
-		cout << "opened" << endl;
 		sprite->changeAnimation(OPENED);
 		opened = true;
 	}
+	// if the level is finished add some extra time before changing
+	if (opened) finishingTime += deltaTime;
 }
 
 
@@ -48,5 +47,5 @@ void Chest::unlockChest() {
 }
 
 bool Chest::isOpened() {
-	return opened;
+	return (opened && finishingTime > 3000); // the chest it's open after the animation finishes and passes and extra time
 }

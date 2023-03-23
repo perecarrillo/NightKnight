@@ -183,7 +183,7 @@ void Scene::update(int deltaTime)
 	key->update(deltaTime);
 	chest->update(deltaTime);
 	if (chest->isOpened()) finishLevel();
-	if (openChest) win = true;
+	//if (openChest) win = true;
 	if (map->numRajolesPressed() >= numRajoles) allPressed = true;
 }
 
@@ -244,7 +244,7 @@ void Scene::render(bool playing)
 	map->render();
 
 	if (allPressed && !unlockChest) key->render();
-	if(!openChest) chest->render();
+	chest->render();
 	//if (currentTime > 5000 && !takenStopwatch) stopwatch->render();
 	for (MovingSlab * ms : movingPlatforms) {
 		ms->render();

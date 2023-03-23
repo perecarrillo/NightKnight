@@ -17,6 +17,7 @@ public:
 	void unlockChest();
 	bool isOpened();
 	int time;
+	int finishingTime;
 	bool open, unlock, opened;
 };
 
