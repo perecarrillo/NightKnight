@@ -7,11 +7,11 @@ Chest::Chest(int x, int y) {
 	//cout << initialPosition.x<<' '<< initialPosition.y << endl;
 	initialPosition = glm::ivec2(x, y);
 	position = initialPosition;
-	movement = { { LOCKED,150 },{ UNLOCKED, 150 },{ OPENING, 150 }, {OPENED, 150} };
+	movement = { { LOCKED,150 },{ UNLOCKING, 150 } , { UNLOCKED, 150 },{ OPENING, 150 }, {OPENED, 150} };
 	WIDTH = 16;
 	HEIGHT = 16;
 	HEIGHT_OFFSET = 0;
-	animationsUsed = { LOCKED, UNLOCKED, OPENING, OPENED };
+	animationsUsed = { LOCKED, UNLOCKING, UNLOCKED, OPENING, OPENED };
 	animationLength = 6;
 	open = false;
 	unlock = false;
@@ -25,10 +25,13 @@ void Chest::update(int deltaTime)
 	sprite->update(deltaTime);
 	time += deltaTime;
 	if (sprite->animation() == LOCKED && unlock) {
-		sprite->changeAnimation(UNLOCKED);
+		sprite->changeAnimation(UNLOCKING);
 	}
 	else if (sprite->animation() == UNLOCKED && open) {
 		sprite->changeAnimation(OPENING);
+	}
+	else if (sprite->animation() == UNLOCKING && sprite->getKeyFrame() > 3) {
+		sprite->changeAnimation(UNLOCKED);
 	}
 	else if (sprite->animation() == OPENING && sprite->getKeyFrame() > 3) {
 		sprite->changeAnimation(OPENED);

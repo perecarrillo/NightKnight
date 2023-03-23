@@ -211,7 +211,7 @@ void Scene::checkCollisions()
 	if (unlockChest) {
 		glm::ivec2 enemyMin = chest->getBoundingBoxMin();
 		glm::ivec2 enemyMax = chest->getBoundingBoxMax();
-		if ((playerMin.x < enemyMax.x && enemyMin.x < playerMax.x) && (playerMin.y < enemyMax.y && enemyMin.y < playerMin.y)) {
+		if ((playerMin.x < enemyMax.x && enemyMin.x < playerMax.x) && (playerMin.y < enemyMax.y && enemyMin.y < playerMax.y)) {
 			openChest = true;
 			chest->openChest();
 		}
@@ -255,7 +255,7 @@ void Scene::render(bool playing)
 	player->render();
 
 	// Print time
-	string textTime = std::to_string(60 - int(currentTime / 1000));
+	string textTime = std::to_string(120 - int(currentTime / 1000));
 	// Print shadow 
 	text.render(textTime, glm::vec2(455 + 3, 100 + 3), 40, glm::vec4(0, 0, 0, 1));
 	if (playing) text.render(textTime, glm::vec2(455, 100), 40, glm::vec4(1, 1, 1, 1));
@@ -275,7 +275,7 @@ void Scene::render(bool playing)
 
 bool Scene::isGameOver()
 {
-	return (player->getNumHearts() <= 0 || currentTime > 60000);
+	return (player->getNumHearts() <= 0 || currentTime > 120000);
 }
 
 bool Scene::isWin()
