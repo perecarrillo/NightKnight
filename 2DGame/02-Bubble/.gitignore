@@ -24,6 +24,7 @@ mono_crash.*
 [Dd]ebug/*.log
 [Dd]ebug/*.obj
 [Dd]ebug/*.idb
+[Dd]ebug/vc140.idb
 
 [Dd]ebugPublic/
 [Rr]elease/
