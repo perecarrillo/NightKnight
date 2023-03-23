@@ -14,6 +14,6 @@ void main()
 	// inside the font texture atlas. Use that texel to determine transparency
 	// combining it with the incoming color.
 	vec2 texCoord = texCoordFrag * (maxTexCoord - minTexCoord) + minTexCoord;
-	outColor = color * vec4(1, 1, 1, texture(tex, texCoord).r) * opacity;
+	outColor = color * vec4(1, 1, 1, texture(tex, texCoord).r);
 }
 

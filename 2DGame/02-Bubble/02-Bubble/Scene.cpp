@@ -165,8 +165,6 @@ void Scene::init()
 
 	// Select which font you want to use
 	if (!text.init("fonts/Supply Center.ttf"))
-		//if(!text.init("fonts/OpenSans-Bold.ttf"))
-		//if(!text.init("fonts/DroidSerif.ttf"))
 		cout << "Could not load font!!!" << endl;
 
 }
