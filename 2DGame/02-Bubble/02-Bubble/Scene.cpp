@@ -175,16 +175,18 @@ void Scene::update(int deltaTime)
 	for (MovingSlab * ms : movingPlatforms) {
 		ms->update(deltaTime);
 	}
-	player->update(deltaTime);
-	for (Entity * enemy : enemies) {
-		enemy->update(deltaTime);
+	if (!openChest) {
+		player->update(deltaTime);
+		for (Entity * enemy : enemies) {
+			enemy->update(deltaTime);
+		}
+		checkCollisions();
+		key->update(deltaTime);
+		//if (openChest) win = true;
+		if (map->numRajolesPressed() >= numRajoles) allPressed = true;
 	}
-	checkCollisions();
-	key->update(deltaTime);
 	chest->update(deltaTime);
 	if (chest->isOpened()) finishLevel();
-	//if (openChest) win = true;
-	if (map->numRajolesPressed() >= numRajoles) allPressed = true;
 }
 
 void Scene::checkCollisions()
@@ -258,8 +260,17 @@ void Scene::render(bool playing)
 	string textTime = std::to_string(120 - int(currentTime / 1000));
 	// Print shadow 
 	text.render(textTime, glm::vec2(455 + 3, 100 + 3), 40, glm::vec4(0, 0, 0, 1));
-	if (playing) text.render(textTime, glm::vec2(455, 100), 40, glm::vec4(1, 1, 1, 1));
-	else text.render(textTime, glm::vec2(455, 100), 40, glm::vec4(0.3f, 0.3f, 0.3f, 1));
+	// Print number
+	if (playing) {
+		if (currentTime < 110000) text.render(textTime, glm::vec2(455, 100), 40, glm::vec4(1, 1, 1, 1));
+		else if (int(currentTime) % 1000 < 500) text.render(textTime, glm::vec2(455, 100), 40, glm::vec4(1, 0, 0, 1));
+		else text.render(textTime, glm::vec2(455, 100), 40, glm::vec4(1, 1, 1, 1));
+	}
+	else {
+		if (currentTime < 110000) text.render(textTime, glm::vec2(455, 100), 40, glm::vec4(0.3, 0.3, 0.3, 1));
+		else if (int(currentTime) % 1000 < 500) text.render(textTime, glm::vec2(455, 100), 40, glm::vec4(0.3, 0, 0, 1));
+		else text.render(textTime, glm::vec2(455, 100), 40, glm::vec4(0.3, 0.3, 0.3, 1));
+	}
 
 	// Print num level
 	string textLevel = "Level " + std::to_string(numLevel);
@@ -359,10 +370,17 @@ void Scene::setNumCoins(int num)
 	player->setNumCoins(num);
 }
 
+
+
 void Scene::finishLevel()
 {
 	
 	win = true;
+}
+
+pair<int, int> Scene::getPosPlayer()
+{
+	return player->getPosition();
 }
 
 

@@ -32,6 +32,8 @@ public:
 	void loseHeart();
 	bool isInmune();
 
+	pair<int, int> getPosition();
+
 private:
 	bool bJumping;
 	int jumpAngle, startY, jumpLost, coyoteTime;

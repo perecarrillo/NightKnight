@@ -51,6 +51,8 @@ public:
 	int getNumCoins();
 
 	void setNumCoins(int num);
+
+	pair<int, int> getPosPlayer();
 	
 
 private:

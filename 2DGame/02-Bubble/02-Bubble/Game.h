@@ -4,6 +4,7 @@
 
 #include "Scene.h"
 #include "Menu.h"
+#include "CircleAnimation.h"
 
 
 #define SCREEN_WIDTH 960 //1280
@@ -45,12 +46,14 @@ public:
 
 	void changeLevel(int level);
 
+
 private:
 	bool bPlay;                       // Continue to play game?
 	Scene scene;                      // Scene to render
 	bool keys[256], specialKeys[256]; // Store key states so that 
 	int state;                       // we can have access at any time
 	Menu menu;
+	CircleAnimation *circle;
 };
 
 

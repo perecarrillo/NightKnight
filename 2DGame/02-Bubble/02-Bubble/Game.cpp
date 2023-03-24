@@ -9,6 +9,7 @@ enum State
 
 void Game::init()
 {
+	circle = new CircleAnimation(SCREEN_WIDTH, SCREEN_HEIGHT);
 	bPlay = true;
 	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 	scene.init();
@@ -26,6 +27,9 @@ bool Game::update(int deltaTime)
 	int level = scene.getNumLevel();
 
 	if (scene.isWin() && level < 3) changeLevel(++level);
+
+	circle->update(deltaTime);
+
 	return bPlay;
 }
 
@@ -34,6 +38,9 @@ void Game::render()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	scene.render(state == PLAYING);
 	if (state != PLAYING) menu.render();
+	pair<int, int> posPlayer = scene.getPosPlayer();
+	circle->changeCenter(posPlayer.first, posPlayer.second);
+	circle->render();
 }
 
 void Game::keyPressed(int key)
@@ -119,7 +126,6 @@ void Game::changeLevel(int level) {
 	scene.setNumHearts(hearts);
 	scene.setNumCoins(coins);
 }
-
 
 
 

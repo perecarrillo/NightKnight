@@ -152,6 +152,8 @@ bool Player::isInmune()
 	return inmune;
 }
 
+
+
 int Player::getNumHearts() {
 	return hearts;
 }
@@ -166,4 +168,11 @@ int Player::getNumCoins() {
 
 void Player::setNumCoins(int num) {
 	coins = num;
+}
+
+pair<int, int> Player::getPosition()
+{
+	int x = position.x;
+	int y = position.y;
+	return pair<int, int>(x, y);
 }

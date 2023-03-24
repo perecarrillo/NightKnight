@@ -75,6 +75,9 @@
     <ClInclude Include="MovingSlab.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="CircleAnimation.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -141,6 +144,9 @@
       <Filter>Archivos de encabezado</Filter>
     </ClCompile>
     <ClCompile Include="StopWatch.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="CircleAnimation.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
   </ItemGroup>
