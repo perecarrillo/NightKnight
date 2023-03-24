@@ -53,5 +53,6 @@ void Chest::unlockChest() {
 }
 
 bool Chest::isOpened() {
-	return (opened && finishingTime > 1500); // the chest it's open after the animation finishes and passes and extra time
+	return (opened && finishingTime > 1000); // the chest it's open after the animation finishes and passes and extra time
+	//return opened;
 }

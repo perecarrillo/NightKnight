@@ -14,6 +14,7 @@ CircleAnimation::CircleAnimation(int width, int height)
 
 	radius = 0;
 	center = glm::vec2(150.f, 150.f);
+	expand = false;
 	
 }
 
@@ -32,8 +33,9 @@ void CircleAnimation::render() {
 
 void CircleAnimation::update(int deltaTime) {
 	currentTime += deltaTime;
-	radius = currentTime/8;
-
+	if (expand)	radius = currentTime/8;
+	else radius = 300 - currentTime / 8;
+	if (radius < 0) radius = 0;
 }
 
 void CircleAnimation::changeCenter(int x, int y)
@@ -41,6 +43,27 @@ void CircleAnimation::changeCenter(int x, int y)
 	center = glm::vec2(x + 16, y + 16);
 }
 
+void CircleAnimation::changeRadius(float r)
+{
+	radius = r;
+	currentTime = 0;
+}
+
+bool CircleAnimation::finishShrink() {
+	return radius <= 0;
+}
+
+bool CircleAnimation::finishExpand() {
+	return radius > 300;
+}
+
+void CircleAnimation::changeToExpand() {
+	expand = true;
+}
+
+void CircleAnimation::changeToShrink() {
+	expand = false;
+}
 
 void CircleAnimation::initShaders()
 {

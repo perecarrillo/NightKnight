@@ -25,6 +25,16 @@ public:
 
 	void changeCenter(int x, int y);
 
+	void changeRadius(float r);
+
+	bool finishShrink();
+
+	bool finishExpand();
+
+	void changeToExpand();
+
+	void changeToShrink();
+
 	void initShaders();
 
 private:
@@ -34,6 +44,7 @@ private:
 	glm::mat4 projection;
 	float radius;
 	glm::vec2 center;
+	bool expand;
 };
 #endif
 

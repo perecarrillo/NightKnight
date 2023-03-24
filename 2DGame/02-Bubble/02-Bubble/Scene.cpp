@@ -171,12 +171,12 @@ void Scene::init()
 
 void Scene::update(int deltaTime)
 {
-	currentTime += deltaTime;
+	if (!openChest) currentTime += deltaTime; //només actualitzem el temps de l'escena si no s'ha acabat el nivell
 	for (MovingSlab * ms : movingPlatforms) {
 		ms->update(deltaTime);
 	}
+	player->update(deltaTime);
 	if (!openChest) {
-		player->update(deltaTime);
 		for (Entity * enemy : enemies) {
 			enemy->update(deltaTime);
 		}
@@ -273,10 +273,10 @@ void Scene::render(bool playing)
 	}
 
 	// Print num level
-	string textLevel = "Level " + std::to_string(numLevel);
-	text.render(textLevel, glm::vec2(750 + 3, 100 + 3), 40, glm::vec4(0, 0, 0, 1));
-	if (playing) text.render(textLevel, glm::vec2(750, 100), 40, glm::vec4(1, 1, 1, 1));
-	else text.render(textLevel, glm::vec2(750, 100), 40, glm::vec4(0.3f, 0.3f, 0.3f, 1));
+	string textLevel = "Stage " + std::to_string(numLevel);
+	text.render(textLevel, glm::vec2(730 + 3, 100 + 3), 40, glm::vec4(0, 0, 0, 1));
+	if (playing) text.render(textLevel, glm::vec2(730, 100), 40, glm::vec4(1, 1, 1, 1));
+	else text.render(textLevel, glm::vec2(730, 100), 40, glm::vec4(0.3f, 0.3f, 0.3f, 1));
 
 	texProgram.use();
 

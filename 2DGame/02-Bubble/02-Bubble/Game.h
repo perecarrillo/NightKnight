@@ -54,6 +54,8 @@ private:
 	int state;                       // we can have access at any time
 	Menu menu;
 	CircleAnimation *circle;
+	bool changingLevel;
+	bool levelExpanding;
 };
 
 

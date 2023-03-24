@@ -15,20 +15,43 @@ void Game::init()
 	scene.init();
 	menu.init();
 	state = PLAYING;
+	changingLevel = false;
+	levelExpanding = false;
 }
 
 bool Game::update(int deltaTime)
 {
-	if (state == PLAYING) scene.update(deltaTime);	
+	if (state == PLAYING && !changingLevel) scene.update(deltaTime);	
 	if (scene.isGameOver()) {
 		state = LOSE;
 		menu.setImage(LOSE);
 	}
+
 	int level = scene.getNumLevel();
 
-	if (scene.isWin() && level < 3) changeLevel(++level);
+	if (scene.isWin() && level < 3 && !changingLevel) {
+		changingLevel = true;
+		circle->changeRadius(400.f);
+		pair<int, int> posPlayer = scene.getPosPlayer();
+		circle->changeCenter(posPlayer.first, posPlayer.second);
+		circle->changeToShrink();
+	}
 
-	circle->update(deltaTime);
+	if (changingLevel && circle->finishShrink() && !levelExpanding) {
+		levelExpanding = true;
+		changeLevel(++level);
+		circle->changeRadius(0.f);
+		pair<int, int> posPlayer = scene.getPosPlayer();
+		circle->changeCenter(posPlayer.first, posPlayer.second);
+		circle->changeToExpand();
+	}
+
+	if (changingLevel) circle->update(deltaTime);
+
+	if (circle->finishExpand()) {
+		changingLevel = false;
+		levelExpanding = false;
+	}
 
 	return bPlay;
 }
@@ -38,9 +61,8 @@ void Game::render()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	scene.render(state == PLAYING);
 	if (state != PLAYING) menu.render();
-	pair<int, int> posPlayer = scene.getPosPlayer();
-	circle->changeCenter(posPlayer.first, posPlayer.second);
-	circle->render();
+	if (changingLevel) circle->render();
+	
 }
 
 void Game::keyPressed(int key)
@@ -126,6 +148,8 @@ void Game::changeLevel(int level) {
 	scene.setNumHearts(hearts);
 	scene.setNumCoins(coins);
 }
+
+
 
 
 
