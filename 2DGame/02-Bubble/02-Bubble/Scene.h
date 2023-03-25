@@ -52,6 +52,8 @@ public:
 
 	void setNumCoins(int num);
 
+	void togglePlayerInmunity();
+
 	glm::vec2 getPosPlayer();
 	
 

@@ -85,6 +85,9 @@ void Game::keyPressed(int key)
 	if ((key == 67 || key == 99) && state == PAUSE) { // key C/c
 		state = PLAYING;
 	}
+	if ((key == 71 || key == 103) && state == PLAYING) { // key G/g
+		scene.togglePlayerInmunity();
+	}
 	if ((key == 75 || key == 107) && state == PLAYING) { // key K/k
 		scene.makeKeyAppear();
 	}

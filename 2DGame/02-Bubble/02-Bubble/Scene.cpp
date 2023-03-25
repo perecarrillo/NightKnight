@@ -369,6 +369,11 @@ void Scene::setNumCoins(int num)
 	player->setNumCoins(num);
 }
 
+void Scene::togglePlayerInmunity()
+{
+	player->toggleInmunity();
+}
+
 
 
 void Scene::finishLevel()

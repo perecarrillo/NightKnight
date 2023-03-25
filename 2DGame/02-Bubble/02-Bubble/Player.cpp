@@ -31,6 +31,7 @@ Player::Player(int x, int y) {
 	speed = 1;
 	coins = 0;
 	isOnPlatform = false;
+	invincible = false;
 
 }
 
@@ -151,7 +152,7 @@ void Player::loseHeart()
 
 bool Player::isInmune()
 {
-	return inmune;
+	return invincible || inmune;
 }
 
 void Player::setIsOnPlatform(bool b)
@@ -172,6 +173,11 @@ int Player::getHeight()
 void Player::addXMovement(float value)
 {
 	position.x += value;
+}
+
+void Player::toggleInmunity()
+{
+	invincible = !invincible;
 }
 
 int Player::getNumHearts() {

@@ -36,6 +36,7 @@ public:
 	int getWidth();
 	int getHeight();
 	void addXMovement(float value);
+	void toggleInmunity();
 
 	glm::vec2 getPosition();
 
@@ -49,6 +50,7 @@ private:
 	int timeInmune;
 	int coins;
 	bool isOnPlatform;
+	bool invincible;
 };
 
 
