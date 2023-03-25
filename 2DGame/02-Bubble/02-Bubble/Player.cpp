@@ -198,5 +198,5 @@ void Player::setNumCoins(int num) {
 
 glm::vec2 Player::getPosition()
 {
-	return glm::vec2(position.x, position.y);
+	return glm::vec2(position.x + WIDTH_OFFSET, position.y);
 }

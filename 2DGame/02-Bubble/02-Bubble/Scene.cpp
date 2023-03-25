@@ -172,8 +172,11 @@ void Scene::init()
 void Scene::update(int deltaTime)
 {
 	if (!openChest) currentTime += deltaTime; //només actualitzem el temps de l'escena si no s'ha acabat el nivell
+	int slabsPainted = 0;
 	for (MovingSlab * ms : movingPlatforms) {
 		ms->update(deltaTime, player);
+		if (ms->isPainted())
+			++slabsPainted;
 	}
 	player->update(deltaTime);
 	if (!openChest) {
@@ -182,7 +185,7 @@ void Scene::update(int deltaTime)
 		}
 		checkCollisions();
 		key->update(deltaTime);
-		if (map->numRajolesPressed() >= numRajoles) allPressed = true;
+		if (map->numRajolesPressed() + slabsPainted >= numRajoles) allPressed = true;
 	}
 	chest->update(deltaTime);
 	if (chest->isOpened()) finishLevel();

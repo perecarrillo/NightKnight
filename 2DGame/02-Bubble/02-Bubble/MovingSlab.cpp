@@ -8,13 +8,14 @@ MovingSlab::MovingSlab(int firstX, int firstY, int lastX, int lastY, int tileSiz
 	position = glm::ivec2(initialPosition.x * tileSize, initialPosition.y * tileSize);
 	speed = 0.5; 
 	animationLength = 1;
-	animationsUsed = { MOVE_LEFT };
+	animationsUsed = { NOT_PAINTED, PAINTED };
 	spriteSize = glm::ivec2(16, 8);
 	WIDTH = 16;
 	HEIGHT = 8;
 	movingLeft = true;
 	start = glm::ivec2(firstX * tileSize, firstY * tileSize);
 	end = glm::ivec2(lastX * tileSize, lastY * tileSize);
+	painted = false;
 }
 
 void MovingSlab::update(int deltaTime, Player *player) {
@@ -28,6 +29,9 @@ void MovingSlab::update(int deltaTime, Player *player) {
 	{
 		hasPlayerAbove = true;
 		player->setIsOnPlatform(true);
+		if (sprite->animation() != PAINTED)
+			sprite->changeAnimation(PAINTED);
+		painted = true;
 	}
 	else player->setIsOnPlatform(false);
 
@@ -60,4 +64,9 @@ void MovingSlab::update(int deltaTime, Player *player) {
 
 	}
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + int(position.x)), float(tileMapDispl.y + int(position.y))));
+}
+
+bool MovingSlab::isPainted()
+{
+	return painted;
 }
