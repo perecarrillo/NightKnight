@@ -32,7 +32,12 @@ public:
 	void loseHeart();
 	bool isInmune();
 
-	pair<int, int> getPosition();
+	void setIsOnPlatform(bool b);
+	int getWidth();
+	int getHeight();
+	void addXMovement(float value);
+
+	glm::vec2 getPosition();
 
 private:
 	bool bJumping;
@@ -43,6 +48,7 @@ private:
 	int time;
 	int timeInmune;
 	int coins;
+	bool isOnPlatform;
 };
 
 

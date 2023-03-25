@@ -30,6 +30,7 @@ Player::Player(int x, int y) {
 	bJumping = false;
 	speed = 1;
 	coins = 0;
+	isOnPlatform = false;
 
 }
 
@@ -92,7 +93,7 @@ void Player::update(int deltaTime)
 					jumpLost += position.y - int(startY - JUMP_HEIGHT * sin(3.14159f * jumpAngle / 180.f));
 				}
 				if (jumpAngle > 90) {
-					bJumping = !map->collisionMoveDown(position + glm::vec2(WIDTH_OFFSET, 0), glm::ivec2(WIDTH, HEIGHT), &position.y, 0);
+					bJumping = !map->collisionMoveDown(position + glm::vec2(WIDTH_OFFSET, 0), glm::ivec2(WIDTH, HEIGHT), &position.y, 0, isOnPlatform);
 					if (!bJumping) coyoteTime = 0;
 				}
 			}
@@ -100,7 +101,8 @@ void Player::update(int deltaTime)
 		else
 		{
 			position.y += FALL_STEP;
-			bool collisionDown = map->collisionMoveDown(position + glm::vec2(WIDTH_OFFSET, 0), glm::ivec2(WIDTH, HEIGHT), &position.y, 0);
+
+			bool collisionDown = map->collisionMoveDown(position + glm::vec2(WIDTH_OFFSET, 0), glm::ivec2(WIDTH, HEIGHT), &position.y, 0, isOnPlatform);
 			if (!collisionDown) ++coyoteTime;
 			if (collisionDown || coyoteTime < COYOTE_TIME)
 			{
@@ -152,7 +154,25 @@ bool Player::isInmune()
 	return inmune;
 }
 
+void Player::setIsOnPlatform(bool b)
+{
+	isOnPlatform = b;
+}
 
+int Player::getWidth()
+{
+	return WIDTH;
+}
+
+int Player::getHeight()
+{
+	return HEIGHT;
+}
+
+void Player::addXMovement(float value)
+{
+	position.x += value;
+}
 
 int Player::getNumHearts() {
 	return hearts;
@@ -170,9 +190,7 @@ void Player::setNumCoins(int num) {
 	coins = num;
 }
 
-pair<int, int> Player::getPosition()
+glm::vec2 Player::getPosition()
 {
-	int x = position.x;
-	int y = position.y;
-	return pair<int, int>(x, y);
+	return glm::vec2(position.x, position.y);
 }

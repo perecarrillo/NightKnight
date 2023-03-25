@@ -173,7 +173,7 @@ void Scene::update(int deltaTime)
 {
 	if (!openChest) currentTime += deltaTime; //només actualitzem el temps de l'escena si no s'ha acabat el nivell
 	for (MovingSlab * ms : movingPlatforms) {
-		ms->update(deltaTime);
+		ms->update(deltaTime, player);
 	}
 	player->update(deltaTime);
 	if (!openChest) {
@@ -182,7 +182,6 @@ void Scene::update(int deltaTime)
 		}
 		checkCollisions();
 		key->update(deltaTime);
-		//if (openChest) win = true;
 		if (map->numRajolesPressed() >= numRajoles) allPressed = true;
 	}
 	chest->update(deltaTime);
@@ -198,7 +197,7 @@ void Scene::checkCollisions()
 		glm::ivec2 enemyMin = enemy->getBoundingBoxMin();
 		glm::ivec2 enemyMax = enemy->getBoundingBoxMax();
 		if (!player->isInmune() && (playerMin.x < enemyMax.x && enemyMin.x < playerMax.x) && (playerMin.y < enemyMax.y && enemyMin.y < playerMax.y)) {
-			cout << "Collision"<<endl;
+			//cout << "Collision"<<endl;
 			player->loseHeart();
 		}
 	}
@@ -378,7 +377,7 @@ void Scene::finishLevel()
 	win = true;
 }
 
-pair<int, int> Scene::getPosPlayer()
+glm::vec2 Scene::getPosPlayer()
 {
 	return player->getPosition();
 }

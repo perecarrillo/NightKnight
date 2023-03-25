@@ -32,8 +32,8 @@ bool Game::update(int deltaTime)
 	if (scene.isWin() && level < 3 && !changingLevel) {
 		changingLevel = true;
 		circle->changeRadius(400.f);
-		pair<int, int> posPlayer = scene.getPosPlayer();
-		circle->changeCenter(posPlayer.first, posPlayer.second);
+		glm::vec2 posPlayer = scene.getPosPlayer();
+		circle->changeCenter(posPlayer.x, posPlayer.y);
 		circle->changeToShrink();
 	}
 
@@ -41,8 +41,8 @@ bool Game::update(int deltaTime)
 		levelExpanding = true;
 		changeLevel(++level);
 		circle->changeRadius(0.f);
-		pair<int, int> posPlayer = scene.getPosPlayer();
-		circle->changeCenter(posPlayer.first, posPlayer.second);
+		glm::vec2 posPlayer = scene.getPosPlayer();
+		circle->changeCenter(posPlayer.x, posPlayer.y);
 		circle->changeToExpand();
 	}
 

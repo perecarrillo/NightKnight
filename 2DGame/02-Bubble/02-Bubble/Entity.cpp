@@ -52,7 +52,7 @@ void Entity::update(int deltaTime)
 			position.x += speed;
 			nextAnimation();
 		}
-		else if (!map->collisionMoveDown(position + glm::vec2(-map->getTileSize(), map->getTileSize()) + glm::vec2(WIDTH_OFFSET, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), &trash, HEIGHT_OFFSET))
+		else if (!map->collisionMoveDown(position + glm::vec2(-map->getTileSize(), map->getTileSize()) + glm::vec2(WIDTH_OFFSET, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), &trash, HEIGHT_OFFSET, false))
 		{
 			position.x += speed;
 			nextAnimation();
@@ -69,7 +69,7 @@ void Entity::update(int deltaTime)
 			position.x -= speed;
 			nextAnimation();
 		}
-		else if (!map->collisionMoveDown(position + glm::vec2(map->getTileSize(), map->getTileSize()) + glm::vec2(WIDTH_OFFSET, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), &trash, HEIGHT_OFFSET))
+		else if (!map->collisionMoveDown(position + glm::vec2(map->getTileSize(), map->getTileSize()) + glm::vec2(WIDTH_OFFSET, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), &trash, HEIGHT_OFFSET, false))
 		{
 			//cout << "collisionDown Right" << endl;
 			position.x -= speed;
@@ -88,7 +88,7 @@ void Entity::update(int deltaTime)
 	}
 
 	position.y += FALL_STEP;
-	map->collisionMoveDown(position + glm::vec2(WIDTH_OFFSET, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), &position.y, HEIGHT_OFFSET);
+	map->collisionMoveDown(position + glm::vec2(WIDTH_OFFSET, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), &position.y, HEIGHT_OFFSET, false);
 
 
 	if (actualMovement.second == 0) {

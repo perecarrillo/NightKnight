@@ -52,7 +52,7 @@ public:
 
 	void setNumCoins(int num);
 
-	pair<int, int> getPosPlayer();
+	glm::vec2 getPosPlayer();
 	
 
 private:

@@ -17,26 +17,45 @@ MovingSlab::MovingSlab(int firstX, int firstY, int lastX, int lastY, int tileSiz
 	end = glm::ivec2(lastX * tileSize, lastY * tileSize);
 }
 
-void MovingSlab::update(int deltaTime) {
+void MovingSlab::update(int deltaTime, Player *player) {
 	sprite->update(deltaTime);
+
+	bool hasPlayerAbove = false;
+	glm::vec2 playerPosition = player->getPosition();
+	int playerHeight = player->getHeight();
+	int playerWidth = player->getWidth();
+	if (playerPosition.y + playerHeight >= position.y - 2 && playerPosition.y + playerHeight <= position.y + 2 && playerPosition.x < position.x + WIDTH && position.x < playerPosition.x + playerWidth)
+	{
+		hasPlayerAbove = true;
+		player->setIsOnPlatform(true);
+	}
+	else player->setIsOnPlatform(false);
 
 	if (movingLeft)
 	{
-		position.x -= speed;
-		if (position.x < start.x)
+		if (position.x - speed < start.x)
 		{
-			position.x += speed;
 			movingLeft = false;
+		}
+		else
+		{
+			position.x -= speed;
+			if (hasPlayerAbove)
+				player->addXMovement(-speed);
 		}
 
 	}
 	else
 	{
-		position.x += speed;
-		if (position.x > end.x)
+		if (position.x + speed > end.x)
 		{
-			position.x -= speed;
 			movingLeft = true;
+		}
+		else
+		{
+			position.x += speed;
+			if (hasPlayerAbove)
+				player->addXMovement(speed);
 		}
 
 	}
