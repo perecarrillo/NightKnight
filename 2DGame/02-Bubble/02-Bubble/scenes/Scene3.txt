@@ -6,7 +6,7 @@
 1 -- nombre rajoles que es mouen
 7 11 -- 1a posicio (i inicial) rajola 1
 27 11 -- 2a posicio rajola 1
-2 2 -- nombre enemics (esquelets, rates, ratpenats)
+2 2 0 -- nombre enemics (esquelets, rates, ratpenats)
 8 8 -- posicio esquelet 1
 8 15 -- posicio esquelet 2
 2 4 -- pos rata 1

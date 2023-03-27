@@ -100,9 +100,9 @@ void Scene::loadScene() {
 	// Nombre d'enemics de cada tipus
 	getline(fin, line);
 	sstream.str(line);
-	sstream >> numSkeletons >> numRates;
+	sstream >> numSkeletons >> numRates >> numVampires;
 
-	int numEnemies = numSkeletons + numRates;
+	int numEnemies = numSkeletons + numRates + numVampires;
 	// Posici� inicial de cada enemics i inicialitzaci� d'aquests
 	enemies = vector<Entity *> (numEnemies);
 	for (int i = 0; i < numEnemies; ++i) {
@@ -117,6 +117,10 @@ void Scene::loadScene() {
 		else if (i - numSkeletons < numRates) {
 			enemies[i] = new Rata(posX, posY);
 			enemies[i]->init("images/Rata.png", glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+		}
+		else if (i - numSkeletons - numRates < numVampires) {
+			enemies[i] = new Vampire(posX, posY);
+			enemies[i]->init("images/Skeleton.png", glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 		}
 		enemies[i]->setPosition(glm::vec2(enemies[i]->getInitialPosition() * map->getTileSize()));
 		enemies[i]->setTileMap(map);

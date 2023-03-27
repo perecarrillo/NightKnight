@@ -13,6 +13,7 @@ public:
 private:
 	bool isVampire;
 	bool movingLeft;
+	bool movingUp;
 
 	int BAT_HEIGHT, BAT_WIDTH, BAT_WIDTH_OFFSET, BAT_HEIGHT_OFFSET;
 };

@@ -4,7 +4,8 @@
 16 20 -- posició clau
 10 10 -- posició stopwatch
 0 -- nombre rajoles que es mouen
-2 1 -- nombre enemics (esquelets, rates, ratpenats)
+2 1 1 -- nombre enemics (esquelets, rates, ratpenats)
 27 22 -- posicio esquelet 1
 22 11 -- posicio esquelet 2
-19 5 -- pos rata 1
+19 5 -- posicio rata 1
+22 11 -- posicio vampir 1

@@ -12,6 +12,7 @@
 #include <vector>
 #include "Skeleton.h"
 #include "Rata.h"
+#include "Vampire.h"
 #include "Key.h"
 #include "Chest.h"
 #include "MovingSlab.h"
@@ -81,7 +82,7 @@ private:
 	vector<MovingSlab *> movingPlatforms;
 
 	int numLevel, numRajoles;
-	int numSkeletons, numRates;
+	int numSkeletons, numRates, numVampires;
 	glm::vec2 posCofre, posClau, posJugador;
 
 	Key *key;
