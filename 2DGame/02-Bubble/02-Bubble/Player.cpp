@@ -119,7 +119,7 @@ void Player::update(int deltaTime)
 		}
 		map->collisionRajola(position + glm::vec2(WIDTH_OFFSET, 0), glm::ivec2(WIDTH, HEIGHT));
 		
-		if (map->collisionSpikes(position + glm::vec2(WIDTH_OFFSET, 0), glm::ivec2(WIDTH, HEIGHT)) && !inmune) {
+		if (!invincible && !inmune && map->collisionSpikes(position + glm::vec2(WIDTH_OFFSET, 0), glm::ivec2(WIDTH, HEIGHT))) {
 			sprite->changeAnimation(DYING);
 			if (hearts > 0) --hearts;
 			position.y += 4;
