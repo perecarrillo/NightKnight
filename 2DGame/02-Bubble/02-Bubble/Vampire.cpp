@@ -6,19 +6,20 @@ Vampire::Vampire(int x, int y)
 {
 	initialPosition = glm::ivec2(x, y);
 	position = initialPosition;
-	speed = 0.5;
-	WIDTH = 16;
-	HEIGHT = 16;
-	WIDTH_OFFSET = 0;
-	HEIGHT_OFFSET = 0;
-	BAT_HEIGHT = 16;
-	BAT_WIDTH = 16;
-	BAT_WIDTH_OFFSET = 0;
-	BAT_HEIGHT_OFFSET = 0;
-	animationsUsed = { MOVE_LEFT, MOVE_RIGHT, STAND_LEFT, STAND_RIGHT, TRANSFORM_TO_BAT, TRANSFORM_TO_VAMPIRE, FLY_LEFT, FLY_RIGHT};
-	animationLength = 8;
+	speed = 0.3;
+	WIDTH = 14;
+	HEIGHT = 20;
+	WIDTH_OFFSET = 9;
+	HEIGHT_OFFSET = 12;
+	BAT_HEIGHT = 20;
+	BAT_WIDTH = 20;
+	BAT_WIDTH_OFFSET = 8;
+	BAT_HEIGHT_OFFSET = 12;
+	animationsUsed = {FLY_RIGHT, FLY_LEFT, MOVE_RIGHT, MOVE_LEFT, STAND_RIGHT, STAND_LEFT, TRANSFORM_TO_BAT, LOCKED, TRANSFORM_TO_VAMPIRE, UNLOCKED};
+	animationLength = 16;
 	movingLeft = false;
 	isVampire = true;
+	spriteSize = glm::vec2(32, 32);
 }
 
 void Vampire::update(int deltaTime)

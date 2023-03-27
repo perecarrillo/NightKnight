@@ -120,7 +120,7 @@ void Scene::loadScene() {
 		}
 		else if (i - numSkeletons - numRates < numVampires) {
 			enemies[i] = new Vampire(posX, posY);
-			enemies[i]->init("images/Skeleton.png", glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+			enemies[i]->init("images/vampire.png", glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 		}
 		enemies[i]->setPosition(glm::vec2(enemies[i]->getInitialPosition() * map->getTileSize()));
 		enemies[i]->setTileMap(map);
