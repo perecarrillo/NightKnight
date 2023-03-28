@@ -263,17 +263,22 @@ void Scene::render(bool playing)
 	player->render();
 
 	// Print time
-	string textTime = std::to_string(120 - int(currentTime / 1000));
+	string textTime = std::to_string(60 - int(currentTime / 1000));
+	if (60 - currentTime / 1000 < 10)
+	{
+		textTime = std::to_string(60 - currentTime / 1000);
+		textTime = textTime.substr(0, 3);
+	}
 	// Print shadow 
 	text.render(textTime, glm::vec2(455 + 3, 100 + 3), 40, glm::vec4(0, 0, 0, 1));
 	// Print number
 	if (playing) {
-		if (currentTime < 110000) text.render(textTime, glm::vec2(455, 100), 40, glm::vec4(1, 1, 1, 1));
+		if (currentTime < 50000) text.render(textTime, glm::vec2(455, 100), 40, glm::vec4(1, 1, 1, 1));
 		else if (int(currentTime) % 1000 < 500) text.render(textTime, glm::vec2(455, 100), 40, glm::vec4(1, 0, 0, 1));
 		else text.render(textTime, glm::vec2(455, 100), 40, glm::vec4(1, 1, 1, 1));
 	}
 	else {
-		if (currentTime < 110000) text.render(textTime, glm::vec2(455, 100), 40, glm::vec4(0.3, 0.3, 0.3, 1));
+		if (currentTime < 50000) text.render(textTime, glm::vec2(455, 100), 40, glm::vec4(0.3, 0.3, 0.3, 1));
 		else if (int(currentTime) % 1000 < 500) text.render(textTime, glm::vec2(455, 100), 40, glm::vec4(0.3, 0, 0, 1));
 		else text.render(textTime, glm::vec2(455, 100), 40, glm::vec4(0.3, 0.3, 0.3, 1));
 	}
@@ -292,7 +297,7 @@ void Scene::render(bool playing)
 
 bool Scene::isGameOver()
 {
-	return (player->getNumHearts() <= 0 || currentTime > 120000);
+	return (player->getNumHearts() <= 0 || currentTime > 60000);
 }
 
 bool Scene::isWin()
