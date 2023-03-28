@@ -89,7 +89,7 @@ void Player::update(int deltaTime)
 			{
 
 				position.y = int((startY + jumpLost) - JUMP_HEIGHT * sin(3.14159f * jumpAngle / 180.f));
-				if (map->collisionMoveUp(position + glm::vec2(WIDTH_OFFSET, 0), glm::ivec2(WIDTH, HEIGHT), &position.y)) {
+				if (map->collisionMoveUp(position + glm::vec2(WIDTH_OFFSET, 0), glm::ivec2(WIDTH, HEIGHT), &position.y, HEIGHT_OFFSET)) {
 					jumpAngle = 90;
 					jumpLost += position.y - int(startY - JUMP_HEIGHT * sin(3.14159f * jumpAngle / 180.f));
 				}

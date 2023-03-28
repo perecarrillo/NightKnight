@@ -7,14 +7,14 @@ Vampire::Vampire(int x, int y)
 	initialPosition = glm::ivec2(x, y);
 	position = initialPosition;
 	speed = 0.3;
-	WIDTH = 14;
-	HEIGHT = 20;
-	WIDTH_OFFSET = 9;
-	HEIGHT_OFFSET = 12;
-	BAT_HEIGHT = 20;
-	BAT_WIDTH = 20;
-	BAT_WIDTH_OFFSET = 8;
-	BAT_HEIGHT_OFFSET = 12;
+	WIDTH = 13;
+	HEIGHT = 16;
+	WIDTH_OFFSET = 11;
+	HEIGHT_OFFSET = 15;
+	BAT_HEIGHT = 19;
+	BAT_WIDTH = 21;
+	BAT_WIDTH_OFFSET = 4;
+	BAT_HEIGHT_OFFSET = 10;
 	animationsUsed = {FLY_RIGHT, FLY_LEFT, MOVE_RIGHT, MOVE_LEFT, STAND_RIGHT, STAND_LEFT, TRANSFORM_TO_BAT, LOCKED, TRANSFORM_TO_VAMPIRE, UNLOCKED};
 	animationLength = 16;
 	movingLeft = false;
@@ -27,6 +27,8 @@ void Vampire::update(int deltaTime)
 	sprite->update(deltaTime);
 	float trash = 0;
 	
+	sprite->setAnimationSpeed(sprite->animation(), 8);
+
 	if (sprite->animation() == TRANSFORM_TO_BAT || sprite->animation() == TRANSFORM_TO_VAMPIRE)
 	{
 		//it hasn't finished transforming
@@ -63,7 +65,7 @@ void Vampire::update(int deltaTime)
 		position.y += FALL_STEP;
 		map->collisionMoveDown(position + glm::vec2(WIDTH_OFFSET, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), &position.y, HEIGHT_OFFSET, false);
 
-		if (rand() % 100 == 0)
+		if (rand() % 500 == 0)
 		{
 			isVampire = !isVampire;
 			sprite->changeAnimation(TRANSFORM_TO_BAT);
@@ -100,7 +102,7 @@ void Vampire::update(int deltaTime)
 		if (movingUp)
 		{
 			position.y -= speed;
-			if (map->collisionMoveUp(position + glm::vec2(BAT_WIDTH_OFFSET, BAT_HEIGHT_OFFSET), glm::ivec2(BAT_WIDTH, BAT_HEIGHT), &position.y))
+			if (map->collisionMoveUp(position + glm::vec2(BAT_WIDTH_OFFSET, BAT_HEIGHT_OFFSET), glm::ivec2(BAT_WIDTH, BAT_HEIGHT), &position.y, BAT_HEIGHT_OFFSET))
 			{
 				movingUp = false;
 			}
@@ -111,9 +113,10 @@ void Vampire::update(int deltaTime)
 			if (map->collisionMoveDown(position + glm::vec2(BAT_WIDTH_OFFSET, BAT_HEIGHT_OFFSET), glm::ivec2(BAT_WIDTH, BAT_HEIGHT), &position.y, BAT_HEIGHT_OFFSET, false))
 			{
 				movingUp = true;
-				if (rand() % 5 == 0) {
+				if (rand() % 3 == 0) {
 					isVampire = !isVampire;
 					sprite->changeAnimation(TRANSFORM_TO_VAMPIRE);
+					position.y -= 3;
 				}
 			}
 		}
