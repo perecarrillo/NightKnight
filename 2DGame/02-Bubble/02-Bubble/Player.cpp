@@ -9,7 +9,7 @@
 
 
 #define JUMP_ANGLE_STEP 4
-#define JUMP_HEIGHT 28
+#define JUMP_HEIGHT 36
 #define COYOTE_TIME 4
 
 
@@ -80,6 +80,7 @@ void Player::update(int deltaTime)
 		{
 			++coyoteTime;
 			jumpAngle += JUMP_ANGLE_STEP;
+
 			if (jumpAngle >= 180)
 			{
 				bJumping = false;
@@ -87,15 +88,20 @@ void Player::update(int deltaTime)
 			}
 			else
 			{
+				bool keepJumping = Game::instance().getSpecialKey(GLUT_KEY_UP);
 
 				position.y = int((startY + jumpLost) - JUMP_HEIGHT * sin(3.14159f * jumpAngle / 180.f));
-				if (map->collisionMoveUp(position + glm::vec2(WIDTH_OFFSET, 0), glm::ivec2(WIDTH, HEIGHT), &position.y, HEIGHT_OFFSET)) {
-					jumpAngle = 90;
-					jumpLost += position.y - int(startY - JUMP_HEIGHT * sin(3.14159f * jumpAngle / 180.f));
-				}
 				if (jumpAngle > 90) {
 					bJumping = !map->collisionMoveDown(position + glm::vec2(WIDTH_OFFSET, 0), glm::ivec2(WIDTH, HEIGHT), &position.y, 0, isOnPlatform);
 					if (!bJumping) coyoteTime = 0;
+				}
+				else if (!keepJumping) {
+					jumpAngle = 90;
+					jumpLost += position.y - int(startY - JUMP_HEIGHT * sin(3.14159f * jumpAngle / 180.f));
+				}
+				else if (map->collisionMoveUp(position + glm::vec2(WIDTH_OFFSET, 0), glm::ivec2(WIDTH, HEIGHT), &position.y, HEIGHT_OFFSET)) {
+					jumpAngle = 90;
+					jumpLost += position.y - int(startY - JUMP_HEIGHT * sin(3.14159f * jumpAngle / 180.f));
 				}
 			}
 		}
