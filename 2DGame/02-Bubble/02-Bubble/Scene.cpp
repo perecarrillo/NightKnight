@@ -9,6 +9,8 @@
 #define SCREEN_Y 8 //Offset pantalla
 #define NUM_TILES_X 32
 #define NUM_TILES_Y 26
+#define TIME 120
+#define FREEZETIME 5
 
 
 Scene::Scene()
@@ -48,7 +50,7 @@ void Scene::loadScene() {
 	sstream.str(line);
 	sstream >> numRajoles;
 
-	// Posici� del cofre
+	// Cofre
 	getline(fin, line);
 	sstream.str(line);
 	sstream >> posCofre.x >> posCofre.y;
@@ -57,24 +59,41 @@ void Scene::loadScene() {
 	chest->setPosition(glm::vec2(chest->getInitialPosition() * map->getTileSize()));
 	chest->setTileMap(map);
 
-	// Posici� de la clau
+	// Clau
 	getline(fin, line);
 	sstream.str(line);
 	sstream >> posClau.x >> posClau.y;
-	key = new Key(posClau.x, posClau.y);
+	key = new Item(posClau.x, posClau.y, 0, TIME);
 	key->init("images/Key.png", glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
 	key->setPosition(glm::vec2(key->getInitialPosition() * map->getTileSize()));
 	key->setTileMap(map);
 
-	// Posici� stopwatch
+
+	// Stopwatch
 	getline(fin, line);
 	sstream.str(line);
 	int x, y;
 	sstream >> x >> y;
-	/*stopwatch = new StopWatch(x, y);
+	getline(fin, line);
+	sstream.str(line);
+	int appearTime, disappearTime;
+	sstream >> appearTime >> disappearTime;
+	stopwatch = new Item(x, y, appearTime, disappearTime);
 	stopwatch->init("images/StopWatch.png", glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	stopwatch->setPosition(glm::vec2(key->getInitialPosition() * map->getTileSize()));
-	stopwatch->setTileMap(map);*/
+	stopwatch->setPosition(glm::vec2(stopwatch->getInitialPosition() * map->getTileSize()));
+	stopwatch->setTileMap(map);
+	
+	// Gemma
+	getline(fin, line);
+	sstream.str(line);
+	sstream >> x >> y;
+	getline(fin, line);
+	sstream.str(line);
+	sstream >> appearTime >> disappearTime;
+	gem = new Item(x, y, appearTime, disappearTime);
+	gem->init("images/Gem.png", glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+	gem->setPosition(glm::vec2(gem->getInitialPosition() * map->getTileSize()));
+	gem->setTileMap(map);
 
 	// Nombre rajoles que es mouen
 	getline(fin, line);
@@ -137,6 +156,7 @@ void Scene::init()
 	unlockChest = false;
 	openChest = false;
 	takenStopwatch = false;
+	takenGem = false;
 	win = false;
 	initShaders();
 	string fileMap = "levels/level" + std::to_string(numLevel) + ".txt";
@@ -184,11 +204,15 @@ void Scene::update(int deltaTime)
 	}
 	player->update(deltaTime);
 	if (!openChest) {
-		for (Entity * enemy : enemies) {
-			enemy->update(deltaTime);
+		if (!takenStopwatch || iniFreezeTime + FREEZETIME * 1000 < currentTime) {
+			for (Entity * enemy : enemies) {
+				enemy->update(deltaTime);
+			}
 		}
 		checkCollisions();
 		key->update(deltaTime);
+		if(!takenStopwatch) stopwatch->update(deltaTime);
+		if (!takenGem) gem->update(deltaTime);
 		if (map->numRajolesPressed() + slabsPainted >= numRajoles) allPressed = true;
 	}
 	chest->update(deltaTime);
@@ -224,13 +248,21 @@ void Scene::checkCollisions()
 			chest->openChest();
 		}
 	}
-	/*if (currentTime > 5000 && !takenStopwatch) {
-		glm::ivec2 enemyMin = chest->getBoundingBoxMin();
-		glm::ivec2 enemyMax = chest->getBoundingBoxMax();
+	if (stopwatch->shouldCheckCollision()) {
+		glm::ivec2 enemyMin = stopwatch->getBoundingBoxMin();
+		glm::ivec2 enemyMax = stopwatch->getBoundingBoxMax();
 		if ((playerMin.x < enemyMax.x && enemyMin.x < playerMax.x) && (playerMin.y < enemyMax.y && enemyMin.y < playerMax.y)) {
 			takenStopwatch = true;
+			iniFreezeTime = currentTime;
 		}
-	}*/
+	}
+	if (gem->shouldCheckCollision()) {
+		glm::ivec2 enemyMin = gem->getBoundingBoxMin();
+		glm::ivec2 enemyMax = gem->getBoundingBoxMax();
+		if ((playerMin.x < enemyMax.x && enemyMin.x < playerMax.x) && (playerMin.y < enemyMax.y && enemyMin.y < playerMax.y)) {
+			takenGem = true;
+		}
+	}
 }
 
 
@@ -253,7 +285,8 @@ void Scene::render(bool playing)
 
 	if (allPressed && !unlockChest) key->render();
 	chest->render();
-	//if (currentTime > 5000 && !takenStopwatch) stopwatch->render();
+	if(!takenStopwatch) stopwatch->render();
+	if (!takenGem) gem->render();
 	for (MovingSlab * ms : movingPlatforms) {
 		ms->render();
 	}
@@ -263,22 +296,22 @@ void Scene::render(bool playing)
 	player->render();
 
 	// Print time
-	string textTime = std::to_string(60 - int(currentTime / 1000));
-	if (60 - currentTime / 1000 < 10)
+	string textTime = std::to_string(TIME - int(currentTime / 1000));
+	if (TIME - currentTime / 1000 < 10)
 	{
-		textTime = std::to_string(60 - currentTime / 1000);
+		textTime = std::to_string(TIME - currentTime / 1000);
 		textTime = textTime.substr(0, 3);
 	}
 	// Print shadow 
 	text.render(textTime, glm::vec2(455 + 3, 100 + 3), 40, glm::vec4(0, 0, 0, 1));
 	// Print number
 	if (playing) {
-		if (currentTime < 50000) text.render(textTime, glm::vec2(455, 100), 40, glm::vec4(1, 1, 1, 1));
+		if (currentTime < 1000*(TIME - 10)) text.render(textTime, glm::vec2(455, 100), 40, glm::vec4(1, 1, 1, 1));
 		else if (int(currentTime) % 1000 < 500) text.render(textTime, glm::vec2(455, 100), 40, glm::vec4(1, 0, 0, 1));
 		else text.render(textTime, glm::vec2(455, 100), 40, glm::vec4(1, 1, 1, 1));
 	}
 	else {
-		if (currentTime < 50000) text.render(textTime, glm::vec2(455, 100), 40, glm::vec4(0.3, 0.3, 0.3, 1));
+		if (currentTime < 1000 * (TIME - 10)) text.render(textTime, glm::vec2(455, 100), 40, glm::vec4(0.3, 0.3, 0.3, 1));
 		else if (int(currentTime) % 1000 < 500) text.render(textTime, glm::vec2(455, 100), 40, glm::vec4(0.3, 0, 0, 1));
 		else text.render(textTime, glm::vec2(455, 100), 40, glm::vec4(0.3, 0.3, 0.3, 1));
 	}

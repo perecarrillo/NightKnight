@@ -17,6 +17,7 @@
 #include "Chest.h"
 #include "MovingSlab.h"
 #include "StopWatch.h"
+#include "Item.h"
 
 #include <iostream>
 #include <fstream>
@@ -67,7 +68,7 @@ private:
 	TileMap *map2;
 	Player *player;
 	ShaderProgram texProgram;
-	float currentTime;
+	float currentTime, iniFreezeTime;
 	glm::mat4 projection;	
 
 	Quad *quad;
@@ -85,15 +86,17 @@ private:
 	int numSkeletons, numRates, numVampires;
 	glm::vec2 posCofre, posClau, posJugador;
 
-	Key *key;
 	Chest *chest;
-	StopWatch *stopwatch;
+	Item *key;
+	Item *stopwatch;
+	Item *gem;
 
 	bool allPressed;
 	bool unlockChest;
 	bool openChest;
 	bool win;
 	bool takenStopwatch;
+	bool takenGem;
 
 };
 
