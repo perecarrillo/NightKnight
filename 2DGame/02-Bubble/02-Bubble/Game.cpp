@@ -29,7 +29,7 @@ bool Game::update(int deltaTime)
 
 	int level = scene.getNumLevel();
 
-	if (scene.isWin() && level < 3 && !changingLevel) {
+	if (scene.isWin() && level < 6 && !changingLevel) {
 		changingLevel = true;
 		circle->changeRadius(400.f);
 		glm::vec2 posPlayer = scene.getPosPlayer();
@@ -101,6 +101,18 @@ void Game::keyPressed(int key)
 	}
 	if ((key == 99 || key == 51) && state == MENU) { // key 3
 		if (scene.getNumLevel() != 3 || scene.isGameOver()) scene.changeLevel(3);
+		state = PLAYING;
+	}
+	if ((key == 100 || key == 52) && state == MENU) { // key 4
+		if (scene.getNumLevel() != 4 || scene.isGameOver()) scene.changeLevel(4);
+		state = PLAYING;
+	}
+	if ((key == 101 || key == 53) && state == MENU) { // key 5
+		if (scene.getNumLevel() != 5 || scene.isGameOver()) scene.changeLevel(5);
+		state = PLAYING;
+	}
+	if ((key == 102 || key == 54) && state == MENU) { // key 6
+		if (scene.getNumLevel() != 6 || scene.isGameOver()) scene.changeLevel(6);
 		state = PLAYING;
 	}
 

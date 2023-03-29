@@ -248,7 +248,7 @@ void Scene::checkCollisions()
 			chest->openChest();
 		}
 	}
-	if (stopwatch->shouldCheckCollision()) {
+	if (!takenStopwatch && stopwatch->shouldCheckCollision()) {
 		glm::ivec2 enemyMin = stopwatch->getBoundingBoxMin();
 		glm::ivec2 enemyMax = stopwatch->getBoundingBoxMax();
 		if ((playerMin.x < enemyMax.x && enemyMin.x < playerMax.x) && (playerMin.y < enemyMax.y && enemyMin.y < playerMax.y)) {
@@ -256,7 +256,7 @@ void Scene::checkCollisions()
 			iniFreezeTime = currentTime;
 		}
 	}
-	if (gem->shouldCheckCollision()) {
+	if (!takenGem && gem->shouldCheckCollision()) {
 		glm::ivec2 enemyMin = gem->getBoundingBoxMin();
 		glm::ivec2 enemyMax = gem->getBoundingBoxMax();
 		if ((playerMin.x < enemyMax.x && enemyMin.x < playerMax.x) && (playerMin.y < enemyMax.y && enemyMin.y < playerMax.y)) {
@@ -330,7 +330,7 @@ void Scene::render(bool playing)
 
 bool Scene::isGameOver()
 {
-	return (player->getNumHearts() <= 0 || currentTime > 60000);
+	return (player->getNumHearts() <= 0 || currentTime > TIME*1000);
 }
 
 bool Scene::isWin()
