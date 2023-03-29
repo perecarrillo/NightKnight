@@ -17,6 +17,7 @@ Entity::Entity(int x, int y)
 void Entity::init(string textureFile, const glm::ivec2 & tileMapPos, ShaderProgram & shaderProgram)
 {
 
+	if (animationSpeed == -1) animationSpeed = animationLength;
 	spritesheet.loadFromFile(textureFile, TEXTURE_PIXEL_FORMAT_RGBA);
 	spritesheet.setMagFilter(GL_NEAREST);
 	int numberOfAnimations = animationsUsed.size();
@@ -25,7 +26,7 @@ void Entity::init(string textureFile, const glm::ivec2 & tileMapPos, ShaderProgr
 	sprite = Sprite::createSprite(spriteSize, glm::vec2(disp, 1.0f / animationLength), &spritesheet, &shaderProgram);
 	sprite->setNumberOfLastAnimation(*max_element(animationsUsed.begin(), animationsUsed.end()));
 	for (int i = 0; i < numberOfAnimations; ++i) {
-		sprite->setAnimationSpeed(animationsUsed[i], animationLength);
+		sprite->setAnimationSpeed(animationsUsed[i], animationSpeed);
 		for (int j = 0; j < animationLength; ++j) {
 			sprite->addKeyframe(animationsUsed[i], glm::vec2(disp*i, float(j) / animationLength));
 		}

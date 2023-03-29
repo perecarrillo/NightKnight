@@ -1,6 +1,6 @@
 20 20 -- posició inicial jugador
 42 -- nombre de rajoles
-8 13 -- posició cofre
+8 11 -- posició cofre
 10 20 -- posició clau
 10 10 -- posició stopwatch
 0 -- nombre rajoles que es mouen
