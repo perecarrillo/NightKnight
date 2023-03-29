@@ -16,7 +16,9 @@ private:
 	glm::ivec2 start;
 	glm::ivec2 end;
 	bool movingLeft;
+	bool movingUp;
 	bool painted;
+	float verticalSpeed;
 };
 
 #endif

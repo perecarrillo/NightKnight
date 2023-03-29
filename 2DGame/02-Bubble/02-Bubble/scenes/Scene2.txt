@@ -8,7 +8,7 @@
 3 50 -- temps aparicio-desaparicio gemma
 1 -- nombre rajoles que es mouen
 7 23 -- 1a posicio (i inicial) rajola 1
-27 23 -- 2a posicio rajola 1
+7 7 -- 2a posicio rajola 1
 2 2 0 -- nombre enemics (esquelets, rates, ratpenats)
 11 13 -- posicio esquelet 1
 8 22 -- posicio esquelet 2

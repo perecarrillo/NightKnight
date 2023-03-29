@@ -94,16 +94,18 @@ void Player::update(int deltaTime)
 					jumpLost += position.y - int(startY - JUMP_HEIGHT * sin(3.14159f * jumpAngle / 180.f));
 				}
 				if (jumpAngle > 90) {
-					bJumping = !map->collisionMoveDown(position + glm::vec2(WIDTH_OFFSET, 0), glm::ivec2(WIDTH, HEIGHT), &position.y, 0, isOnPlatform);
+					bJumping = !isOnPlatform && !map->collisionMoveDown(position + glm::vec2(WIDTH_OFFSET, 0), glm::ivec2(WIDTH, HEIGHT), &position.y, 0);
 					if (!bJumping) coyoteTime = 0;
 				}
 			}
 		}
 		else
 		{
-			position.y += FALL_STEP;
+			if (!isOnPlatform)
+				position.y += FALL_STEP;
 
-			bool collisionDown = map->collisionMoveDown(position + glm::vec2(WIDTH_OFFSET, 0), glm::ivec2(WIDTH, HEIGHT), &position.y, 0, isOnPlatform);
+			bool collisionDown = isOnPlatform || map->collisionMoveDown(position + glm::vec2(WIDTH_OFFSET, 0), glm::ivec2(WIDTH, HEIGHT), &position.y, 0);
+			//bool collisionDown = map->collisionMoveDown(position + glm::vec2(WIDTH_OFFSET, 0), glm::ivec2(WIDTH, HEIGHT), &position.y, 0, isOnPlatform);
 			if (!collisionDown) ++coyoteTime;
 			if (collisionDown || coyoteTime < COYOTE_TIME)
 			{
@@ -175,6 +177,11 @@ void Player::addXMovement(float value)
 	position.x += value;
 }
 
+void Player::addYMovement(float value)
+{
+	position.y += value;
+}
+
 void Player::toggleInmunity()
 {
 	invincible = !invincible;
@@ -200,3 +207,10 @@ glm::vec2 Player::getPosition()
 {
 	return glm::vec2(position.x + WIDTH_OFFSET, position.y);
 }
+
+void Player::setPosition(glm::vec2 pos)
+{
+	position.x = pos.x - WIDTH_OFFSET;
+	position.y = pos.y;
+}
+

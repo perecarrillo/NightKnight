@@ -87,11 +87,11 @@ void Rata::updateAI(int deltaTime)
 				sprite->changeAnimation(MOVE_LEFT);
 			position.y += FALL_STEP;
 			bool collisionDown;
-			collisionDown = map->collisionMoveDown(position + glm::vec2(WIDTH_OFFSET_LEFT, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), &position.y, HEIGHT_OFFSET, false);
+			collisionDown = map->collisionMoveDown(position + glm::vec2(WIDTH_OFFSET_LEFT, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), &position.y, HEIGHT_OFFSET);
 
 			position.x -= speed;
 			bool collisionLeft = map->collisionMoveLeft(position + glm::vec2(WIDTH_OFFSET_LEFT, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT));
-			bool collisionDownLeft = map->collisionMoveDown(position + glm::vec2(-map->getTileSize()*2, map->getTileSize()) + glm::vec2(WIDTH_OFFSET, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), &trash, HEIGHT_OFFSET, false);
+			bool collisionDownLeft = map->collisionMoveDown(position + glm::vec2(-map->getTileSize()*2, map->getTileSize()) + glm::vec2(WIDTH_OFFSET, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), &trash, HEIGHT_OFFSET);
 			pair<int, int> jumpTo = map->closestJumpPosition(position + glm::vec2(WIDTH_OFFSET_LEFT, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), true);
 			if (collisionLeft || (collisionDown && !collisionDownLeft && jumpTo.first == -1))
 			{
@@ -115,11 +115,11 @@ void Rata::updateAI(int deltaTime)
 				sprite->changeAnimation(MOVE_RIGHT);
 			position.y += FALL_STEP;
 			bool collisionDown;
-			collisionDown = map->collisionMoveDown(position + glm::vec2(WIDTH_OFFSET, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), &position.y, HEIGHT_OFFSET, false);
+			collisionDown = map->collisionMoveDown(position + glm::vec2(WIDTH_OFFSET, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), &position.y, HEIGHT_OFFSET);
 
 			position.x += speed;
 			bool collisionRight = map->collisionMoveRight(position + glm::vec2(WIDTH_OFFSET, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT));
-			bool collisionDownRight = map->collisionMoveDown(position + glm::vec2(map->getTileSize(), map->getTileSize()) + glm::vec2(WIDTH_OFFSET, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), &trash, HEIGHT_OFFSET, false);
+			bool collisionDownRight = map->collisionMoveDown(position + glm::vec2(map->getTileSize(), map->getTileSize()) + glm::vec2(WIDTH_OFFSET, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), &trash, HEIGHT_OFFSET);
 			pair<int, int> jumpTo = map->closestJumpPosition(position + glm::vec2(WIDTH_OFFSET, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), false);
 			if (collisionRight || (collisionDown && !collisionDownRight && jumpTo.first == -1))
 			{
@@ -151,7 +151,7 @@ void Rata::updateAI(int deltaTime)
 		{
 			position.y = int((startY)-JUMP_HEIGHT * sin(3.14159f * jumpAngle / 180.f));
 			if (jumpAngle > 90) {
-				jumping = !map->collisionMoveDown(position + glm::vec2(WIDTH_OFFSET_LEFT, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), &position.y, HEIGHT_OFFSET, false);
+				jumping = !map->collisionMoveDown(position + glm::vec2(WIDTH_OFFSET_LEFT, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), &position.y, HEIGHT_OFFSET);
 				if (!jumping) {
 					if (movingLeft) sprite->changeAnimation(MOVE_LEFT);
 					else sprite->changeAnimation(MOVE_RIGHT);
@@ -231,7 +231,7 @@ void Rata::updatePredefinedMovements(int deltaTime)
 
 			position.y = int((startY)-JUMP_HEIGHT * sin(3.14159f * jumpAngle / 180.f));
 			if (jumpAngle > 90) {
-				jumpingLeft = !map->collisionMoveDown(position + glm::vec2(WIDTH_OFFSET_LEFT, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), &position.y, HEIGHT_OFFSET, false);
+				jumpingLeft = !map->collisionMoveDown(position + glm::vec2(WIDTH_OFFSET_LEFT, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), &position.y, HEIGHT_OFFSET);
 				if (!jumpingLeft) {
 					++actualMovement.first;
 					nextAnimation();
@@ -262,7 +262,7 @@ void Rata::updatePredefinedMovements(int deltaTime)
 
 			position.y = int((startY)-JUMP_HEIGHT * sin(3.14159f * jumpAngle / 180.f));
 			if (jumpAngle > 90) {
-				jumpingRight = !map->collisionMoveDown(position + glm::vec2(WIDTH_OFFSET, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), &position.y, HEIGHT_OFFSET, false);
+				jumpingRight = !map->collisionMoveDown(position + glm::vec2(WIDTH_OFFSET, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), &position.y, HEIGHT_OFFSET);
 				if (!jumpingRight) {
 					++actualMovement.first;
 					nextAnimation();
@@ -280,9 +280,9 @@ void Rata::updatePredefinedMovements(int deltaTime)
 		position.y += FALL_STEP;
 		bool collisionDown;// = map->collisionMoveDown(position + glm::vec2(WIDTH_OFFSET, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), &position.y, HEIGHT_OFFSET);
 		if (sprite->animation() == MOVE_LEFT || sprite->animation() == STAND_LEFT || sprite->animation() == JUMP_LEFT)
-			collisionDown = map->collisionMoveDown(position + glm::vec2(WIDTH_OFFSET_LEFT, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), &position.y, HEIGHT_OFFSET, false);
+			collisionDown = map->collisionMoveDown(position + glm::vec2(WIDTH_OFFSET_LEFT, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), &position.y, HEIGHT_OFFSET);
 		else if (sprite->animation() == MOVE_RIGHT || sprite->animation() == STAND_RIGHT)
-			collisionDown = map->collisionMoveDown(position + glm::vec2(WIDTH_OFFSET, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), &position.y, HEIGHT_OFFSET, false);
+			collisionDown = map->collisionMoveDown(position + glm::vec2(WIDTH_OFFSET, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), &position.y, HEIGHT_OFFSET);
 
 		if (collisionDown)
 		{

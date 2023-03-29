@@ -36,9 +36,11 @@ public:
 	int getWidth();
 	int getHeight();
 	void addXMovement(float value);
+	void addYMovement(float value);
 	void toggleInmunity();
 
 	glm::vec2 getPosition();
+	void setPosition(glm::vec2 pos);
 
 private:
 	bool bJumping;
