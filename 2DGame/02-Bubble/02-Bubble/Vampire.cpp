@@ -20,14 +20,13 @@ Vampire::Vampire(int x, int y)
 	movingLeft = false;
 	isVampire = true;
 	spriteSize = glm::vec2(32, 32);
+	animationSpeed = 8;
 }
 
 void Vampire::update(int deltaTime)
 {
 	sprite->update(deltaTime);
 	float trash = 0;
-	
-	sprite->setAnimationSpeed(sprite->animation(), 8);
 
 	if (sprite->animation() == TRANSFORM_TO_BAT || sprite->animation() == TRANSFORM_TO_VAMPIRE)
 	{

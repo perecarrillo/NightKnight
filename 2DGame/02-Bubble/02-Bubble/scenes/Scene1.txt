@@ -3,6 +3,10 @@
 19 10 -- posició cofre
 16 16 -- posició clau
 8 14 -- posició stopwatch
+26 -- nombre de rajoles
+19 5 -- posició cofre
+16 20 -- posició clau
+8 13 -- posició stopwatch
 3 30 -- temps aparicio-desaparicio stopwatch
 18 16 -- posició gemma
 3 50 -- temps aparicio-desaparicio gemma
@@ -11,4 +15,4 @@
 27 22 -- posicio esquelet 1
 22 10 -- posicio esquelet 2
 19 5 -- posicio rata 1
-22 11 -- posicio vampir 1
+22 11 -- posicio vampir 1	

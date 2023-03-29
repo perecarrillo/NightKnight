@@ -301,6 +301,7 @@ void Scene::render(bool playing)
 	{
 		textTime = std::to_string(TIME - currentTime / 1000);
 		textTime = textTime.substr(0, 3);
+		if (textTime[0] == '-') textTime = "0.0";
 	}
 	// Print shadow 
 	text.render(textTime, glm::vec2(455 + 3, 100 + 3), 40, glm::vec4(0, 0, 0, 1));
@@ -423,7 +424,6 @@ void Scene::togglePlayerInmunity()
 
 void Scene::finishLevel()
 {
-	
 	win = true;
 }
 
