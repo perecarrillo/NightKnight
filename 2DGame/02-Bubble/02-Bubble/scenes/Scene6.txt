@@ -1,6 +1,6 @@
 25 17 -- posició inicial jugador
 25 -- nombre de rajoles
-19 7 -- posició cofre
+17 13 -- posició cofre
 12 22 -- posició clau
 10 8 -- posició stopwatch
 10 30 -- temps aparicio-desaparicio stopwatch
