@@ -3,6 +3,9 @@
 19 5 -- posició cofre
 12 20 -- posició clau
 10 10 -- posició stopwatch
+10 30 -- temps aparicio-desaparicio stopwatch
+19 16 -- posició gemma
+3 50 -- temps aparicio-desaparicio gemma
 1 -- nombre rajoles que es mouen
 7 11 -- 1a posicio (i inicial) rajola 1
 27 11 -- 2a posicio rajola 1

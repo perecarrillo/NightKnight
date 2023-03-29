@@ -2,7 +2,10 @@
 26 -- nombre de rajoles
 19 5 -- posició cofre
 16 20 -- posició clau
-10 10 -- posició stopwatch
+8 13 -- posició stopwatch
+3 30 -- temps aparicio-desaparicio stopwatch
+19 16 -- posició gemma
+3 50 -- temps aparicio-desaparicio gemma
 0 -- nombre rajoles que es mouen
 2 1 1 -- nombre enemics (esquelets, rates, ratpenats)
 27 22 -- posicio esquelet 1

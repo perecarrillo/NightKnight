@@ -16,6 +16,7 @@
     <ClInclude Include="CircleAnimation.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Item.h" />
     <ClInclude Include="Key.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="MovingSlab.h" />
@@ -39,6 +40,7 @@
     <ClCompile Include="CircleAnimation.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Item.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MovingSlab.cpp" />
