@@ -57,6 +57,8 @@ public:
 	void togglePlayerInmunity();
 
 	glm::vec2 getPosPlayer();
+
+	glm::vec2 getChestPosition();
 	
 
 private:

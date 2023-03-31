@@ -12,13 +12,16 @@ class Chest : public Entity
 
 public:
 	Chest(int x, int y);
-	void update(int deltaTime);
+	void update(int deltaTime, bool finalLevel);
 	void openChest();
 	void unlockChest();
 	bool isOpened();
+	bool playerHasEntered();
+	glm::vec2 getPosition();
+private:
 	int time;
-	int finishingTime;
 	bool open, unlock, opened;
+	bool playerIn;
 };
 
 #endif

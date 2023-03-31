@@ -11,6 +11,7 @@
 #define NUM_TILES_Y 26
 #define TIME 120
 #define FREEZETIME 5
+#define NUM_LAST_LEVEL 6
 
 
 Scene::Scene()
@@ -195,27 +196,27 @@ void Scene::init()
 
 void Scene::update(int deltaTime)
 {
-	if (!openChest) currentTime += deltaTime; //només actualitzem el temps de l'escena si no s'ha acabat el nivell
-	int slabsPainted = 0;
-	for (MovingSlab * ms : movingPlatforms) {
-		ms->update(deltaTime, player);
-		if (ms->isPainted())
-			++slabsPainted;
-	}
-	player->update(deltaTime);
 	if (!openChest) {
+		currentTime += deltaTime; //només actualitzem el temps de l'escena si no s'ha acabat el nivell
+		int slabsPainted = 0;
+		for (MovingSlab * ms : movingPlatforms) {
+			ms->update(deltaTime, player);
+			if (ms->isPainted())
+				++slabsPainted;
+		}
+		player->update(deltaTime);
 		if (!takenStopwatch || iniFreezeTime + FREEZETIME * 1000 < currentTime) {
 			for (Entity * enemy : enemies) {
 				enemy->update(deltaTime);
 			}
+			checkCollisions();
+			key->update(deltaTime);
+			if (!takenStopwatch) stopwatch->update(deltaTime);
+			if (!takenGem) gem->update(deltaTime);
+			if (map->numRajolesPressed() + slabsPainted >= numRajoles) allPressed = true;
 		}
-		checkCollisions();
-		key->update(deltaTime);
-		if(!takenStopwatch) stopwatch->update(deltaTime);
-		if (!takenGem) gem->update(deltaTime);
-		if (map->numRajolesPressed() + slabsPainted >= numRajoles) allPressed = true;
 	}
-	chest->update(deltaTime);
+	chest->update(deltaTime, numLevel == NUM_LAST_LEVEL);
 	if (chest->isOpened()) finishLevel();
 }
 
@@ -293,7 +294,10 @@ void Scene::render(bool playing)
 	for (Entity * enemy : enemies) {
 		enemy->render();
 	}
-	player->render();
+	if (!chest->isOpened()) {
+		cout << "rendering player" << endl;
+		player->render();
+	}
 
 	// Print time
 	string textTime = std::to_string(TIME - int(currentTime / 1000));
@@ -336,7 +340,7 @@ bool Scene::isGameOver()
 
 bool Scene::isWin()
 {
-	return win;
+	return win && chest->playerHasEntered();
 }
 
 void Scene::changeLevel(int n)
@@ -420,8 +424,6 @@ void Scene::togglePlayerInmunity()
 	player->toggleInmunity();
 }
 
-
-
 void Scene::finishLevel()
 {
 	win = true;
@@ -430,6 +432,11 @@ void Scene::finishLevel()
 glm::vec2 Scene::getPosPlayer()
 {
 	return player->getPosition();
+}
+
+glm::vec2 Scene::getChestPosition()
+{
+	return chest->getPosition();
 }
 
 

@@ -10,16 +10,16 @@ Chest::Chest(int x, int y) {
 	WIDTH = 16;
 	HEIGHT = 18;
 	HEIGHT_OFFSET = 1;
-	animationsUsed = { LOCKED, UNLOCKING, UNLOCKED, OPENING_EMPTY , OPENED_EMPTY, OPENING_FULL, OPENED_FULL, ENTERING };
+	animationsUsed = { LOCKED, UNLOCKING, UNLOCKED, OPENING_FULL , OPENED_FULL, OPENING_EMPTY, OPENED_EMPTY, ENTERING };
 	animationLength = 8;
 	spriteSize = glm::vec2(16, 32);
 	open = false;
 	unlock = false;
 	opened = false;
-	finishingTime = 0;
+	playerIn = false;
 }
 
-void Chest::update(int deltaTime)
+void Chest::update(int deltaTime, bool finalLevel)
 {
 	sprite->update(deltaTime);
 	time += deltaTime;
@@ -27,10 +27,14 @@ void Chest::update(int deltaTime)
 		sprite->changeAnimation(UNLOCKING);
 	}
 	else if (sprite->animation() == UNLOCKED && open) {
-		sprite->changeAnimation(OPENING_EMPTY);
+		if (finalLevel) sprite->changeAnimation(OPENING_FULL);
+		else sprite->changeAnimation(OPENING_EMPTY);
 	}
 	else if (sprite->animation() == UNLOCKING && sprite->getKeyFrame() > 3) {
 		sprite->changeAnimation(UNLOCKED);
+	}
+	else if (sprite->animation() == OPENING_FULL && sprite->getKeyFrame() > 3) {
+		sprite->changeAnimation(OPENED_FULL);
 	}
 	else if (sprite->animation() == OPENING_EMPTY && sprite->getKeyFrame() > 3) {
 		sprite->changeAnimation(OPENED_EMPTY);
@@ -40,8 +44,11 @@ void Chest::update(int deltaTime)
 	if (opened) {
 		if (sprite->animation() != ENTERING)
 			sprite->changeAnimation(ENTERING);
-
-		finishingTime += deltaTime;
+		if (sprite->getKeyFrame() >= animationLength - 1) {
+			playerIn = true;
+			if (sprite->animation() != OPENED_EMPTY)
+				sprite->changeAnimation(OPENED_EMPTY);
+		}
 	}
 }
 
@@ -55,6 +62,16 @@ void Chest::unlockChest() {
 }
 
 bool Chest::isOpened() {
-	return (opened && finishingTime > 1000); // the chest it's open after the animation finishes and passes and extra time
+	return (opened); // the chest it's open after the animation finishes and passes and extra time
 	//return opened;
+}
+
+bool Chest::playerHasEntered()
+{
+	return playerIn;
+}
+
+glm::vec2 Chest::getPosition()
+{
+	return glm::vec2(position.x + WIDTH_OFFSET + WIDTH/2., position.y + HEIGHT_OFFSET + HEIGHT/2.);
 }
