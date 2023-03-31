@@ -74,7 +74,7 @@ private:
 	glm::mat4 projection;	
 
 	Quad *quad;
-	Texture texs[2];
+	Texture texs[3];
 	TexturedQuad *texQuad[3];
 
 	Text text;

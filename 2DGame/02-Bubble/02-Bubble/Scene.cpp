@@ -4,6 +4,9 @@
 #include "Scene.h"
 #include "Game.h"
 
+#include <GL/glew.h>
+#include <GL/glut.h>
+
 
 #define SCREEN_X 9
 #define SCREEN_Y 8 //Offset pantalla
@@ -174,6 +177,9 @@ void Scene::init()
 	texs[1].loadFromFile("images/lostHeart.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	texs[1].setMagFilter(GL_NEAREST);
 
+	texs[2].loadFromFile("images/coin.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	texs[2].setMagFilter(GL_NEAREST);
+
 
 	// Select which font you want to use
 	if (!text.init("fonts/Supply Center.ttf"))
@@ -298,28 +304,45 @@ void Scene::render(bool playing)
 		if (textTime[0] == '-') textTime = "0.0";
 	}
 	// Print shadow 
-	text.render(textTime, glm::vec2(455 + 3, 100 + 3), 40, glm::vec4(0, 0, 0, 1));
+	text.render(textTime, glm::vec2(0.48*glutGet(GLUT_WINDOW_WIDTH) + 3, 0.125*glutGet(GLUT_WINDOW_HEIGHT) + 3), 40, glm::vec4(0, 0, 0, 1));
 	// Print number
 	if (playing) {
-		if (currentTime < 1000*(TIME - 10)) text.render(textTime, glm::vec2(455, 100), 40, glm::vec4(1, 1, 1, 1));
-		else if (int(currentTime) % 1000 < 500) text.render(textTime, glm::vec2(455, 100), 40, glm::vec4(1, 0, 0, 1));
-		else text.render(textTime, glm::vec2(455, 100), 40, glm::vec4(1, 1, 1, 1));
+		if (currentTime < 1000*(TIME - 10)) text.render(textTime, glm::vec2(0.48*glutGet(GLUT_WINDOW_WIDTH), 0.125*glutGet(GLUT_WINDOW_HEIGHT)), 40, glm::vec4(1, 1, 1, 1));
+		else if (int(currentTime) % 1000 < 500) text.render(textTime, glm::vec2(0.48*glutGet(GLUT_WINDOW_WIDTH), 0.125*glutGet(GLUT_WINDOW_HEIGHT)), 40, glm::vec4(1, 0, 0, 1));
+		else text.render(textTime, glm::vec2(0.48*glutGet(GLUT_WINDOW_WIDTH), 0.125*glutGet(GLUT_WINDOW_HEIGHT)), 40, glm::vec4(1, 1, 1, 1));
 	}
 	else {
-		if (currentTime < 1000 * (TIME - 10)) text.render(textTime, glm::vec2(455, 100), 40, glm::vec4(0.3, 0.3, 0.3, 1));
-		else if (int(currentTime) % 1000 < 500) text.render(textTime, glm::vec2(455, 100), 40, glm::vec4(0.3, 0, 0, 1));
-		else text.render(textTime, glm::vec2(455, 100), 40, glm::vec4(0.3, 0.3, 0.3, 1));
+		if (currentTime < 1000 * (TIME - 10)) text.render(textTime, glm::vec2(0.48*glutGet(GLUT_WINDOW_WIDTH), 0.125*glutGet(GLUT_WINDOW_HEIGHT)), 40, glm::vec4(0.3, 0.3, 0.3, 1));
+		else if (int(currentTime) % 1000 < 500) text.render(textTime, glm::vec2(0.48*glutGet(GLUT_WINDOW_WIDTH), 0.125*glutGet(GLUT_WINDOW_HEIGHT)), 40, glm::vec4(0.3, 0, 0, 1));
+		else text.render(textTime, glm::vec2(0.48*glutGet(GLUT_WINDOW_WIDTH), 0.125*glutGet(GLUT_WINDOW_HEIGHT)), 40, glm::vec4(0.3, 0.3, 0.3, 1));
 	}
 
 	// Print num level
 	string textLevel = "Stage " + std::to_string(numLevel);
-	text.render(textLevel, glm::vec2(730 + 3, 100 + 3), 40, glm::vec4(0, 0, 0, 1));
-	if (playing) text.render(textLevel, glm::vec2(730, 100), 40, glm::vec4(1, 1, 1, 1));
-	else text.render(textLevel, glm::vec2(730, 100), 40, glm::vec4(0.3f, 0.3f, 0.3f, 1));
+	text.render(textLevel, glm::vec2(0.8*glutGet(GLUT_WINDOW_WIDTH) + 3, 0.12*glutGet(GLUT_WINDOW_HEIGHT) + 3), 30, glm::vec4(0, 0, 0, 1));
+	if (playing) text.render(textLevel, glm::vec2(0.8*glutGet(GLUT_WINDOW_WIDTH), 0.12*glutGet(GLUT_WINDOW_HEIGHT)), 30, glm::vec4(1, 1, 1, 1));
+	else text.render(textLevel, glm::vec2(0.8*glutGet(GLUT_WINDOW_WIDTH), 0.12*glutGet(GLUT_WINDOW_HEIGHT)), 30, glm::vec4(0.3f, 0.3f, 0.3f, 1));
+
+	// Print coins
+	string textCoins;
+	int coins = player->getNumCoins();
+	if (coins > 9999) textCoins = "9999"; // 9999 is the maximum value of the coins
+	else textCoins = std::to_string(coins);
+	textCoins = "4658";
+	text.render(textCoins, glm::vec2(0.34*glutGet(GLUT_WINDOW_WIDTH) + 3, 0.12*glutGet(GLUT_WINDOW_HEIGHT) + 3), 30, glm::vec4(0, 0, 0, 1));
+	if (playing) text.render(textCoins, glm::vec2(0.34*glutGet(GLUT_WINDOW_WIDTH), 0.12*glutGet(GLUT_WINDOW_HEIGHT)), 30, glm::vec4(1, 1, 1, 1));
+	else text.render(textCoins, glm::vec2(0.34*glutGet(GLUT_WINDOW_WIDTH), 0.12*glutGet(GLUT_WINDOW_HEIGHT)), 30, glm::vec4(0.3f, 0.3f, 0.3f, 1));
 
 	texProgram.use();
 
 	printHearts();
+
+	// Print coin image
+	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
+	modelview = glm::translate(glm::mat4(1.0f), glm::vec3(20.f + 61.f, 18.f, 0.f));
+	texProgram.setUniformMatrix4f("modelview", modelview);
+	texQuad[0]->render(texs[2]);
+
 
 }
 
@@ -380,7 +403,7 @@ void Scene::printHearts() {
 	int num = player->getNumHearts();
 	glm::mat4 modelview;
 	for (int i = 0; i < 5; ++i) {
-		modelview = glm::translate(glm::mat4(1.0f), glm::vec3(20.f + i*12.f, 18.f, 0.f));
+		modelview = glm::translate(glm::mat4(1.0f), glm::vec3(20.f + i*10.f, 18.f, 0.f));
 		texProgram.setUniformMatrix4f("modelview", modelview);
 		if (i < num) texQuad[0]->render(texs[0]);
 		else  texQuad[0]->render(texs[1]);
