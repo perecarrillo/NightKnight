@@ -41,8 +41,8 @@ bool Game::update(int deltaTime)
 		levelExpanding = true;
 		changeLevel(++level);
 		circle->changeRadius(0.f);
-		glm::vec2 chestPos = scene.getChestPosition();
-		circle->changeCenter(chestPos.x, chestPos.y);
+		glm::vec2 posPlayer = scene.getPosPlayer();
+		circle->changeCenter(posPlayer.x, posPlayer.y);
 		circle->changeToExpand();
 	}
 

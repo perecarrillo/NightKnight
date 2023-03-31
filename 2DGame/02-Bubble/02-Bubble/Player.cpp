@@ -138,6 +138,14 @@ void Player::update(int deltaTime)
 
 }
 
+void Player::moveToChest(int deltaTime, glm::vec2 chestPosition)
+{
+	sprite->update(deltaTime);
+	time += deltaTime;
+
+	sprite->setPosition(glm::vec2(float(tileMapDispl.x + position.x), float(tileMapDispl.y + position.y)));
+}
+
 void Player::render()
 {	
 	if (!inmune || show) sprite->render();

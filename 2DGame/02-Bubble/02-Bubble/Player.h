@@ -19,6 +19,7 @@ class Player : public Entity
 public:
 	Player(int x, int y);
 	void update(int deltaTime);
+	void moveToChest(int deltaTime, glm::vec2 chestPosition);
 	void render();
 	
 	int getNumHearts();

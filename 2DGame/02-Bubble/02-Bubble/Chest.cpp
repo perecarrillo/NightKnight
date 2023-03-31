@@ -71,5 +71,5 @@ bool Chest::playerHasEntered()
 
 glm::vec2 Chest::getPosition()
 {
-	return glm::vec2(position.x + WIDTH_OFFSET + WIDTH/2., position.y + HEIGHT_OFFSET + HEIGHT/2.);
+	return glm::vec2(position.x, position.y + HEIGHT_OFFSET + HEIGHT);
 }

@@ -203,6 +203,9 @@ void Scene::update(int deltaTime)
 			if (map->numRajolesPressed() + slabsPainted >= numRajoles) allPressed = true;
 		}
 	}
+	else {
+		//player->moveToChest(deltaTime, chest->getPosition());
+	}
 	chest->update(deltaTime, numLevel == NUM_LAST_LEVEL);
 	if (chest->isOpened()) finishLevel();
 }
