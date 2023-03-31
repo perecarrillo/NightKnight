@@ -4,9 +4,7 @@
 using namespace std;
 
 Skeleton::Skeleton(int x, int y) {
-	//cout << initialPosition.x<<' '<< initialPosition.y << endl;
 	initialPosition = glm::ivec2(x, y);
-	position = initialPosition;
 	speed = 0.5;
 	movement = { { MOVE_LEFT,-1 }, { STAND_RIGHT, 50 }, { MOVE_RIGHT, -1 }, { STAND_LEFT, 50 } };
 	WIDTH = 10;

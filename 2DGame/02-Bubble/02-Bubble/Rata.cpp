@@ -22,7 +22,6 @@ Rata::Rata(int x, int y, vector<pair<int, int>> movement)
 
 void Rata::setUp() 
 {
-	position = initialPosition;
 	speed = 0.8;
 	jumpingSpeed = 1.3;
 	movement = { { MOVE_LEFT,112 },{ JUMP_LEFT, 5 },{ STAND_LEFT, 250 },{ JUMP_RIGHT, 5 },{ MOVE_RIGHT, 112 },{ JUMP_RIGHT, 5 },{ MOVE_RIGHT, 250 },{ MOVE_LEFT, 20 },{ JUMP_LEFT, 3 } };

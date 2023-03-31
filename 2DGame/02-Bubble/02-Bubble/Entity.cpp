@@ -14,9 +14,10 @@ Entity::Entity(int x, int y)
 	initialPosition = glm::vec2(x, y);
 }
 
-void Entity::init(string textureFile, const glm::ivec2 & tileMapPos, ShaderProgram & shaderProgram)
+void Entity::init(string textureFile, const glm::ivec2 & tileMapPos, ShaderProgram & shaderProgram, TileMap *map)
 {
-
+	position = glm::vec2(initialPosition * map->getTileSize());
+	this->map = map;
 	if (animationSpeed == -1) animationSpeed = animationLength;
 	spritesheet.loadFromFile(textureFile, TEXTURE_PIXEL_FORMAT_RGBA);
 	spritesheet.setMagFilter(GL_NEAREST);

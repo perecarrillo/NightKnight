@@ -8,7 +8,6 @@ using namespace std;
 Item::Item(int x, int y, float appear, float disappear)
 {
 	initialPosition = glm::ivec2(x, y);
-	position = initialPosition;
 	speed = 0.5;
 	movement = { { MOVE_LEFT,1 } };
 	WIDTH = 16;

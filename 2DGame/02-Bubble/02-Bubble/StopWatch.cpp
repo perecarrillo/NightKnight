@@ -6,7 +6,6 @@ using namespace std;
 StopWatch::StopWatch(int x, int y) {
 	//cout << initialPosition.x<<' '<< initialPosition.y << endl;
 	initialPosition = glm::ivec2(x, y);
-	position = initialPosition;
 	speed = 0.5;
 	WIDTH = 14;
 	HEIGHT = 14;

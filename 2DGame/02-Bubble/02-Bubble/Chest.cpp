@@ -4,9 +4,7 @@
 using namespace std;
 
 Chest::Chest(int x, int y) {
-	//cout << initialPosition.x<<' '<< initialPosition.y << endl;
 	initialPosition = glm::ivec2(x, y);
-	position = initialPosition;
 	WIDTH = 16;
 	HEIGHT = 18;
 	HEIGHT_OFFSET = 1;

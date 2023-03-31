@@ -42,9 +42,7 @@ void Scene::loadScene() {
 	sstream.str(line);
 	sstream >> posJugador.x >> posJugador.y;
 	player = new Player(posJugador.x, posJugador.y);
-	player->init("images/Player.png", glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	player->setPosition(glm::vec2(player->getInitialPosition() * map->getTileSize()));
-	player->setTileMap(map);
+	player->init("images/Player.png", glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, map);
 
 	// Nombre de rajoles del nivell
 	getline(fin, line);
@@ -56,18 +54,14 @@ void Scene::loadScene() {
 	sstream.str(line);
 	sstream >> posCofre.x >> posCofre.y;
 	chest = new Chest(posCofre.x, posCofre.y);
-	chest->init("images/Chest.png", glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	chest->setPosition(glm::vec2(chest->getInitialPosition() * map->getTileSize()));
-	chest->setTileMap(map);
+	chest->init("images/Chest.png", glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, map);
 
 	// Clau
 	getline(fin, line);
 	sstream.str(line);
 	sstream >> posClau.x >> posClau.y;
 	key = new Item(posClau.x, posClau.y, 0, TIME);
-	key->init("images/Key.png", glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	key->setPosition(glm::vec2(key->getInitialPosition() * map->getTileSize()));
-	key->setTileMap(map);
+	key->init("images/Key.png", glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, map);
 
 
 	// Stopwatch
@@ -80,9 +74,7 @@ void Scene::loadScene() {
 	int appearTime, disappearTime;
 	sstream >> appearTime >> disappearTime;
 	stopwatch = new Item(x, y, appearTime, disappearTime);
-	stopwatch->init("images/StopWatch.png", glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	stopwatch->setPosition(glm::vec2(stopwatch->getInitialPosition() * map->getTileSize()));
-	stopwatch->setTileMap(map);
+	stopwatch->init("images/StopWatch.png", glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, map);
 	
 	// Gemma
 	getline(fin, line);
@@ -92,9 +84,7 @@ void Scene::loadScene() {
 	sstream.str(line);
 	sstream >> appearTime >> disappearTime;
 	gem = new Item(x, y, appearTime, disappearTime);
-	gem->init("images/Gem.png", glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-	gem->setPosition(glm::vec2(gem->getInitialPosition() * map->getTileSize()));
-	gem->setTileMap(map);
+	gem->init("images/Gem.png", glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, map);
 
 	// Nombre rajoles que es mouen
 	getline(fin, line);
@@ -112,8 +102,7 @@ void Scene::loadScene() {
 		sstream.str(line);
 		sstream >> lastX >> lastY;
 		movingPlatforms[i] = new MovingSlab(firstX, firstY, lastX, lastY, map->getTileSize());
-		movingPlatforms[i]->init("images/MovingSlab.png", glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
-		movingPlatforms[i]->setTileMap(map);
+		movingPlatforms[i]->init("images/MovingSlab.png", glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, map);
 	}
 
 
@@ -132,18 +121,16 @@ void Scene::loadScene() {
 		sstream >> posX >> posY;
 		if (i < numSkeletons) {
 			enemies[i] = new Skeleton(posX, posY);
-			enemies[i]->init("images/Skeleton.png", glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+			enemies[i]->init("images/Skeleton.png", glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, map);
 		}
 		else if (i - numSkeletons < numRates) {
 			enemies[i] = new Rata(posX, posY);
-			enemies[i]->init("images/Rata.png", glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+			enemies[i]->init("images/Rata.png", glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, map);
 		}
 		else if (i - numSkeletons - numRates < numVampires) {
 			enemies[i] = new Vampire(posX, posY);
-			enemies[i]->init("images/vampire.png", glm::ivec2(SCREEN_X, SCREEN_Y), texProgram);
+			enemies[i]->init("images/vampire.png", glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, map);
 		}
-		enemies[i]->setPosition(glm::vec2(enemies[i]->getInitialPosition() * map->getTileSize()));
-		enemies[i]->setTileMap(map);
 	}
 
 	

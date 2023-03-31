@@ -16,7 +16,7 @@ class Entity
 public:
 	Entity();
 	Entity(int x, int y);
-	virtual void init(string textureFile, const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram);
+	virtual void init(string textureFile, const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, TileMap *map);
 	virtual void update(int deltaTime);
 	virtual void render();
 

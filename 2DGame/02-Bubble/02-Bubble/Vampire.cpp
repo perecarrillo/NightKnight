@@ -5,7 +5,6 @@
 Vampire::Vampire(int x, int y)
 {
 	initialPosition = glm::ivec2(x, y);
-	position = initialPosition;
 	speed = 0.3;
 	WIDTH = 13;
 	HEIGHT = 16;

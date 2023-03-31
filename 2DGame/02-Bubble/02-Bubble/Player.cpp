@@ -16,7 +16,6 @@
 
 Player::Player(int x, int y) {
 	initialPosition = glm::ivec2(x, y);
-	position = initialPosition;
 	hearts = 5;
 	inmune = false;
 	show = true;
