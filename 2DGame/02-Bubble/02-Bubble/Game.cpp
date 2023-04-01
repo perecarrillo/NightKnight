@@ -121,7 +121,7 @@ void Game::keyPressed(int key)
 	}
 	if (key == 13 && state == LEVELS) { // enter
 		cout << "enter" << endl;
-		int num = menu.getLevelFocus();
+		int num = menu.getLevelFocus() + 1;
 		if (scene.getNumLevel() != num || scene.isGameOver()) scene.changeLevel(num);
 		state = PLAYING;
 	}

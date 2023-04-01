@@ -52,7 +52,7 @@ void Menu::init()
 	texs[2].loadFromFile("images/pause.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	texs[2].setMagFilter(GL_NEAREST);
 
-	texs[3].loadFromFile("images/levels.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	texs[3].loadFromFile("images/levels2.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	texs[3].setMagFilter(GL_NEAREST);
 
 	levelSelector = new LevelSelector();

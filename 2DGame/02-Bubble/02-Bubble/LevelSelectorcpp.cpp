@@ -46,22 +46,22 @@ void LevelSelector::init()
 
 
 	// Load textures
-	texs[0].loadFromFile("images/mapa1.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	texs[0].loadFromFile("images/mapa4.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	texs[0].setMagFilter(GL_NEAREST);
 
-	texs[1].loadFromFile("images/mapa2.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	texs[1].loadFromFile("images/mapa5.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	texs[1].setMagFilter(GL_NEAREST);
 
-	texs[2].loadFromFile("images/mapa3.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	texs[2].loadFromFile("images/mapa6.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	texs[2].setMagFilter(GL_NEAREST);
 
-	texs[3].loadFromFile("images/mapa4.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	texs[3].loadFromFile("images/mapa2.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	texs[3].setMagFilter(GL_NEAREST);
 
-	texs[4].loadFromFile("images/mapa5.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	texs[4].loadFromFile("images/mapa1.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	texs[4].setMagFilter(GL_NEAREST);
 
-	texs[5].loadFromFile("images/mapa6.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	texs[5].loadFromFile("images/mapa3.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	texs[5].setMagFilter(GL_NEAREST);
 
 	texs[6].loadFromFile("images/marc.png", TEXTURE_PIXEL_FORMAT_RGBA);
@@ -105,7 +105,7 @@ void LevelSelector::render()
 
 				// HEIGHT
 				(9 + 26) // offset menu screen height
-				+ 1.4f*height // random offset to put all the maps near the bottom of the menu screen
+				+ 1.35f*height // random offset to put all the maps near the bottom of the menu screen
 				+ (height / (ROWS + 1) + height) * row, 0.f)); // vertical offset between maps plus the height of a map
 			texProgram.setUniformMatrix4f("modelview", modelview);
 			texQuad[0]->render(texs[i]);
@@ -114,22 +114,22 @@ void LevelSelector::render()
 
 	// Expand the level focused
 	modelview = glm::mat4(1.0f);
-	modelview = glm::translate(modelview, glm::vec3((9 + 32) + width / (COLS + 1) + (width / (COLS + 1) + width)*(levelFocus % COLS), (9+26) + 1.4f*height + (height / (ROWS + 1) + height) * (levelFocus/COLS), 0.f));
+	modelview = glm::translate(modelview, glm::vec3((9 + 32) + width / (COLS + 1) + (width / (COLS + 1) + width)*(levelFocus % COLS), (9+26) + 1.35f*height + (height / (ROWS + 1) + height) * (levelFocus/COLS), 0.f));
 	modelview = glm::translate(modelview, glm::vec3(width / 2.f, height / 2.f, 0.f));
-	modelview = glm::scale(modelview, glm::vec3(1.2f, 1.2f, 0));
+	modelview = glm::scale(modelview, glm::vec3(1.1f, 1.1f, 0));
 	modelview = glm::translate(modelview, glm::vec3(-width/2.f, -height/2.f, 0.f));
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texQuad[0]->render(texs[levelFocus]);
 
 	// Put the marc
-	modelview = glm::mat4(1.0f);
-	modelview = glm::translate(modelview, glm::vec3((9 + 32) + width / (COLS + 1) + (width / (COLS + 1) + width)*(levelFocus % COLS), (9 + 26) + 1.4f*height + (height / (ROWS + 1) + height) * (levelFocus / COLS), 0.f));
-	modelview = glm::translate(modelview, glm::vec3(width / 2.f, height / 2.f, 0.f));
-	//modelview = glm::scale(modelview, glm::vec3(1.3f, 1.3f, 0));
-	modelview = glm::translate(modelview, glm::vec3(-width*0.2f, -height*0.2f, 0.f));
-	modelview = glm::translate(modelview, glm::vec3(-width / 2.f, -height / 2.f, 0.f));
-	texProgram.setUniformMatrix4f("modelview", modelview);
-	texQuad[1]->render(texs[6]);
+	//modelview = glm::mat4(1.0f);
+	//modelview = glm::translate(modelview, glm::vec3((9 + 32) + width / (COLS + 1) + (width / (COLS + 1) + width)*(levelFocus % COLS), (9 + 26) + 1.4f*height + (height / (ROWS + 1) + height) * (levelFocus / COLS), 0.f));
+	//modelview = glm::translate(modelview, glm::vec3(width / 2.f, height / 2.f, 0.f));
+	////modelview = glm::scale(modelview, glm::vec3(1.3f, 1.3f, 0));
+	//modelview = glm::translate(modelview, glm::vec3(-width*0.2f, -height*0.2f, 0.f));
+	//modelview = glm::translate(modelview, glm::vec3(-width / 2.f, -height / 2.f, 0.f));
+	//texProgram.setUniformMatrix4f("modelview", modelview);
+	//texQuad[1]->render(texs[6]);
 }
 
 
