@@ -4,7 +4,7 @@
 
 enum State
 {
-	PLAYING, MENU, CREDITS, LOSE, PAUSE
+	PLAYING, MENU, CREDITS, LOSE, PAUSE, LEVELS
 };
 
 void Game::init()
@@ -91,6 +91,10 @@ void Game::keyPressed(int key)
 	if ((key == 75 || key == 107) && state == PLAYING) { // key K/k
 		scene.makeKeyAppear();
 	}
+	if ((key == 108 || key == 76)) { // key L/l
+		state = LEVELS;
+		menu.setImage(LEVELS);
+	}
 	if ((key == 97 || key == 49) && state == MENU) { // key 1
 		if (scene.getNumLevel() != 1 || scene.isGameOver()) scene.changeLevel(1);
 		state = PLAYING;
@@ -115,6 +119,12 @@ void Game::keyPressed(int key)
 		if (scene.getNumLevel() != 6 || scene.isGameOver()) scene.changeLevel(6);
 		state = PLAYING;
 	}
+	if (key == 13 && state == LEVELS) { // enter
+		cout << "enter" << endl;
+		int num = menu.getLevelFocus();
+		if (scene.getNumLevel() != num || scene.isGameOver()) scene.changeLevel(num);
+		state = PLAYING;
+	}
 
 	keys[key] = true;
 }
@@ -127,6 +137,23 @@ void Game::keyReleased(int key)
 void Game::specialKeyPressed(int key)
 {
 	specialKeys[key] = true;
+	if (key == GLUT_KEY_RIGHT && state == LEVELS) {
+		int num = menu.getLevelFocus();
+		if (num % 3 < 2) menu.setLevelFocus(++num);
+	}
+	if (key == GLUT_KEY_LEFT && state == LEVELS) {
+		int num = menu.getLevelFocus();
+		if (num % 3 > 0) menu.setLevelFocus(--num);
+	}
+	if (key == GLUT_KEY_DOWN && state == LEVELS) {
+		int num = menu.getLevelFocus();
+		if (num < 3) menu.setLevelFocus(num + 3);
+	}
+	if (key == GLUT_KEY_UP && state == LEVELS) {
+		int num = menu.getLevelFocus();
+		if (num > 2) menu.setLevelFocus(num - 3);
+	}
+
 }
 
 void Game::specialKeyReleased(int key)

@@ -18,6 +18,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Key.h" />
+    <ClInclude Include="LevelSelector.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="MovingSlab.h" />
     <ClInclude Include="Player.h" />
@@ -41,6 +42,7 @@
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="LevelSelectorcpp.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MovingSlab.cpp" />

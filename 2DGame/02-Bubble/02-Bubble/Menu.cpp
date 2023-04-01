@@ -12,7 +12,7 @@
 
 enum State
 {
-	PLAYING, MENU, CREDITS, LOSE, PAUSE
+	PLAYING, MENU, CREDITS, LOSE, PAUSE, LEVELS
 };
 
 Menu::Menu()
@@ -40,7 +40,7 @@ void Menu::init()
 	//geom[1] = glm::vec2(256.f, 208.f);
 	glm::vec2 geom2[2] = { glm::vec2(0.f, 0.f), glm::vec2(256.f, 208.f) };
 
-	texQuad[1] = TexturedQuad::createTexturedQuad(geom2, texCoords, simpleProgram);
+	//texQuad[1] = TexturedQuad::createTexturedQuad(geom2, texCoords, simpleProgram);
 
 	// Load textures
 	texs[0].loadFromFile("images/menu.png", TEXTURE_PIXEL_FORMAT_RGBA);
@@ -52,7 +52,11 @@ void Menu::init()
 	texs[2].loadFromFile("images/pause.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	texs[2].setMagFilter(GL_NEAREST);
 
-	
+	texs[3].loadFromFile("images/levels.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	texs[3].setMagFilter(GL_NEAREST);
+
+	levelSelector = new LevelSelector();
+	levelSelector->init();
 
 }
 
@@ -75,9 +79,14 @@ void Menu::render()
 	modelview = glm::translate(glm::mat4(1.0f), glm::vec3(9.f + 32.f, 8.f + 26.f, 0.f)); //centering the menu in the viewport
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texProgram.setUniform1f("opacity", 1);
-	if (menu == MENU) texQuad[0]->render(texs[0]); // it will render one of the different menus
+	// it will render one of the different menus
+	if (menu == MENU) texQuad[0]->render(texs[0]); 
 	else if (menu == LOSE) texQuad[0]->render(texs[1]);
 	else if (menu == PAUSE)  texQuad[0]->render(texs[2]);
+	else if (menu == LEVELS) {
+		texQuad[0]->render(texs[3]);
+		levelSelector->render();
+	}
 }
 
 
@@ -111,5 +120,15 @@ void Menu::initShaders()
 
 void Menu::setImage(int x) {
 	menu = x; //change the menu between LOSE, MENU, CREDITS...
+}
+
+void Menu::setLevelFocus(int x)
+{
+	levelSelector->setLevelFocus(x);
+}
+
+int Menu::getLevelFocus()
+{
+	return levelSelector->getLevelFocus();
 }
 

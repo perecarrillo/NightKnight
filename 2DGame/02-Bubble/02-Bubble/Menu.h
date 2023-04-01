@@ -9,6 +9,7 @@
 #include "TileMap.h"
 #include "Text.h"
 #include <vector>
+#include "LevelSelector.h"
 
 
 // Menu contains all the entities of our game.
@@ -26,6 +27,8 @@ public:
 	void update(int deltaTime);
 	void render();
 	void setImage(int x);
+	void setLevelFocus(int x);
+	int getLevelFocus();
 
 
 private:
@@ -33,6 +36,7 @@ private:
 	ShaderProgram texProgram, simpleProgram;
 	float currentTime;
 	glm::mat4 projection;
+	LevelSelector *levelSelector;
 
 	Quad *quad;
 	Texture texs[4];
