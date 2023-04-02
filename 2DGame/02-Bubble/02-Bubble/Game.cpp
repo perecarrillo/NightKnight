@@ -46,6 +46,7 @@ bool Game::update(int deltaTime)
 	int level = scene.getNumLevel();
 
 	if (scene.isWin() && level < 6 && !changingLevel) {
+		SoundController::instance().play(WIN);
 		changingLevel = true;
 		circle->changeRadius(400.f);
 		glm::vec2 posPlayer = scene.getPosPlayer();
@@ -55,6 +56,7 @@ bool Game::update(int deltaTime)
 
 	if (changingLevel && circle->finishShrink() && !levelExpanding) {
 		levelExpanding = true;
+		menu.setLevelFocus(level);
 		changeLevel(++level);
 		circle->changeRadius(0.f);
 		glm::vec2 posPlayer = scene.getPosPlayer();
@@ -88,6 +90,7 @@ bool Game::update(int deltaTime)
 	if (state == READY && ((currentTime - readyIniTime) > READY_TIME)) {
 		state = PLAYING;
 		SoundController::instance().setAllSoundsPaused(true);
+		SoundController::instance().play(READYY);
 		SoundController::instance().play(MAINTHEME);
 	}
 	return bPlay;
@@ -191,18 +194,25 @@ void Game::specialKeyPressed(int key)
 	if (key == GLUT_KEY_RIGHT && state == LEVELS && !animationLevelSelected) {
 		int num = menu.getLevelFocus();
 		if (num % 3 < 2) menu.setLevelFocus(++num);
+		SoundController::instance().play(ARROW);
 	}
 	if (key == GLUT_KEY_LEFT && state == LEVELS && !animationLevelSelected) {
 		int num = menu.getLevelFocus();
 		if (num % 3 > 0) menu.setLevelFocus(--num);
+		SoundController::instance().play(ARROW);
+
 	}
 	if (key == GLUT_KEY_DOWN && state == LEVELS && !animationLevelSelected) {
 		int num = menu.getLevelFocus();
 		if (num < 3) menu.setLevelFocus(num + 3);
+		SoundController::instance().play(ARROW);
+
 	}
 	if (key == GLUT_KEY_UP && state == LEVELS && !animationLevelSelected) {
 		int num = menu.getLevelFocus();
 		if (num > 2) menu.setLevelFocus(num - 3);
+		SoundController::instance().play(ARROW);
+
 	}
 
 }
