@@ -14,5 +14,4 @@ void SoundController::play(Sounds sound, bool loop) //Loop is optional
 
 void SoundController::stop(int sound) 
 {
-
 }
