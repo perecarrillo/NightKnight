@@ -29,6 +29,8 @@ public:
 	void setImage(int x);
 	void setLevelFocus(int x);
 	int getLevelFocus();
+	bool animationLevelSelectedFinished();
+	void expandLevelSelector();
 
 
 private:
@@ -43,6 +45,7 @@ private:
 	TexturedQuad *texQuad[3];
 
 	int menu;
+
 
 };
 

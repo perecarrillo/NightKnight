@@ -263,7 +263,7 @@ void Scene::checkCollisions()
 }
 
 
-void Scene::render(bool playing)
+void Scene::render(bool playing, bool changingLevel)
 {
 	glm::mat4 modelview;
 
@@ -275,8 +275,9 @@ void Scene::render(bool playing)
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 	if (playing)
 		texProgram.setUniform1f("opacity", 1);
-	else
-		texProgram.setUniform1f("opacity", 0.3);
+	else if (changingLevel)
+		texProgram.setUniform1f("opacity", 0);
+	else texProgram.setUniform1f("opacity", 0.3);
 	map2->render();
 	map->render();
 

@@ -56,6 +56,14 @@ private:
 	CircleAnimation *circle;
 	bool changingLevel;
 	bool levelExpanding;
+
+	bool animationLevelSelected;
+
+	bool showReady;
+
+	float readyIniTime;
+
+	float currentTime;
 };
 
 

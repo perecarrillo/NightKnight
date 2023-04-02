@@ -2,10 +2,13 @@
 #include <GL/glut.h>
 #include "Game.h"
 
+#define READY_TIME 2000
+
 enum State
 {
-	PLAYING, MENU, CREDITS, LOSE, PAUSE, LEVELS
+	PLAYING, MENU, CREDITS, LOSE, PAUSE, LEVELS, READY
 };
+
 
 void Game::init()
 {
@@ -17,10 +20,15 @@ void Game::init()
 	state = PLAYING;
 	changingLevel = false;
 	levelExpanding = false;
+	animationLevelSelected = false;
+	showReady = false;
+	readyIniTime = 0.f;
+	currentTime = 0.f;
 }
 
 bool Game::update(int deltaTime)
 {
+	currentTime += deltaTime;
 	if (state == PLAYING && !changingLevel) scene.update(deltaTime);	
 	if (scene.isGameOver()) {
 		state = LOSE;
@@ -53,14 +61,26 @@ bool Game::update(int deltaTime)
 		levelExpanding = false;
 	}
 
+	menu.update(deltaTime);
+
+	if (animationLevelSelected && menu.animationLevelSelectedFinished()) {
+		animationLevelSelected = false;
+		if (showReady) {
+			state = READY;
+			readyIniTime = currentTime;
+		}
+		else state = PLAYING;
+	}
+
+	if (state == READY && ((currentTime - readyIniTime) > READY_TIME)) state = PLAYING;
 	return bPlay;
 }
 
 void Game::render()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	scene.render(state == PLAYING);
-	if (state != PLAYING) menu.render();
+	scene.render(state == PLAYING, animationLevelSelected);
+	if (state != PLAYING && state != READY) menu.render();
 	if (changingLevel) circle->render();
 	
 }
@@ -119,11 +139,14 @@ void Game::keyPressed(int key)
 		if (scene.getNumLevel() != 6 || scene.isGameOver()) scene.changeLevel(6);
 		state = PLAYING;
 	}
-	if (key == 13 && state == LEVELS) { // enter
-		cout << "enter" << endl;
+	if (key == 13 && state == LEVELS && !animationLevelSelected) { // enter
+		menu.expandLevelSelector();
+		animationLevelSelected = true;
 		int num = menu.getLevelFocus() + 1;
-		if (scene.getNumLevel() != num || scene.isGameOver()) scene.changeLevel(num);
-		state = PLAYING;
+		if (scene.getNumLevel() != num || scene.isGameOver()) {
+			scene.changeLevel(num);
+			showReady = true;
+		}
 	}
 
 	keys[key] = true;
@@ -137,19 +160,19 @@ void Game::keyReleased(int key)
 void Game::specialKeyPressed(int key)
 {
 	specialKeys[key] = true;
-	if (key == GLUT_KEY_RIGHT && state == LEVELS) {
+	if (key == GLUT_KEY_RIGHT && state == LEVELS && !animationLevelSelected) {
 		int num = menu.getLevelFocus();
 		if (num % 3 < 2) menu.setLevelFocus(++num);
 	}
-	if (key == GLUT_KEY_LEFT && state == LEVELS) {
+	if (key == GLUT_KEY_LEFT && state == LEVELS && !animationLevelSelected) {
 		int num = menu.getLevelFocus();
 		if (num % 3 > 0) menu.setLevelFocus(--num);
 	}
-	if (key == GLUT_KEY_DOWN && state == LEVELS) {
+	if (key == GLUT_KEY_DOWN && state == LEVELS && !animationLevelSelected) {
 		int num = menu.getLevelFocus();
 		if (num < 3) menu.setLevelFocus(num + 3);
 	}
-	if (key == GLUT_KEY_UP && state == LEVELS) {
+	if (key == GLUT_KEY_UP && state == LEVELS && !animationLevelSelected) {
 		int num = menu.getLevelFocus();
 		if (num > 2) menu.setLevelFocus(num - 3);
 	}

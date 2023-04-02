@@ -63,6 +63,7 @@ void Menu::init()
 void Menu::update(int deltaTime)
 {
 	currentTime += deltaTime;
+	levelSelector->update(deltaTime);
 }
 
 void Menu::render()
@@ -130,5 +131,15 @@ void Menu::setLevelFocus(int x)
 int Menu::getLevelFocus()
 {
 	return levelSelector->getLevelFocus();
+}
+
+bool Menu::animationLevelSelectedFinished()
+{
+	return levelSelector->animationLevelSelectedFinished();
+}
+
+void Menu::expandLevelSelector()
+{
+	levelSelector->expandLevelSelector();
 }
 

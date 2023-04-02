@@ -39,7 +39,7 @@ public:
 
 	void init();
 	void update(int deltaTime);
-	void render(bool playing);
+	void render(bool playing, bool changingLevel);
 	bool isGameOver();
 	bool isWin();
 	void changeLevel(int n);

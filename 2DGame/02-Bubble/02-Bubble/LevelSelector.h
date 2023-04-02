@@ -28,6 +28,9 @@ public:
 	void setLevelFocus(int x);
 	int getLevelFocus();
 
+	bool animationLevelSelectedFinished();
+
+	void expandLevelSelector();
 
 private:
 	void initShaders();
@@ -42,6 +45,12 @@ private:
 	float width, height;
 
 	int levelFocus;
+	float iniAnimationTime;
+
+	bool expanding;
+
+	glm::vec2 posIni;
+	glm::vec2 posFi;
 };
 
 

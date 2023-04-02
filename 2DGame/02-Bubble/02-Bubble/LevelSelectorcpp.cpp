@@ -14,6 +14,7 @@
 #define NUM_LEVELS 6
 #define MENU_WIDTH 32*6
 #define MENU_HEIGHT 26*6
+#define ANIMATION_TIME 350
 
 
 LevelSelector::LevelSelector()
@@ -30,6 +31,9 @@ LevelSelector::~LevelSelector()
 void LevelSelector::init()
 {
 	initShaders();
+
+	expanding = false;
+	iniAnimationTime = 0.f;
 
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH / (3.5) - 1), float(SCREEN_HEIGHT / (3.5) - 1), 0.f);
 	currentTime = 0.0f;
@@ -74,6 +78,7 @@ void LevelSelector::init()
 void LevelSelector::update(int deltaTime)
 {
 	currentTime += deltaTime;
+	if ((currentTime - iniAnimationTime) > ANIMATION_TIME) expanding = false;
 }
 
 void LevelSelector::render()
@@ -112,14 +117,6 @@ void LevelSelector::render()
 		}
 	}
 
-	// Expand the level focused
-	modelview = glm::mat4(1.0f);
-	modelview = glm::translate(modelview, glm::vec3((9 + 32) + width / (COLS + 1) + (width / (COLS + 1) + width)*(levelFocus % COLS), (9+26) + 1.35f*height + (height / (ROWS + 1) + height) * (levelFocus/COLS), 0.f));
-	modelview = glm::translate(modelview, glm::vec3(width / 2.f, height / 2.f, 0.f));
-	modelview = glm::scale(modelview, glm::vec3(1.1f, 1.1f, 0));
-	modelview = glm::translate(modelview, glm::vec3(-width/2.f, -height/2.f, 0.f));
-	texProgram.setUniformMatrix4f("modelview", modelview);
-	texQuad[0]->render(texs[levelFocus]);
 
 	// Put the marc
 	//modelview = glm::mat4(1.0f);
@@ -130,6 +127,29 @@ void LevelSelector::render()
 	//modelview = glm::translate(modelview, glm::vec3(-width / 2.f, -height / 2.f, 0.f));
 	//texProgram.setUniformMatrix4f("modelview", modelview);
 	//texQuad[1]->render(texs[6]);
+
+	// Expand the level focused
+	if (!expanding) {
+		modelview = glm::mat4(1.0f);
+		modelview = glm::translate(modelview, glm::vec3((9 + 32) + width / (COLS + 1) + (width / (COLS + 1) + width)*(levelFocus % COLS), (9 + 26) + 1.35f*height + (height / (ROWS + 1) + height) * (levelFocus / COLS), 0.f));
+		modelview = glm::translate(modelview, glm::vec3(width / 2.f, height / 2.f, 0.f));
+		modelview = glm::scale(modelview, glm::vec3(1.1f, 1.1f, 0));
+		modelview = glm::translate(modelview, glm::vec3(-width / 2.f, -height / 2.f, 0.f));
+		texProgram.setUniformMatrix4f("modelview", modelview);
+		texQuad[0]->render(texs[levelFocus]);
+	}
+
+	else {
+		float diffTime = currentTime - iniAnimationTime;
+		float m = diffTime / ANIMATION_TIME;
+		modelview = glm::mat4(1.0f);
+		modelview = glm::translate(modelview, glm::vec3(glm::vec2(posFi*m + posIni * (1-m)), 0.f));
+		//modelview = glm::translate(modelview, glm::vec3(width / 2.f, height / 2.f, 0.f));
+		modelview = glm::scale(modelview, glm::vec3(m*26/6.f + 1.f, m*548/156.f + 1.f, 0));
+		modelview = glm::translate(modelview, glm::vec3(-width / 2.f, -height / 2.f, 0.f));
+		texProgram.setUniformMatrix4f("modelview", modelview);
+		texQuad[0]->render(texs[levelFocus]);
+	}
 }
 
 
@@ -167,4 +187,17 @@ void LevelSelector::setLevelFocus(int x) {
 
 int LevelSelector::getLevelFocus() {
 	return levelFocus;
+}
+
+bool LevelSelector::animationLevelSelectedFinished()
+{
+	return (currentTime - iniAnimationTime) > ANIMATION_TIME;
+}
+
+void LevelSelector::expandLevelSelector()
+{
+	iniAnimationTime = currentTime;
+	expanding = true;
+	posIni = glm::vec2((9 + 32) + width/2.f + width / (COLS + 1) + (width / (COLS + 1) + width)*(levelFocus % COLS), (9 + 26) + 1.35f*height + height/2.f + (height / (ROWS + 1) + height) * (levelFocus / COLS));
+	posFi = glm::vec2(8 + 32*8/2.f, 8 + 2*8 + 26*8/2.f);
 }
