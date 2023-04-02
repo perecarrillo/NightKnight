@@ -96,7 +96,7 @@ bool Game::update(int deltaTime)
 void Game::render()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	scene.render(state == PLAYING & !changingLevel, animationLevelSelected);
+	scene.render((state == PLAYING && !changingLevel) || (changingLevel && !levelExpanding), animationLevelSelected);
 	if (state != PLAYING && state != READY) menu.render();
 	if (changingLevel) circle->render();
 	if (state == READY) {
