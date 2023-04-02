@@ -7,6 +7,7 @@ void SoundController::init()
 	sounds[CLOCK] = engine->addSoundSourceFromFile("sounds/clock.wav");
 	sounds[MAINTHEME] = engine->addSoundSourceFromFile("sounds/MainTheme.mp3");
 	sounds[MENUU] = engine->addSoundSourceFromFile("sounds/Menu.mp3");
+	sounds[JUMP] = engine->addSoundSourceFromFile("sounds/Jump.mp3");
 }
 
 void SoundController::play(Sounds sound, bool loop) //Loop is optional

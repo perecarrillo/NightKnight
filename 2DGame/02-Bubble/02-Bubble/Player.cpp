@@ -119,7 +119,7 @@ void Player::update(int deltaTime)
 					jumpAngle = 0;
 					jumpLost = 0;
 					startY = position.y;
-					//SoundController::instance().play(LAUGH);
+					SoundController::instance().play(JUMP);
 				}
 			}
 		}

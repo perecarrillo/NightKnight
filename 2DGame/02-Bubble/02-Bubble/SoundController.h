@@ -7,7 +7,7 @@
 
 using namespace irrklang;
 
-enum Sounds {CLOCK, LAUGH, MAINTHEME, MENUU};
+enum Sounds {CLOCK, LAUGH, MAINTHEME, MENUU, JUMP};
 
 class SoundController
 {
