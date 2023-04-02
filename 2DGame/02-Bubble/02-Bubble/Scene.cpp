@@ -104,7 +104,7 @@ void Scene::loadScene() {
 		getline(fin, line);
 		sstream.str(line);
 		sstream >> lastX >> lastY;
-		movingPlatforms[i] = new MovingSlab(firstX, firstY, lastX, lastY, map->getTileSize());
+		movingPlatforms[i] = new MovingSlab(i, firstX, firstY, lastX, lastY, map->getTileSize());
 		movingPlatforms[i]->init("images/MovingSlab.png", glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, map);
 	}
 

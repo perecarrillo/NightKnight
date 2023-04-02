@@ -3,6 +3,8 @@
 
 using namespace std;
 
+#define WAIT_TIME 100
+
 
 Rata::Rata(int x, int y)
 {
@@ -24,7 +26,7 @@ void Rata::setUp()
 {
 	speed = 0.8;
 	jumpingSpeed = 1.3;
-	movement = { { MOVE_LEFT,112 },{ JUMP_LEFT, 5 },{ STAND_LEFT, 250 },{ JUMP_RIGHT, 5 },{ MOVE_RIGHT, 112 },{ JUMP_RIGHT, 5 },{ MOVE_RIGHT, 250 },{ MOVE_LEFT, 20 },{ JUMP_LEFT, 3 } };
+	//movement = { { MOVE_LEFT,112 },{ JUMP_LEFT, 5 },{ STAND_LEFT, 250 },{ JUMP_RIGHT, 5 },{ MOVE_RIGHT, 112 },{ JUMP_RIGHT, 5 },{ MOVE_RIGHT, 250 },{ MOVE_LEFT, 20 },{ JUMP_LEFT, 3 } };
 	animationLength = 10;
 	animationsUsed = { MOVE_LEFT, MOVE_RIGHT, STAND_LEFT, STAND_RIGHT, JUMP_LEFT, JUMP_RIGHT };
 	WIDTH = 12;
@@ -37,6 +39,7 @@ void Rata::setUp()
 	jumpingRight = false;
 	jumpAngle = 0;
 	JUMP_HEIGHT = 8;
+	waiting = 0;
 }
 
 void Rata::update(int deltaTime)
@@ -82,58 +85,84 @@ void Rata::updateAI(int deltaTime)
 	{
 		if (movingLeft)
 		{
-			if (sprite->animation() != MOVE_LEFT)
-				sprite->changeAnimation(MOVE_LEFT);
-			position.y += FALL_STEP;
-			bool collisionDown;
-			collisionDown = map->collisionMoveDown(position + glm::vec2(WIDTH_OFFSET_LEFT, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), &position.y, HEIGHT_OFFSET);
-
-			position.x -= speed;
-			bool collisionLeft = map->collisionMoveLeft(position + glm::vec2(WIDTH_OFFSET_LEFT, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT));
-			bool collisionDownLeft = map->collisionMoveDown(position + glm::vec2(-map->getTileSize()*2, map->getTileSize()) + glm::vec2(WIDTH_OFFSET, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), &trash, HEIGHT_OFFSET);
-			pair<int, int> jumpTo = map->closestJumpPosition(position + glm::vec2(WIDTH_OFFSET_LEFT, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), true);
-			if (collisionLeft || (collisionDown && !collisionDownLeft && jumpTo.first == -1))
+			if (waiting > 0)
 			{
-				position.x += speed;
-				movingLeft = false;
-				sprite->changeAnimation(MOVE_RIGHT);
+				if (sprite->animation() != STAND_RIGHT)
+					sprite->changeAnimation(STAND_RIGHT);
+				--waiting;
+				if (waiting == 0)
+				{
+					movingLeft = false;
+					sprite->changeAnimation(MOVE_RIGHT);
+				}
 			}
-			else if (collisionDown && !collisionDownLeft)
+			else
 			{
-				jumping = true;
-				jumpAngle = 0;
-				startY = position.y;
-				calculateJumpParameters(jumpTo);
-				sprite->changeAnimation(JUMP_LEFT);
+				if (sprite->animation() != MOVE_LEFT)
+					sprite->changeAnimation(MOVE_LEFT);
+				position.y += FALL_STEP;
+				bool collisionDown;
+				collisionDown = map->collisionMoveDown(position + glm::vec2(WIDTH_OFFSET_LEFT, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), &position.y, HEIGHT_OFFSET);
 
+				position.x -= speed;
+				bool collisionLeft = map->collisionMoveLeft(position + glm::vec2(WIDTH_OFFSET_LEFT, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT));
+				bool collisionDownLeft = map->collisionMoveDown(position + glm::vec2(-map->getTileSize() * 2, map->getTileSize()) + glm::vec2(WIDTH_OFFSET, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), &trash, HEIGHT_OFFSET);
+				pair<int, int> jumpTo = map->closestJumpPosition(position + glm::vec2(WIDTH_OFFSET_LEFT, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), true);
+				if (collisionLeft || (collisionDown && !collisionDownLeft && jumpTo.first == -1))
+				{
+					position.x += speed;
+					waiting = WAIT_TIME;
+					sprite->changeAnimation(STAND_RIGHT);
+				}
+				else if (collisionDown && !collisionDownLeft)
+				{
+					jumping = true;
+					jumpAngle = 0;
+					startY = position.y;
+					calculateJumpParameters(jumpTo);
+					sprite->changeAnimation(JUMP_LEFT);
+				}
 			}
 		}
 		else
 		{
-			if (sprite->animation() != MOVE_RIGHT)
-				sprite->changeAnimation(MOVE_RIGHT);
-			position.y += FALL_STEP;
-			bool collisionDown;
-			collisionDown = map->collisionMoveDown(position + glm::vec2(WIDTH_OFFSET, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), &position.y, HEIGHT_OFFSET);
-
-			position.x += speed;
-			bool collisionRight = map->collisionMoveRight(position + glm::vec2(WIDTH_OFFSET, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT));
-			bool collisionDownRight = map->collisionMoveDown(position + glm::vec2(map->getTileSize(), map->getTileSize()) + glm::vec2(WIDTH_OFFSET, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), &trash, HEIGHT_OFFSET);
-			pair<int, int> jumpTo = map->closestJumpPosition(position + glm::vec2(WIDTH_OFFSET, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), false);
-			if (collisionRight || (collisionDown && !collisionDownRight && jumpTo.first == -1))
+			if (waiting > 0)
 			{
-				position.x -= speed;
-				movingLeft = true;
-				sprite->changeAnimation(MOVE_LEFT);
+				if (sprite->animation() != STAND_LEFT)
+					sprite->changeAnimation(STAND_LEFT);
+				--waiting;
+				if (waiting == 0)
+				{
+					movingLeft = true;
+					sprite->changeAnimation(MOVE_LEFT);
+				}
 			}
-			else if (collisionDown && !collisionDownRight)
+			else
 			{
-				jumping = true;
-				jumpAngle = 0;
-				startY = position.y;
-				calculateJumpParameters(jumpTo);
-				sprite->changeAnimation(JUMP_RIGHT);
+				if (sprite->animation() != MOVE_RIGHT)
+					sprite->changeAnimation(MOVE_RIGHT);
+				position.y += FALL_STEP;
+				bool collisionDown;
+				collisionDown = map->collisionMoveDown(position + glm::vec2(WIDTH_OFFSET, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), &position.y, HEIGHT_OFFSET);
 
+				position.x += speed;
+				bool collisionRight = map->collisionMoveRight(position + glm::vec2(WIDTH_OFFSET, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT));
+				bool collisionDownRight = map->collisionMoveDown(position + glm::vec2(map->getTileSize(), map->getTileSize()) + glm::vec2(WIDTH_OFFSET, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), &trash, HEIGHT_OFFSET);
+				pair<int, int> jumpTo = map->closestJumpPosition(position + glm::vec2(WIDTH_OFFSET, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), false);
+				if (collisionRight || (collisionDown && !collisionDownRight && jumpTo.first == -1))
+				{
+					position.x -= speed;
+					waiting = WAIT_TIME;
+					sprite->changeAnimation(MOVE_LEFT);
+				}
+				else if (collisionDown && !collisionDownRight)
+				{
+					jumping = true;
+					jumpAngle = 0;
+					startY = position.y;
+					calculateJumpParameters(jumpTo);
+					sprite->changeAnimation(JUMP_RIGHT);
+				}
 			}
 		}
 	}

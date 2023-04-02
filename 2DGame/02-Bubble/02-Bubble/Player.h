@@ -33,7 +33,8 @@ public:
 	void loseHeart();
 	bool isInmune();
 
-	void setIsOnPlatform(bool b);
+	void isOnPlatform(int id);
+	void isNotOnPlatform(int id);
 	int getWidth();
 	int getHeight();
 	void addXMovement(float value);
@@ -52,8 +53,8 @@ private:
 	int time;
 	int timeInmune;
 	int coins;
-	bool isOnPlatform;
 	bool invincible;
+	set<int> onPlatforms;
 };
 
 

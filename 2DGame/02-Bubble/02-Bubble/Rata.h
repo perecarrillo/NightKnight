@@ -23,6 +23,7 @@ private:
 	float jumpingSpeed;
 	int JUMP_ANGLE_STEP;
 	int JUMP_HEIGHT;
+	int waiting;
 
 	bool useAI;
 	bool movingLeft;

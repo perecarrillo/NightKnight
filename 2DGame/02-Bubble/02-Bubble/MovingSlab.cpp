@@ -5,8 +5,9 @@ using namespace std;
 
 
 
-MovingSlab::MovingSlab(int firstX, int firstY, int lastX, int lastY, int tileSize)
+MovingSlab::MovingSlab(int id, int firstX, int firstY, int lastX, int lastY, int tileSize)
 {
+	this->id = id;
 	initialPosition = glm::ivec2(firstX, firstY);
 	position = glm::ivec2(initialPosition.x * tileSize, initialPosition.y * tileSize);
 	speed = 0.5;
@@ -34,13 +35,13 @@ void MovingSlab::update(int deltaTime, Player *player) {
 	{
 		//cout << "isOnPlatform" << endl;
 		hasPlayerAbove = true;
-		player->setIsOnPlatform(true);
+		player->isOnPlatform(id);
 		player->setPosition(glm::vec2(playerPosition.x, position.y - playerHeight));
 		if (sprite->animation() != PAINTED)
 			sprite->changeAnimation(PAINTED);
 		painted = true;
 	}
-	else player->setIsOnPlatform(false);
+	else player->isNotOnPlatform(id);
 
 	if (start.x != end.x) {
 		if (movingLeft) {

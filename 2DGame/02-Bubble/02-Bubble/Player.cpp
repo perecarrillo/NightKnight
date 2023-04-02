@@ -30,7 +30,6 @@ Player::Player(int x, int y) {
 	bJumping = false;
 	speed = 1;
 	coins = 0;
-	isOnPlatform = false;
 	invincible = false;
 
 }
@@ -96,17 +95,17 @@ void Player::update(int deltaTime)
 					jumpLost += position.y - int(startY - JUMP_HEIGHT * sin(3.14159f * jumpAngle / 180.f));
 				}
 				if (jumpAngle > 90) {
-					bJumping = !map->collisionMoveDown(position + glm::vec2(WIDTH_OFFSET, 0), glm::ivec2(WIDTH, HEIGHT), &position.y, 0) && !isOnPlatform;
+					bJumping = !map->collisionMoveDown(position + glm::vec2(WIDTH_OFFSET, 0), glm::ivec2(WIDTH, HEIGHT), &position.y, 0) && onPlatforms.empty();
 					if (!bJumping) coyoteTime = 0;
 				}
 			}
 		}
 		else
 		{
-			if (!isOnPlatform)
+			if (onPlatforms.empty())
 				position.y += FALL_STEP;
 
-			bool collisionDown = map->collisionMoveDown(position + glm::vec2(WIDTH_OFFSET, 0), glm::ivec2(WIDTH, HEIGHT), &position.y, 0) || isOnPlatform;
+			bool collisionDown = map->collisionMoveDown(position + glm::vec2(WIDTH_OFFSET, 0), glm::ivec2(WIDTH, HEIGHT), &position.y, 0) || !onPlatforms.empty();
 			//cout << collisionDown << endl;
 			//bool collisionDown = map->collisionMoveDown(position + glm::vec2(WIDTH_OFFSET, 0), glm::ivec2(WIDTH, HEIGHT), &position.y, 0, isOnPlatform);
 			if (!collisionDown) ++coyoteTime;
@@ -169,9 +168,15 @@ bool Player::isInmune()
 	return invincible || inmune;
 }
 
-void Player::setIsOnPlatform(bool b)
+void Player::isOnPlatform(int id)
 {
-	isOnPlatform = b;
+	onPlatforms.insert(id);
+}
+
+void Player::isNotOnPlatform(int id)
+{
+	if (onPlatforms.find(id) != onPlatforms.end())
+		onPlatforms.erase(id);
 }
 
 int Player::getWidth()
