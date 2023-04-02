@@ -7,7 +7,7 @@
 
 using namespace irrklang;
 
-enum Sounds {CLOCK, LAUGH};
+enum Sounds {CLOCK, LAUGH, MAINTHEME, MENUU};
 
 class SoundController
 {
@@ -23,6 +23,9 @@ public:
 	void init();
 	void play(Sounds sound, bool loop = false);
 	void stop(int sound);
+	void stopAllSounds();
+	void setAllSoundsPaused(bool b);
+
 
 private:
 	std::map<Sounds, ISoundSource*> sounds;

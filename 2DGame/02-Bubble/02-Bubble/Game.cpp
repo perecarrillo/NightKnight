@@ -18,19 +18,20 @@ void Game::init()
 	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 	scene.init();
 	menu.init();
-	state = PLAYING;
+	state = LEVELS;
+	menu.setImage(LEVELS);
 	changingLevel = false;
 	levelExpanding = false;
 	animationLevelSelected = false;
 	showReady = false;
 	readyIniTime = 0.f;
 	currentTime = 0.f;
-
 	// Select which font you want to use
 	if (!text.init("fonts/Supply Center.ttf"))
 		cout << "Could not load font!!!" << endl;
 	
 	SoundController::instance().init();
+	SoundController::instance().play(MENUU);
 }
 
 bool Game::update(int deltaTime)
@@ -80,9 +81,15 @@ bool Game::update(int deltaTime)
 			showReady = false;
 		}
 		else state = PLAYING;
+		SoundController::instance().setAllSoundsPaused(true);
+		SoundController::instance().play(MAINTHEME);
 	}
 
-	if (state == READY && ((currentTime - readyIniTime) > READY_TIME)) state = PLAYING;
+	if (state == READY && ((currentTime - readyIniTime) > READY_TIME)) {
+		state = PLAYING;
+		SoundController::instance().setAllSoundsPaused(true);
+		SoundController::instance().play(MAINTHEME);
+	}
 	return bPlay;
 }
 
@@ -116,9 +123,13 @@ void Game::keyPressed(int key)
 	if ((key == 80 || key == 112) && state == PLAYING) { // key P/p
 		state = PAUSE;
 		menu.setImage(PAUSE);
+		SoundController::instance().setAllSoundsPaused(true);
+		SoundController::instance().play(MENUU);
 	}
 	if ((key == 67 || key == 99) && state == PAUSE) { // key C/c
 		state = PLAYING;
+		SoundController::instance().setAllSoundsPaused(false);
+		SoundController::instance().play(MAINTHEME);
 	}
 	if ((key == 71 || key == 103) && state == PLAYING) { // key G/g
 		scene.togglePlayerInmunity();
@@ -129,6 +140,8 @@ void Game::keyPressed(int key)
 	if ((key == 108 || key == 76)) { // key L/l
 		state = LEVELS;
 		menu.setImage(LEVELS);
+		SoundController::instance().setAllSoundsPaused(true);
+		SoundController::instance().play(MENUU);
 	}
 	if ((key == 97 || key == 49) && state == MENU) { // key 1
 		if (scene.getNumLevel() != 1 || scene.isGameOver()) scene.changeLevel(1);
