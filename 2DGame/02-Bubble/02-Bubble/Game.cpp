@@ -24,6 +24,10 @@ void Game::init()
 	showReady = false;
 	readyIniTime = 0.f;
 	currentTime = 0.f;
+
+	// Select which font you want to use
+	if (!text.init("fonts/Supply Center.ttf"))
+		cout << "Could not load font!!!" << endl;
 }
 
 bool Game::update(int deltaTime)
@@ -56,9 +60,11 @@ bool Game::update(int deltaTime)
 
 	if (changingLevel) circle->update(deltaTime);
 
-	if (circle->finishExpand()) {
+	if (changingLevel && circle->finishExpand()) {
 		changingLevel = false;
 		levelExpanding = false;
+		state = READY;
+		readyIniTime = currentTime;
 	}
 
 	menu.update(deltaTime);
@@ -68,6 +74,7 @@ bool Game::update(int deltaTime)
 		if (showReady) {
 			state = READY;
 			readyIniTime = currentTime;
+			showReady = false;
 		}
 		else state = PLAYING;
 	}
@@ -79,10 +86,15 @@ bool Game::update(int deltaTime)
 void Game::render()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	scene.render(state == PLAYING, animationLevelSelected);
+	scene.render(state == PLAYING & !changingLevel, animationLevelSelected);
 	if (state != PLAYING && state != READY) menu.render();
 	if (changingLevel) circle->render();
-	
+	if (state == READY) {
+		// Print Ready?
+		string textLevel = "Ready?";
+		text.render(textLevel, glm::vec2(0.43*glutGet(GLUT_WINDOW_WIDTH) + 3, 0.6*glutGet(GLUT_WINDOW_HEIGHT) + 3), 40, glm::vec4(0, 0, 0, 1));
+		text.render(textLevel, glm::vec2(0.43*glutGet(GLUT_WINDOW_WIDTH), 0.6*glutGet(GLUT_WINDOW_HEIGHT)), 40, glm::vec4(1, 1, 1, 1));
+	}
 }
 
 void Game::keyPressed(int key)

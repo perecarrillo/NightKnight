@@ -14,7 +14,7 @@
 #define NUM_LEVELS 6
 #define MENU_WIDTH 32*6
 #define MENU_HEIGHT 26*6
-#define ANIMATION_TIME 350
+#define ANIMATION_TIME 500
 
 
 LevelSelector::LevelSelector()
@@ -142,6 +142,7 @@ void LevelSelector::render()
 	else {
 		float diffTime = currentTime - iniAnimationTime;
 		float m = diffTime / ANIMATION_TIME;
+		texProgram.setUniform1f("opacity", 0.3 + 0.7*(1-m));
 		modelview = glm::mat4(1.0f);
 		modelview = glm::translate(modelview, glm::vec3(glm::vec2(posFi*m + posIni * (1-m)), 0.f));
 		//modelview = glm::translate(modelview, glm::vec3(width / 2.f, height / 2.f, 0.f));

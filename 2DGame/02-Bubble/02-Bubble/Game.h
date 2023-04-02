@@ -64,6 +64,8 @@ private:
 	float readyIniTime;
 
 	float currentTime;
+
+	Text text;
 };
 
 
