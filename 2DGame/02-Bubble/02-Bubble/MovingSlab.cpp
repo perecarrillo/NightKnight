@@ -30,7 +30,7 @@ void MovingSlab::update(int deltaTime, Player *player) {
 	glm::vec2 playerPosition = player->getPosition();
 	int playerHeight = player->getHeight();
 	int playerWidth = player->getWidth();
-	if (playerPosition.y + playerHeight >= position.y - 3 && playerPosition.y + playerHeight <= position.y + 3 && playerPosition.x < position.x + WIDTH && position.x < playerPosition.x + playerWidth)
+	if (playerPosition.y + playerHeight >= position.y - 2 && playerPosition.y + playerHeight <= position.y + 2 && playerPosition.x < position.x + WIDTH && position.x < playerPosition.x + playerWidth)
 	{
 		//cout << "isOnPlatform" << endl;
 		hasPlayerAbove = true;
