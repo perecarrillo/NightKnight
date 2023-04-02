@@ -1,6 +1,7 @@
 #include <GL/glew.h>
 #include <GL/glut.h>
 #include "Game.h"
+#include "SoundController.h"
 
 #define READY_TIME 2000
 
@@ -24,6 +25,7 @@ void Game::init()
 	showReady = false;
 	readyIniTime = 0.f;
 	currentTime = 0.f;
+	SoundController::instance().init();
 }
 
 bool Game::update(int deltaTime)

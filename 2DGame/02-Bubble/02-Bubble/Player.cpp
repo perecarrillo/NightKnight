@@ -4,6 +4,7 @@
 #include <GL/glut.h>
 #include "Player.h"
 #include "Game.h"
+#include "SoundController.h"
 
 #include <algorithm>
 
@@ -115,6 +116,7 @@ void Player::update(int deltaTime)
 					jumpAngle = 0;
 					jumpLost = 0;
 					startY = position.y;
+					SoundController::instance().play(LAUGH);
 				}
 			}
 		}

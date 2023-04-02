@@ -292,7 +292,7 @@ void Scene::render(bool playing, bool changingLevel)
 		enemy->render();
 	}
 	if (!chest->isOpened()) {
-		cout << "rendering player" << endl;
+		//cout << "rendering player" << endl;
 		player->render();
 	}
 
