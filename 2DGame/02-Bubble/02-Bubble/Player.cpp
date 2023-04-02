@@ -38,6 +38,7 @@ Player::Player(int x, int y) {
 
 void Player::update(int deltaTime)
 {
+	//cout << isOnPlatform << ' '<<bJumping<< endl;
 	sprite->update(deltaTime);
 	time += deltaTime;
 	if (time%500 < 250) show = false;
@@ -78,6 +79,7 @@ void Player::update(int deltaTime)
 
 		if (bJumping)
 		{
+			//cout << "jumpinmg" << endl;
 			++coyoteTime;
 			jumpAngle += JUMP_ANGLE_STEP;
 			if (jumpAngle >= 180)
@@ -105,6 +107,7 @@ void Player::update(int deltaTime)
 				position.y += FALL_STEP;
 
 			bool collisionDown = isOnPlatform || map->collisionMoveDown(position + glm::vec2(WIDTH_OFFSET, 0), glm::ivec2(WIDTH, HEIGHT), &position.y, 0);
+			//cout << collisionDown << endl;
 			//bool collisionDown = map->collisionMoveDown(position + glm::vec2(WIDTH_OFFSET, 0), glm::ivec2(WIDTH, HEIGHT), &position.y, 0, isOnPlatform);
 			if (!collisionDown) ++coyoteTime;
 			if (collisionDown || coyoteTime < COYOTE_TIME)
@@ -116,7 +119,7 @@ void Player::update(int deltaTime)
 					jumpAngle = 0;
 					jumpLost = 0;
 					startY = position.y;
-					SoundController::instance().play(LAUGH);
+					//SoundController::instance().play(LAUGH);
 				}
 			}
 		}

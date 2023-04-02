@@ -1,5 +1,6 @@
 #include "Chest.h"
 #include <iostream>
+#include <algorithm>
 
 using namespace std;
 
@@ -9,12 +10,46 @@ Chest::Chest(int x, int y) {
 	HEIGHT = 18;
 	HEIGHT_OFFSET = 1;
 	animationsUsed = { LOCKED, UNLOCKING, UNLOCKED, OPENING_FULL , OPENED_FULL, OPENING_EMPTY, OPENED_EMPTY, ENTERING };
-	animationLength = 8;
+	animationLength = 18;
+	animationSpeed = 8;
 	spriteSize = glm::vec2(16, 32);
 	open = false;
 	unlock = false;
 	opened = false;
 	playerIn = false;
+}
+
+void Chest::init(string textureFile, const glm::ivec2 & tileMapPos, ShaderProgram & shaderProgram, TileMap *map)
+{
+	position = glm::vec2(initialPosition * map->getTileSize());
+	this->map = map;
+	if (animationSpeed == -1) animationSpeed = animationLength;
+	spritesheet.loadFromFile(textureFile, TEXTURE_PIXEL_FORMAT_RGBA);
+	spritesheet.setMagFilter(GL_NEAREST);
+	int numberOfAnimations = animationsUsed.size();
+	float disp = 1.0f / numberOfAnimations;
+
+	sprite = Sprite::createSprite(spriteSize, glm::vec2(disp, 1.0f / animationLength), &spritesheet, &shaderProgram);
+	sprite->setNumberOfLastAnimation(*max_element(animationsUsed.begin(), animationsUsed.end()));
+	for (int i = 0; i < numberOfAnimations - 1; ++i) {
+		sprite->setAnimationSpeed(animationsUsed[i], animationSpeed);
+		for (int j = 0; j < 6; ++j) {
+			sprite->addKeyframe(animationsUsed[i], glm::vec2(disp*i, float(j) / animationLength));
+		}
+	}
+	// The player entering chest animation is hardcoded because it's way longer. It needs to be the last one on the file
+	sprite->setAnimationSpeed(ENTERING, animationSpeed);
+	for (int j = 0; j < 18; ++j) {
+		sprite->addKeyframe(ENTERING, glm::vec2(disp*(numberOfAnimations-1), float(j) / animationLength));
+	}
+
+	sprite->changeAnimation(*min_element(animationsUsed.begin(), animationsUsed.end()));
+	tileMapDispl = tileMapPos;
+
+	if (movement.size() > 0)
+		actualMovement = { 0, movement[0].second };
+	sprite->setPosition(glm::vec2(float(tileMapDispl.x + int(position.x)), float(tileMapDispl.y + int(position.y))));
+
 }
 
 void Chest::update(int deltaTime, bool finalLevel)
@@ -44,8 +79,8 @@ void Chest::update(int deltaTime, bool finalLevel)
 			sprite->changeAnimation(ENTERING);
 		if (sprite->getKeyFrame() >= animationLength - 1) {
 			playerIn = true;
-			if (sprite->animation() != OPENED_EMPTY)
-				sprite->changeAnimation(OPENED_EMPTY);
+			if (sprite->animation() != UNLOCKED)
+				sprite->changeAnimation(UNLOCKED);
 		}
 	}
 }

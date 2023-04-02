@@ -12,6 +12,7 @@ class Chest : public Entity
 
 public:
 	Chest(int x, int y);
+	void init(string textureFile, const glm::ivec2 & tileMapPos, ShaderProgram & shaderProgram, TileMap *map);
 	void update(int deltaTime, bool finalLevel);
 	void openChest();
 	void unlockChest();
