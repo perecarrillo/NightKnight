@@ -15,6 +15,8 @@
 #define TIME 120
 #define FREEZETIME 5
 #define NUM_LAST_LEVEL 6
+#define COINS_ANIMATION_TIME 3000
+#define COINS_PER_SECOND 33
 
 
 Scene::Scene()
@@ -149,7 +151,16 @@ void Scene::init()
 	takenStopwatch = false;
 	takenGem = false;
 	win = false;
+	animationCoinsFinished = false;
+	iniAnimationCoins = false;
+
+	initialCoins = 0;
+	finalCoins = 0;
+	coins = 0;
+	animationTime = 0;
+
 	initShaders();
+
 	string fileMap = "levels/level" + std::to_string(numLevel) + ".txt";
 	string fileBackground = "levels/level" + std::to_string(numLevel) + "Background.txt";
 	//map = TileMap::createTileMap("levels/level2.txt", glm::vec2(SCREEN_X, SCREEN_Y), texProgram);
@@ -189,6 +200,7 @@ void Scene::init()
 
 void Scene::update(int deltaTime)
 {
+	cout << "deltaTime " << deltaTime << endl;
 	if (!openChest) {
 		currentTime += deltaTime; //només actualitzem el temps de l'escena si no s'ha acabat el nivell
 		int slabsPainted = 0;
@@ -212,8 +224,24 @@ void Scene::update(int deltaTime)
 	else {
 		//player->moveToChest(deltaTime, chest->getPosition());
 	}
-	chest->update(deltaTime, numLevel == NUM_LAST_LEVEL);
+	if (!iniAnimationCoins) chest->update(deltaTime, numLevel == NUM_LAST_LEVEL);
 	if (chest->isOpened()) finishLevel();
+	if (chest->playerHasEntered() && !iniAnimationCoins) {
+		startAnimationCoins();
+	}
+	if (iniAnimationCoins) {
+ 		animationTime += deltaTime;
+		if (animationTime < COINS_ANIMATION_TIME) {
+			float m = animationTime/(COINS_ANIMATION_TIME);
+			coins = initialCoins + int(m * (finalCoins - initialCoins));
+			if (int(animationTime)%150 < 20) SoundController::instance().play(COIN);
+		}
+		else {
+			coins = finalCoins;
+			iniAnimationCoins = false;
+			animationCoinsFinished = true;
+		}
+	}
 }
 
 void Scene::checkCollisions()
@@ -326,10 +354,8 @@ void Scene::render(bool playing, bool changingLevel)
 
 	// Print coins
 	string textCoins;
-	int coins = player->getNumCoins();
 	if (coins > 9999) textCoins = "9999"; // 9999 is the maximum value of the coins
 	else textCoins = std::to_string(coins);
-	textCoins = "4658";
 	text.render(textCoins, glm::vec2(0.34*glutGet(GLUT_WINDOW_WIDTH) + 3, 0.12*glutGet(GLUT_WINDOW_HEIGHT) + 3), 30, glm::vec4(0, 0, 0, 1));
 	if (playing) text.render(textCoins, glm::vec2(0.34*glutGet(GLUT_WINDOW_WIDTH), 0.12*glutGet(GLUT_WINDOW_HEIGHT)), 30, glm::vec4(1, 1, 1, 1));
 	else text.render(textCoins, glm::vec2(0.34*glutGet(GLUT_WINDOW_WIDTH), 0.12*glutGet(GLUT_WINDOW_HEIGHT)), 30, glm::vec4(0.3f, 0.3f, 0.3f, 1));
@@ -354,7 +380,9 @@ bool Scene::isGameOver()
 
 bool Scene::isWin()
 {
-	return win && chest->playerHasEntered();
+	//return win && chest->playerHasEntered() && animationCoinsFinished;
+	return animationCoinsFinished;
+
 }
 
 void Scene::changeLevel(int n)
@@ -425,12 +453,14 @@ void Scene::setNumHearts(int num) {
 
 int Scene::getNumCoins()
 {
-	return player->getNumCoins();
+	//return player->getNumCoins();
+	return coins;
 }
 
 void Scene::setNumCoins(int num)
 {
 	player->setNumCoins(num);
+	coins = num;
 }
 
 void Scene::togglePlayerInmunity()
@@ -441,6 +471,15 @@ void Scene::togglePlayerInmunity()
 void Scene::finishLevel()
 {
 	win = true;
+}
+
+void Scene::startAnimationCoins()
+{
+	iniCoinsTime = currentTime;
+	iniAnimationCoins = true;
+	initialCoins = coins;
+	animationTime = 0;
+	finalCoins = COINS_PER_SECOND * (TIME - int(currentTime / 1000)) + coins;
 }
 
 glm::vec2 Scene::getPosPlayer()

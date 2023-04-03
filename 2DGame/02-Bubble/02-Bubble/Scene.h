@@ -18,6 +18,7 @@
 #include "MovingSlab.h"
 #include "StopWatch.h"
 #include "Item.h"
+#include "SoundController.h"
 
 #include <iostream>
 #include <fstream>
@@ -66,11 +67,13 @@ private:
 	void printHearts();
 	void checkCollisions();
 	void finishLevel();
+	void startAnimationCoins();
+
 	TileMap *map;
 	TileMap *map2;
 	Player *player;
 	ShaderProgram texProgram;
-	float currentTime, iniFreezeTime;
+	float currentTime, iniFreezeTime, iniCoinsTime, animationTime;
 	glm::mat4 projection;	
 
 	Quad *quad;
@@ -88,6 +91,10 @@ private:
 	int numSkeletons, numRates, numVampires;
 	glm::vec2 posCofre, posClau, posJugador;
 
+	int initialCoins;
+	int finalCoins;
+	int coins;
+
 	Chest *chest;
 	Item *key;
 	Item *stopwatch;
@@ -99,6 +106,8 @@ private:
 	bool win;
 	bool takenStopwatch;
 	bool takenGem;
+	bool iniAnimationCoins;
+	bool animationCoinsFinished;
 
 };
 
