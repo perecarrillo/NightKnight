@@ -8,7 +8,7 @@ void SoundController::init()
 	sounds[MAINTHEME] = engine->addSoundSourceFromFile("sounds/MainTheme.mp3");
 	sounds[MENUU] = engine->addSoundSourceFromFile("sounds/Menu.mp3");
 	sounds[JUMP] = engine->addSoundSourceFromFile("sounds/Jump.mp3");
-	sounds[WIN] = engine->addSoundSourceFromFile("sounds/Win.mp3");
+	sounds[WINN] = engine->addSoundSourceFromFile("sounds/Win.mp3");
 	sounds[READYY] = engine->addSoundSourceFromFile("sounds/Ready.mp3");
 	sounds[ARROW] = engine->addSoundSourceFromFile("sounds/Arrow.mp3");
 }

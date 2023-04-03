@@ -7,7 +7,7 @@
 
 enum State
 {
-	PLAYING, MENU, CREDITS, LOSE, PAUSE, LEVELS, READY
+	PLAYING, MENU, CREDITS, LOSE, PAUSE, LEVELS, READY, WIN, INSTRUCTIONS
 };
 
 
@@ -46,7 +46,7 @@ bool Game::update(int deltaTime)
 	int level = scene.getNumLevel();
 
 	if (scene.isWin() && level < 6 && !changingLevel) {
-		SoundController::instance().play(WIN);
+		SoundController::instance().play(WINN);
 		changingLevel = true;
 		circle->changeRadius(400.f);
 		glm::vec2 posPlayer = scene.getPosPlayer();
@@ -54,6 +54,7 @@ bool Game::update(int deltaTime)
 		circle->changeToShrink();
 	}
 
+	// Circle Animation
 	if (changingLevel && circle->finishShrink() && !levelExpanding) {
 		levelExpanding = true;
 		menu.setLevelFocus(level);
@@ -72,9 +73,11 @@ bool Game::update(int deltaTime)
 		state = READY;
 		readyIniTime = currentTime;
 	}
+	// End Circle Animation
 
 	menu.update(deltaTime);
 
+	// If we have selected a level from the level menu and the animation of expanding is finished the menu will change to 'Ready?'
 	if (animationLevelSelected && menu.animationLevelSelectedFinished()) {
 		animationLevelSelected = false;
 		if (showReady) {
@@ -87,6 +90,7 @@ bool Game::update(int deltaTime)
 		SoundController::instance().play(MAINTHEME);
 	}
 
+	// If it has passed more than READY_TIME since the message appeared, the level will start
 	if (state == READY && ((currentTime - readyIniTime) > READY_TIME)) {
 		state = PLAYING;
 		SoundController::instance().setAllSoundsPaused(true);
@@ -170,13 +174,27 @@ void Game::keyPressed(int key)
 		if (scene.getNumLevel() != 6 || scene.isGameOver()) scene.changeLevel(6);
 		state = PLAYING;
 	}
-	if (key == 13 && state == LEVELS && !animationLevelSelected) { // enter
-		menu.expandLevelSelector();
-		animationLevelSelected = true;
-		int num = menu.getLevelFocus() + 1;
-		if (scene.getNumLevel() != num || scene.isGameOver()) {
-			scene.changeLevel(num);
-			showReady = true;
+	if (key == 13) {
+		if (state == LEVELS && !animationLevelSelected) { // enter
+			menu.expandLevelSelector();
+			animationLevelSelected = true;
+			int num = menu.getLevelFocus() + 1;
+			if (scene.getNumLevel() != num || scene.isGameOver()) {
+				scene.changeLevel(num);
+				showReady = true;
+			}
+		}
+		else if (state == MENU) {
+			int option = menu.getOptionFocus();
+			if (option == 0) { // play
+				scene.changeLevel(1);
+				state = READY;
+				readyIniTime = currentTime;
+				showReady = false;
+			}
+			else if (option == 1) state = LEVELS;
+			else if (option == 2) state = INSTRUCTIONS;
+			else if (option == 3) state = CREDITS;
 		}
 	}
 
@@ -202,17 +220,28 @@ void Game::specialKeyPressed(int key)
 		SoundController::instance().play(ARROW);
 
 	}
-	if (key == GLUT_KEY_DOWN && state == LEVELS && !animationLevelSelected) {
-		int num = menu.getLevelFocus();
-		if (num < 3) menu.setLevelFocus(num + 3);
+	if (key == GLUT_KEY_DOWN) {
+		if (state == LEVELS && !animationLevelSelected) {
+			int num = menu.getLevelFocus();
+			if (num < 3) menu.setLevelFocus(num + 3);
+		}
+		else if (state == MENU) {
+			int num = menu.getOptionFocus();
+			if (num < 3) menu.setOptionFocus(++num);
+		}
 		SoundController::instance().play(ARROW);
 
 	}
-	if (key == GLUT_KEY_UP && state == LEVELS && !animationLevelSelected) {
-		int num = menu.getLevelFocus();
-		if (num > 2) menu.setLevelFocus(num - 3);
+	if (key == GLUT_KEY_UP) {
+		if (state == LEVELS && !animationLevelSelected) {
+			int num = menu.getLevelFocus();
+			if (num > 2) menu.setLevelFocus(num - 3);
+		}
+		else if (state == MENU) {
+			int num = menu.getOptionFocus();
+			if (num > 0) menu.setOptionFocus(--num);
+		}
 		SoundController::instance().play(ARROW);
-
 	}
 
 }

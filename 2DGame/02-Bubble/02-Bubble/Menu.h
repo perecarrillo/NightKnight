@@ -10,6 +10,7 @@
 #include "Text.h"
 #include <vector>
 #include "LevelSelector.h"
+#include "MainMenu.h"
 
 
 // Menu contains all the entities of our game.
@@ -32,6 +33,10 @@ public:
 	bool animationLevelSelectedFinished();
 	void expandLevelSelector();
 
+	void setOptionFocus(int x);
+
+	int getOptionFocus();
+
 
 private:
 	void initShaders();
@@ -39,6 +44,7 @@ private:
 	float currentTime;
 	glm::mat4 projection;
 	LevelSelector *levelSelector;
+	MainMenu *mainMenu;
 
 	Quad *quad;
 	Texture texs[4];

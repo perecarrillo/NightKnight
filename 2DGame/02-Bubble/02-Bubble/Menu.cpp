@@ -58,6 +58,9 @@ void Menu::init()
 	levelSelector = new LevelSelector();
 	levelSelector->init();
 
+	mainMenu = new MainMenu();
+	mainMenu->init();
+
 }
 
 void Menu::update(int deltaTime)
@@ -81,7 +84,10 @@ void Menu::render()
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texProgram.setUniform1f("opacity", 1);
 	// it will render one of the different menus
-	if (menu == MENU) texQuad[0]->render(texs[0]); 
+	if (menu == MENU) {
+		texQuad[0]->render(texs[0]);
+		mainMenu->render();
+	}
 	else if (menu == LOSE) texQuad[0]->render(texs[1]);
 	else if (menu == PAUSE)  texQuad[0]->render(texs[2]);
 	else if (menu == LEVELS) {
@@ -141,5 +147,15 @@ bool Menu::animationLevelSelectedFinished()
 void Menu::expandLevelSelector()
 {
 	levelSelector->expandLevelSelector();
+}
+
+void Menu::setOptionFocus(int x)
+{
+	mainMenu->setOptionFocus(x);
+}
+
+int Menu::getOptionFocus()
+{
+	return mainMenu->getOptionFocus();
 }
 
