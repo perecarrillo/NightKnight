@@ -47,7 +47,7 @@ private:
 	MainMenu *mainMenu;
 
 	Quad *quad;
-	Texture texs[4];
+	Texture texs[5];
 	TexturedQuad *texQuad[3];
 
 	int menu;

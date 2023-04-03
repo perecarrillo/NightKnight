@@ -18,8 +18,8 @@ void Game::init()
 	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 	scene.init();
 	menu.init();
-	state = LEVELS;
-	menu.setImage(LEVELS);
+	state = MENU;
+	menu.setImage(MENU);
 	changingLevel = false;
 	levelExpanding = false;
 	animationLevelSelected = false;
@@ -104,7 +104,7 @@ void Game::render()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	scene.render((state == PLAYING && !changingLevel) || (changingLevel && !levelExpanding), animationLevelSelected);
-	if (state != PLAYING && state != READY) menu.render();
+	if (state != PLAYING && state != READY && state) menu.render();
 	if (changingLevel) circle->render();
 	if (state == READY) {
 		// Print Ready?
@@ -118,8 +118,8 @@ void Game::keyPressed(int key)
 {
 	if(key == 27) // Escape code
 		bPlay = false;
-	if ((key == 77 || key == 109) && (state == LOSE || state == PAUSE)) {// key M/m
-		scene.init();
+	if ((key == 77 || key == 109)) {// key M/m
+		//scene.init();
 		state = MENU;
 		menu.setImage(MENU);
 	}
@@ -174,8 +174,8 @@ void Game::keyPressed(int key)
 		if (scene.getNumLevel() != 6 || scene.isGameOver()) scene.changeLevel(6);
 		state = PLAYING;
 	}
-	if (key == 13) {
-		if (state == LEVELS && !animationLevelSelected) { // enter
+	if (key == 13) { // enter
+		if (state == LEVELS && !animationLevelSelected) { 
 			menu.expandLevelSelector();
 			animationLevelSelected = true;
 			int num = menu.getLevelFocus() + 1;
@@ -192,9 +192,19 @@ void Game::keyPressed(int key)
 				readyIniTime = currentTime;
 				showReady = false;
 			}
-			else if (option == 1) state = LEVELS;
-			else if (option == 2) state = INSTRUCTIONS;
-			else if (option == 3) state = CREDITS;
+			else if (option == 1) {
+				state = LEVELS;
+				menu.setImage(LEVELS);
+			}
+			else if (option == 2) {
+				state = INSTRUCTIONS;
+				menu.setImage(INSTRUCTIONS);
+			}
+			else if (option == 3) {
+				state = CREDITS;
+				menu.setImage(CREDITS);
+			}
+				
 		}
 	}
 

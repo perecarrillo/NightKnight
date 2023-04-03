@@ -19,8 +19,8 @@
 MainMenu::MainMenu()
 {
 	optionFocus = 0;
-	width = 80.f;
-	height = 25.f;
+	width = 100.f;
+	height = 20.f;
 }
 
 MainMenu::~MainMenu()
@@ -40,28 +40,28 @@ void MainMenu::init()
 
 	texQuad[0] = TexturedQuad::createTexturedQuad(geom, texCoords, texProgram);
 
-	glm::vec2 geom2[2] = { glm::vec2(0.f, 0.f), glm::vec2(width*1.4f, height*1.4f) };
+	glm::vec2 geom2[2] = { glm::vec2(0.f, 0.f), glm::vec2(32*8,26*8) };
 
 	texQuad[1] = TexturedQuad::createTexturedQuad(geom2, texCoords, texProgram);
 
 
 	// Load textures
-	texs[0].loadFromFile("images/playText.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	texs[0].loadFromFile("images/textPlay.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	texs[0].setMagFilter(GL_NEAREST);
 
-	texs[1].loadFromFile("images/playText.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	texs[1].loadFromFile("images/textLevels.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	texs[1].setMagFilter(GL_NEAREST);
 
-	texs[2].loadFromFile("images/playText.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	texs[2].loadFromFile("images/textInstructions.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	texs[2].setMagFilter(GL_NEAREST);
 
-	texs[3].loadFromFile("images/playText.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	texs[3].loadFromFile("images/textCredits.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	texs[3].setMagFilter(GL_NEAREST);
 
-	/*texs[4].loadFromFile("images/mapa1.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	texs[4].loadFromFile("images/MenuBackground.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	texs[4].setMagFilter(GL_NEAREST);
 
-	texs[5].loadFromFile("images/mapa3.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	/*texs[5].loadFromFile("images/mapa3.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	texs[5].setMagFilter(GL_NEAREST);
 
 	texs[6].loadFromFile("images/marc.png", TEXTURE_PIXEL_FORMAT_RGBA);
@@ -85,8 +85,13 @@ void MainMenu::render()
 	texProgram.setUniformMatrix4f("projection", projection);
 	texProgram.setUniform4f("color", 1.0f, 1.0f, 1.0f, 1.0f);
 	modelview = glm::mat4(1.0f);
+	modelview = glm::translate(glm::mat4(1.0f), glm::vec3(9.f, 8.f , 0.f)); //centering the Bakcground
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
+
+	// Render Background of the menu
+	texQuad[1]->render(texs[4]);
+
 	modelview = glm::translate(glm::mat4(1.0f), glm::vec3(9.f + 32.f, 8.f + 26.f, 0.f)); //centering the MainMenu in the viewport
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texProgram.setUniform1f("opacity", 1);
@@ -95,11 +100,11 @@ void MainMenu::render()
 	texProgram.setUniform2f("texCoordDispl", 0.f, 0.f);
 	for (int i = 0; i < NUM_OPTIONS; ++i) {
 		modelview = glm::mat4(1.0f);
-		modelview = glm::translate(modelview, glm::vec3(8.f + 32*8 / 2.f, (26*8 / 2.f) + 1.5f * height * (i - 1), 0.f));
-		if (optionFocus == i) modelview = glm::scale(modelview, glm::vec3(1.1f, 1.1f, 0));
+		modelview = glm::translate(modelview, glm::vec3(8.f + 32*8 / 2.f, (26*8 / 2.f) -2 + 1.3f * height * (i), 0.f));
+		if (optionFocus == i) modelview = glm::scale(modelview, glm::vec3(1.2f, 1.2f, 0));
 		modelview = glm::translate(modelview, glm::vec3(-width / 2.f, -height / 2.f, 0.f));
 		texProgram.setUniformMatrix4f("modelview", modelview);
-		texQuad[0]->render(texs[optionFocus]);
+		texQuad[0]->render(texs[i]);
 	}
 
 

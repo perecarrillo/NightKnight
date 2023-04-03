@@ -12,7 +12,7 @@
 
 enum State
 {
-	PLAYING, MENU, CREDITS, LOSE, PAUSE, LEVELS
+	PLAYING, MENU, CREDITS, LOSE, PAUSE, LEVELS, INSTRUCTIONS
 };
 
 Menu::Menu()
@@ -49,11 +49,14 @@ void Menu::init()
 	texs[1].loadFromFile("images/gameover.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	texs[1].setMagFilter(GL_NEAREST);
 
-	texs[2].loadFromFile("images/pause.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	texs[2].loadFromFile("images/Pause2.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	texs[2].setMagFilter(GL_NEAREST);
 
 	texs[3].loadFromFile("images/levels2.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	texs[3].setMagFilter(GL_NEAREST);
+
+	texs[4].loadFromFile("images/credits.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	texs[4].setMagFilter(GL_NEAREST);
 
 	levelSelector = new LevelSelector();
 	levelSelector->init();
@@ -94,6 +97,7 @@ void Menu::render()
 		texQuad[0]->render(texs[3]);
 		levelSelector->render();
 	}
+	else if (menu == CREDITS) texQuad[0]->render(texs[4]);
 }
 
 
