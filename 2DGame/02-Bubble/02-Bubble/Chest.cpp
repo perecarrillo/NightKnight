@@ -6,9 +6,10 @@ using namespace std;
 
 Chest::Chest(int x, int y) {
 	initialPosition = glm::ivec2(x, y);
-	WIDTH = 16;
-	HEIGHT = 18;
-	HEIGHT_OFFSET = 1;
+	WIDTH = 14;
+	WIDTH_OFFSET = 1;
+	HEIGHT = 9;
+	HEIGHT_OFFSET = 18;
 	animationsUsed = { LOCKED, UNLOCKING, UNLOCKED, OPENING_FULL , OPENED_FULL, OPENING_EMPTY, OPENED_EMPTY, ENTERING };
 	animationLength = 18;
 	animationSpeed = 8;
