@@ -10,6 +10,9 @@ public:
 
 	void update(int deltaTime);
 
+	glm::ivec2 getBoundingBoxMin();
+	glm::ivec2 getBoundingBoxMax();
+
 private:
 	bool isVampire;
 	bool movingLeft;

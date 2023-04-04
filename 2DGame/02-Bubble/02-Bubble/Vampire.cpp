@@ -129,3 +129,19 @@ void Vampire::update(int deltaTime)
 
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + int(position.x)), float(tileMapDispl.y + int(position.y))));
 }
+
+glm::ivec2 Vampire::getBoundingBoxMin()
+{
+	if (isVampire)
+		return glm::ivec2(position.x + WIDTH_OFFSET + 1, position.y + HEIGHT_OFFSET);
+	else
+		return glm::ivec2(position.x + BAT_WIDTH_OFFSET + 1, position.y + BAT_HEIGHT_OFFSET);
+}
+
+glm::ivec2 Vampire::getBoundingBoxMax()
+{
+	if (isVampire)
+		return glm::ivec2(position.x + BAT_WIDTH_OFFSET + BAT_WIDTH + BAT_WIDTH_OFFSET - 1, position.y + BAT_HEIGHT + BAT_HEIGHT_OFFSET);
+	else
+		return glm::ivec2(position.x + BAT_WIDTH_OFFSET + BAT_WIDTH + BAT_WIDTH_OFFSET - 1, position.y + BAT_HEIGHT + BAT_HEIGHT_OFFSET);
+}
