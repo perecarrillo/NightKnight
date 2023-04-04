@@ -91,6 +91,16 @@ void Scene::loadScene() {
 	gem = new Item(x, y, appearTime, disappearTime);
 	gem->init("images/Gem.png", glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, map);
 
+	// Heart
+	getline(fin, line);
+	sstream.str(line);
+	sstream >> x >> y;
+	getline(fin, line);
+	sstream.str(line);
+	sstream >> appearTime >> disappearTime;
+	heart = new Item(x, y, appearTime, disappearTime);
+	heart->init("images/heart.png", glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, map);
+
 	// Nombre rajoles que es mouen
 	getline(fin, line);
 	sstream.str(line);
@@ -150,6 +160,7 @@ void Scene::init()
 	openChest = false;
 	takenStopwatch = false;
 	takenGem = false;
+	takenHeart = false;
 	win = false;
 	animationCoinsFinished = false;
 	iniAnimationCoins = false;
@@ -158,6 +169,7 @@ void Scene::init()
 	finalCoins = 0;
 	coins = 0;
 	animationTime = 0;
+	iniCoinsTime = 0;
 
 	initShaders();
 
@@ -200,7 +212,6 @@ void Scene::init()
 
 void Scene::update(int deltaTime)
 {
-	cout << "deltaTime " << deltaTime << endl;
 	if (!openChest) {
 		currentTime += deltaTime; //només actualitzem el temps de l'escena si no s'ha acabat el nivell
 		int slabsPainted = 0;
@@ -218,6 +229,7 @@ void Scene::update(int deltaTime)
 			key->update(deltaTime);
 			if (!takenStopwatch) stopwatch->update(deltaTime);
 			if (!takenGem) gem->update(deltaTime);
+			if (!takenHeart) heart->update(deltaTime);
 			if (map->numRajolesPressed() + slabsPainted >= numRajoles) allPressed = true;
 		}
 	}
@@ -235,11 +247,13 @@ void Scene::update(int deltaTime)
 			float m = animationTime/(COINS_ANIMATION_TIME);
 			coins = initialCoins + int(m * (finalCoins - initialCoins));
 			if (int(animationTime)%150 < 20) SoundController::instance().play(COIN);
+			currentTime = iniCoinsTime + (TIME*1000 - iniCoinsTime) * m;
 		}
 		else {
 			coins = finalCoins;
 			iniAnimationCoins = false;
 			animationCoinsFinished = true;
+			currentTime = TIME*1000;
 		}
 	}
 }
@@ -278,6 +292,7 @@ void Scene::checkCollisions()
 		glm::ivec2 enemyMax = stopwatch->getBoundingBoxMax();
 		if ((playerMin.x < enemyMax.x && enemyMin.x < playerMax.x) && (playerMin.y < enemyMax.y && enemyMin.y < playerMax.y)) {
 			takenStopwatch = true;
+			SoundController::instance().play(CLOCK);
 			iniFreezeTime = currentTime;
 		}
 	}
@@ -286,6 +301,18 @@ void Scene::checkCollisions()
 		glm::ivec2 enemyMax = gem->getBoundingBoxMax();
 		if ((playerMin.x < enemyMax.x && enemyMin.x < playerMax.x) && (playerMin.y < enemyMax.y && enemyMin.y < playerMax.y)) {
 			takenGem = true;
+			coins += 500; 
+			SoundController::instance().play(COIN);
+		}
+	}
+	int numHearts = player->getNumHearts();
+	if (!takenHeart && heart->shouldCheckCollision() && numHearts < 5) {
+		glm::ivec2 enemyMin = heart->getBoundingBoxMin();
+		glm::ivec2 enemyMax = heart->getBoundingBoxMax();
+		if ((playerMin.x < enemyMax.x && enemyMin.x < playerMax.x) && (playerMin.y < enemyMax.y && enemyMin.y < playerMax.y)) {
+			takenHeart = true;
+			player->setNumHearts(++numHearts);
+			SoundController::instance().play(HEART);
 		}
 	}
 }
@@ -313,6 +340,7 @@ void Scene::render(bool playing, bool changingLevel)
 	chest->render();
 	if(!takenStopwatch) stopwatch->render();
 	if (!takenGem) gem->render();
+	if (!takenHeart && player->getNumHearts() < 5) heart->render();
 	for (MovingSlab * ms : movingPlatforms) {
 		ms->render();
 	}
@@ -326,7 +354,7 @@ void Scene::render(bool playing, bool changingLevel)
 
 	// Print time
 	string textTime = std::to_string(TIME - int(currentTime / 1000));
-	if (TIME - currentTime / 1000 < 10)
+	if (TIME - currentTime / 1000 < 10 && !iniAnimationCoins && !animationCoinsFinished)
 	{
 		textTime = std::to_string(TIME - currentTime / 1000);
 		textTime = textTime.substr(0, 3);
@@ -336,12 +364,12 @@ void Scene::render(bool playing, bool changingLevel)
 	text.render(textTime, glm::vec2(0.48*glutGet(GLUT_WINDOW_WIDTH) + 3, 0.125*glutGet(GLUT_WINDOW_HEIGHT) + 3), 40, glm::vec4(0, 0, 0, 1));
 	// Print number
 	if (playing) {
-		if (currentTime < 1000*(TIME - 10)) text.render(textTime, glm::vec2(0.48*glutGet(GLUT_WINDOW_WIDTH), 0.125*glutGet(GLUT_WINDOW_HEIGHT)), 40, glm::vec4(1, 1, 1, 1));
+		if (currentTime < 1000*(TIME - 10) || iniAnimationCoins || animationCoinsFinished) text.render(textTime, glm::vec2(0.48*glutGet(GLUT_WINDOW_WIDTH), 0.125*glutGet(GLUT_WINDOW_HEIGHT)), 40, glm::vec4(1, 1, 1, 1));
 		else if (int(currentTime) % 1000 < 500) text.render(textTime, glm::vec2(0.48*glutGet(GLUT_WINDOW_WIDTH), 0.125*glutGet(GLUT_WINDOW_HEIGHT)), 40, glm::vec4(1, 0, 0, 1));
 		else text.render(textTime, glm::vec2(0.48*glutGet(GLUT_WINDOW_WIDTH), 0.125*glutGet(GLUT_WINDOW_HEIGHT)), 40, glm::vec4(1, 1, 1, 1));
 	}
 	else {
-		if (currentTime < 1000 * (TIME - 10)) text.render(textTime, glm::vec2(0.48*glutGet(GLUT_WINDOW_WIDTH), 0.125*glutGet(GLUT_WINDOW_HEIGHT)), 40, glm::vec4(0.3, 0.3, 0.3, 1));
+		if (currentTime < 1000 * (TIME - 10) || iniAnimationCoins || animationCoinsFinished) text.render(textTime, glm::vec2(0.48*glutGet(GLUT_WINDOW_WIDTH), 0.125*glutGet(GLUT_WINDOW_HEIGHT)), 40, glm::vec4(0.3, 0.3, 0.3, 1));
 		else if (int(currentTime) % 1000 < 500) text.render(textTime, glm::vec2(0.48*glutGet(GLUT_WINDOW_WIDTH), 0.125*glutGet(GLUT_WINDOW_HEIGHT)), 40, glm::vec4(0.3, 0, 0, 1));
 		else text.render(textTime, glm::vec2(0.48*glutGet(GLUT_WINDOW_WIDTH), 0.125*glutGet(GLUT_WINDOW_HEIGHT)), 40, glm::vec4(0.3, 0.3, 0.3, 1));
 	}

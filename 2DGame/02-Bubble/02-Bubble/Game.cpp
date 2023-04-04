@@ -234,24 +234,26 @@ void Game::specialKeyPressed(int key)
 		if (state == LEVELS && !animationLevelSelected) {
 			int num = menu.getLevelFocus();
 			if (num < 3) menu.setLevelFocus(num + 3);
+			SoundController::instance().play(ARROW);
 		}
 		else if (state == MENU) {
 			int num = menu.getOptionFocus();
 			if (num < 3) menu.setOptionFocus(++num);
+			SoundController::instance().play(ARROW);
 		}
-		SoundController::instance().play(ARROW);
 
 	}
 	if (key == GLUT_KEY_UP) {
 		if (state == LEVELS && !animationLevelSelected) {
 			int num = menu.getLevelFocus();
 			if (num > 2) menu.setLevelFocus(num - 3);
+			SoundController::instance().play(ARROW);
 		}
 		else if (state == MENU) {
 			int num = menu.getOptionFocus();
 			if (num > 0) menu.setOptionFocus(--num);
+			SoundController::instance().play(ARROW);
 		}
-		SoundController::instance().play(ARROW);
 	}
 
 }

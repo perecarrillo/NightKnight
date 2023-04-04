@@ -6,6 +6,8 @@
 20 60 -- temps aparicio-desaparicio stopwatch
 30 6 -- posició gemma
 5 90 -- temps aparicio-desaparicio gemma
+12 10 -- posició heart
+3 50 -- temps aparicio-desaparicio heart
 2 -- nombre rajoles que es mouen
 7 12 -- 1a posicio (i inicial) rajola 1
 27 12 -- 2a posicio rajola 1

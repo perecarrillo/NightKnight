@@ -6,6 +6,8 @@
 12 35 -- temps aparicio-desaparicio stopwatch
 19 13 -- posició gemma
 15 45 -- temps aparicio-desaparicio gemma
+12 10 -- posició heart
+3 50 -- temps aparicio-desaparicio heart
 0 -- nombre rajoles que es mouen
 2 0 2 -- nombre enemics (esquelets, rates, ratpenats)
 8 22 -- posicio esquelet 1

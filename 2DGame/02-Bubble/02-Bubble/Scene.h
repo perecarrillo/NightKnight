@@ -99,6 +99,7 @@ private:
 	Item *key;
 	Item *stopwatch;
 	Item *gem;
+	Item *heart;
 
 	bool allPressed;
 	bool unlockChest;
@@ -106,6 +107,7 @@ private:
 	bool win;
 	bool takenStopwatch;
 	bool takenGem;
+	bool takenHeart;
 	bool iniAnimationCoins;
 	bool animationCoinsFinished;
 

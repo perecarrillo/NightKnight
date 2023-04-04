@@ -4,7 +4,6 @@ void SoundController::init()
 {
 	engine = createIrrKlangDevice();
 	sounds[LAUGH] = engine->addSoundSourceFromFile("sounds/laugh.wav");
-	sounds[CLOCK] = engine->addSoundSourceFromFile("sounds/clock.wav");
 	sounds[MAINTHEME] = engine->addSoundSourceFromFile("sounds/MainTheme.mp3");
 	sounds[MENUU] = engine->addSoundSourceFromFile("sounds/Menu.mp3");
 	sounds[JUMP] = engine->addSoundSourceFromFile("sounds/Jump.mp3");
@@ -12,6 +11,8 @@ void SoundController::init()
 	sounds[READYY] = engine->addSoundSourceFromFile("sounds/Ready.mp3");
 	sounds[ARROW] = engine->addSoundSourceFromFile("sounds/Arrow.mp3");
 	sounds[COIN] = engine->addSoundSourceFromFile("sounds/coin.mp3");
+	sounds[CLOCK] = engine->addSoundSourceFromFile("sounds/Clock2.mp3");
+	sounds[HEART] = engine->addSoundSourceFromFile("sounds/heart.mp3");
 }
 
 void SoundController::play(Sounds sound, bool loop) //Loop is optional
