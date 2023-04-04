@@ -14,6 +14,7 @@
 #define NUM_TILES_Y 26
 #define TIME 120
 #define FREEZETIME 5
+#define ESCUT_TIME 5
 #define NUM_LAST_LEVEL 6
 #define COINS_ANIMATION_TIME 3000
 #define COINS_PER_SECOND 33
@@ -101,6 +102,16 @@ void Scene::loadScene() {
 	heart = new Item(x, y, appearTime, disappearTime);
 	heart->init("images/heart.png", glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, map);
 
+	// Escut
+	getline(fin, line);
+	sstream.str(line);
+	sstream >> x >> y;
+	getline(fin, line);
+	sstream.str(line);
+	sstream >> appearTime >> disappearTime;
+	escut = new Item(x, y, appearTime, disappearTime);
+	escut->init("images/escut.png", glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, map);
+
 	// Nombre rajoles que es mouen
 	getline(fin, line);
 	sstream.str(line);
@@ -161,9 +172,13 @@ void Scene::init()
 	takenStopwatch = false;
 	takenGem = false;
 	takenHeart = false;
+	takenEscut = false;
 	win = false;
 	animationCoinsFinished = false;
 	iniAnimationCoins = false;
+
+	iniFreezeTime = 0.f;
+	iniEscutTime = 0.f;
 
 	initialCoins = 0;
 	finalCoins = 0;
@@ -225,13 +240,14 @@ void Scene::update(int deltaTime)
 			for (Entity * enemy : enemies) {
 				enemy->update(deltaTime);
 			}
-			checkCollisions();
 			key->update(deltaTime);
 			if (!takenStopwatch) stopwatch->update(deltaTime);
 			if (!takenGem) gem->update(deltaTime);
 			if (!takenHeart) heart->update(deltaTime);
+			if (!takenEscut) escut->update(deltaTime);
 			if (map->numRajolesPressed() + slabsPainted >= numRajoles) allPressed = true;
 		}
+		if (!takenEscut || iniEscutTime + ESCUT_TIME * 1000 < currentTime) checkCollisions();
 	}
 	else {
 		//player->moveToChest(deltaTime, chest->getPosition());
@@ -315,6 +331,15 @@ void Scene::checkCollisions()
 			SoundController::instance().play(HEART);
 		}
 	}
+	if (!takenEscut && escut->shouldCheckCollision()) {
+		glm::ivec2 enemyMin = escut->getBoundingBoxMin();
+		glm::ivec2 enemyMax = escut->getBoundingBoxMax();
+		if ((playerMin.x < enemyMax.x && enemyMin.x < playerMax.x) && (playerMin.y < enemyMax.y && enemyMin.y < playerMax.y)) {
+			takenEscut = true;
+			//SoundController::instance().play(CLOCK);
+			iniEscutTime = currentTime;
+		}
+	}
 }
 
 
@@ -341,6 +366,7 @@ void Scene::render(bool playing, bool changingLevel)
 	if(!takenStopwatch) stopwatch->render();
 	if (!takenGem) gem->render();
 	if (!takenHeart && player->getNumHearts() < 5) heart->render();
+	if (!takenEscut) escut->render();
 	for (MovingSlab * ms : movingPlatforms) {
 		ms->render();
 	}
