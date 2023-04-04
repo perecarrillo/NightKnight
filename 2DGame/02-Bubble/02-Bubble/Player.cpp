@@ -25,12 +25,13 @@ Player::Player(int x, int y) {
 	WIDTH = 12;
 	WIDTH_OFFSET = 2;
 	HEIGHT = 16;
-	animationsUsed = { MOVE_LEFT, MOVE_RIGHT, STAND_LEFT, STAND_RIGHT, DYING };
+	animationsUsed = { MOVE_LEFT, MOVE_RIGHT, STAND_LEFT, STAND_RIGHT, DYING, MOVE_LEFT_TERMINATOR, MOVE_RIGHT_TERMINATOR, STAND_LEFT_TERMINATOR, STAND_RIGHT_TERMINATOR };
 	animationLength = 8;
 	bJumping = false;
 	speed = 1;
 	coins = 0;
 	invincible = false;
+	terminatorMode = false;
 
 }
 
@@ -50,10 +51,14 @@ void Player::update(int deltaTime)
 			if (map->collisionMoveLeft(position + glm::vec2(WIDTH_OFFSET, 0), glm::ivec2(WIDTH, HEIGHT), false))
 			{
 				position.x += speed;
-				if (sprite->animation() != STAND_LEFT)
+				if (godMode() && sprite->animation() != STAND_LEFT_TERMINATOR)
+					sprite->changeAnimation(STAND_LEFT_TERMINATOR);
+				else if (!godMode() && sprite->animation() != STAND_LEFT)
 					sprite->changeAnimation(STAND_LEFT);
 			}
-			else if (sprite->animation() != MOVE_LEFT)
+			else if (godMode() && sprite->animation() != MOVE_LEFT_TERMINATOR)
+				sprite->changeAnimation(MOVE_LEFT_TERMINATOR);
+			else if (!godMode() && sprite->animation() != MOVE_LEFT)
 				sprite->changeAnimation(MOVE_LEFT);
 		}
 		else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT))
@@ -62,17 +67,34 @@ void Player::update(int deltaTime)
 			if (map->collisionMoveRight(position + glm::vec2(WIDTH_OFFSET, 0), glm::ivec2(WIDTH, HEIGHT), false))
 			{
 				position.x -= speed;
-				if (sprite->animation() != STAND_RIGHT)
+				if (godMode() && sprite->animation() != STAND_RIGHT_TERMINATOR)
+					sprite->changeAnimation(STAND_RIGHT_TERMINATOR);
+				else if (!godMode() && sprite->animation() != STAND_RIGHT)
 					sprite->changeAnimation(STAND_RIGHT);
 			}
-			else if (sprite->animation() != MOVE_RIGHT)
+			else if (godMode() && sprite->animation() != MOVE_RIGHT_TERMINATOR)
+				sprite->changeAnimation(MOVE_RIGHT_TERMINATOR);
+			else if (!godMode() && sprite->animation() != MOVE_RIGHT)
 				sprite->changeAnimation(MOVE_RIGHT);
 		}
 		else
 		{
-			if (sprite->animation() == MOVE_LEFT)
+			if (godMode() && sprite->animation() == MOVE_LEFT_TERMINATOR)
+				sprite->changeAnimation(STAND_LEFT_TERMINATOR);
+			if (!godMode() && sprite->animation() == MOVE_LEFT)
 				sprite->changeAnimation(STAND_LEFT);
-			else if (sprite->animation() == MOVE_RIGHT)
+			else if (godMode() && sprite->animation() == MOVE_RIGHT_TERMINATOR)
+				sprite->changeAnimation(STAND_RIGHT_TERMINATOR);
+			else if (!godMode() && sprite->animation() == MOVE_RIGHT)
+				sprite->changeAnimation(STAND_RIGHT);
+
+			else if (godMode() && sprite->animation() == STAND_LEFT)
+				sprite->changeAnimation(STAND_LEFT_TERMINATOR);
+			else if (!godMode() && sprite->animation() == STAND_LEFT_TERMINATOR)
+				sprite->changeAnimation(STAND_LEFT);
+			else if (godMode() && sprite->animation() == STAND_RIGHT)
+				sprite->changeAnimation(STAND_RIGHT_TERMINATOR);
+			else if (!godMode() && sprite->animation() == STAND_RIGHT_TERMINATOR)
 				sprite->changeAnimation(STAND_RIGHT);
 		}
 
@@ -210,6 +232,11 @@ void Player::toggleInmunity()
 	invincible = !invincible;
 }
 
+void Player::setTerminatorMode(bool activate)
+{
+	terminatorMode = activate;
+}
+
 int Player::getNumHearts() {
 	return hearts;
 }
@@ -237,5 +264,10 @@ void Player::setPosition(glm::vec2 pos)
 	position.y = pos.y;
 	map->collisionMoveDown(position + glm::vec2(WIDTH_OFFSET, 0), glm::ivec2(WIDTH, HEIGHT), &position.y, 0);
 	map->collisionMoveUp(position + glm::vec2(WIDTH_OFFSET, 0), glm::ivec2(WIDTH, HEIGHT), &position.y, 0, false);
+}
+
+bool Player::godMode()
+{
+	return terminatorMode || invincible;
 }
 

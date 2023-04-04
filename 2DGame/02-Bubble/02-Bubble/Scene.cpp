@@ -176,6 +176,7 @@ void Scene::init()
 	win = false;
 	animationCoinsFinished = false;
 	iniAnimationCoins = false;
+	terminatorEnd = false;
 
 	iniFreezeTime = 0.f;
 	iniEscutTime = 0.f;
@@ -248,6 +249,10 @@ void Scene::update(int deltaTime)
 			if (map->numRajolesPressed() + slabsPainted >= numRajoles) allPressed = true;
 		}
 		if (!takenEscut || iniEscutTime + ESCUT_TIME * 1000 < currentTime) checkCollisions();
+		if (takenEscut && iniEscutTime + ESCUT_TIME * 1000 < currentTime && !terminatorEnd) {
+			player->setTerminatorMode(false);
+			terminatorEnd = true;
+		}
 	}
 	else {
 		//player->moveToChest(deltaTime, chest->getPosition());
@@ -338,6 +343,7 @@ void Scene::checkCollisions()
 			takenEscut = true;
 			//SoundController::instance().play(CLOCK);
 			iniEscutTime = currentTime;
+			player->setTerminatorMode(true);
 		}
 	}
 }

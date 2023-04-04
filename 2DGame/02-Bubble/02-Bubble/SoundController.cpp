@@ -11,12 +11,13 @@ void SoundController::init()
 	sounds[READYY] = engine->addSoundSourceFromFile("sounds/Ready.mp3");
 	sounds[ARROW] = engine->addSoundSourceFromFile("sounds/Arrow.mp3");
 	sounds[COIN] = engine->addSoundSourceFromFile("sounds/coin.mp3");
-	sounds[CLOCK] = engine->addSoundSourceFromFile("sounds/Clock2.mp3");
+	sounds[CLOCK] = engine->addSoundSourceFromFile("sounds/clock.wav");
 	sounds[HEART] = engine->addSoundSourceFromFile("sounds/heart.mp3");
 }
 
 void SoundController::play(Sounds sound, bool loop) //Loop is optional
 {
+	std::cout<<sounds[sound]<<std::endl;
 	engine->play2D(sounds[sound]);
 }
 

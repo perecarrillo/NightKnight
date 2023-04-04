@@ -40,11 +40,13 @@ public:
 	void addXMovement(float value);
 	void addYMovement(float value);
 	void toggleInmunity();
+	void setTerminatorMode(bool activate);
 
 	glm::vec2 getPosition();
 	void setPosition(glm::vec2 pos);
 
 private:
+	bool godMode();
 	bool bJumping;
 	int jumpAngle, startY, jumpLost, coyoteTime;
 	int hearts;
@@ -55,6 +57,7 @@ private:
 	int coins;
 	bool invincible;
 	set<int> onPlatforms;
+	bool terminatorMode;
 };
 
 

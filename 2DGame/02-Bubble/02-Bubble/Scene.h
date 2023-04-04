@@ -112,6 +112,7 @@ private:
 	bool takenEscut;
 	bool iniAnimationCoins;
 	bool animationCoinsFinished;
+	bool terminatorEnd;
 
 };
 
