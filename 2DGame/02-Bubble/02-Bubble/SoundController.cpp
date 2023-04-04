@@ -11,6 +11,7 @@ void SoundController::init()
 	sounds[WINN] = engine->addSoundSourceFromFile("sounds/Win.mp3");
 	sounds[READYY] = engine->addSoundSourceFromFile("sounds/Ready.mp3");
 	sounds[ARROW] = engine->addSoundSourceFromFile("sounds/Arrow.mp3");
+	sounds[COIN] = engine->addSoundSourceFromFile("sounds/coin.mp3");
 }
 
 void SoundController::play(Sounds sound, bool loop) //Loop is optional

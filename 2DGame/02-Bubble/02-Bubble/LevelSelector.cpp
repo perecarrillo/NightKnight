@@ -110,8 +110,8 @@ void LevelSelector::render()
 
 				// HEIGHT
 				(9 + 26) // offset menu screen height
-				+ 1.35f*height // random offset to put all the maps near the bottom of the menu screen
-				+ (height / (ROWS + 1) + height) * row, 0.f)); // vertical offset between maps plus the height of a map
+				+ 1.4f*height // random offset to put all the maps near the bottom of the menu screen
+				+ (height / (ROWS + 1) + 0.9f* height) * row, 0.f)); // vertical offset between maps plus the height of a map
 			texProgram.setUniformMatrix4f("modelview", modelview);
 			texQuad[0]->render(texs[i]);
 		}
@@ -131,7 +131,7 @@ void LevelSelector::render()
 	// Expand the level focused
 	if (!expanding) {
 		modelview = glm::mat4(1.0f);
-		modelview = glm::translate(modelview, glm::vec3((9 + 32) + width / (COLS + 1) + (width / (COLS + 1) + width)*(levelFocus % COLS), (9 + 26) + 1.35f*height + (height / (ROWS + 1) + height) * (levelFocus / COLS), 0.f));
+		modelview = glm::translate(modelview, glm::vec3((9 + 32) + width / (COLS + 1) + (width / (COLS + 1) + width)*(levelFocus % COLS), (9 + 26) + 1.4f*height + (height / (ROWS + 1) + 0.9f*height) * (levelFocus / COLS), 0.f));
 		modelview = glm::translate(modelview, glm::vec3(width / 2.f, height / 2.f, 0.f));
 		modelview = glm::scale(modelview, glm::vec3(1.1f, 1.1f, 0));
 		modelview = glm::translate(modelview, glm::vec3(-width / 2.f, -height / 2.f, 0.f));
@@ -199,6 +199,6 @@ void LevelSelector::expandLevelSelector()
 {
 	iniAnimationTime = currentTime;
 	expanding = true;
-	posIni = glm::vec2((9 + 32) + width/2.f + width / (COLS + 1) + (width / (COLS + 1) + width)*(levelFocus % COLS), (9 + 26) + 1.35f*height + height/2.f + (height / (ROWS + 1) + height) * (levelFocus / COLS));
+	posIni = glm::vec2((9 + 32) + width/2.f + width / (COLS + 1) + (width / (COLS + 1) + width)*(levelFocus % COLS), (9 + 26) + 1.4f*height + height/2.f + (height / (ROWS + 1) + 0.9f*height) * (levelFocus / COLS));
 	posFi = glm::vec2(8 + 32*8/2.f, 8 + 2*8 + 26*8/2.f);
 }
