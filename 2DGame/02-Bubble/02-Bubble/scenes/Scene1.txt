@@ -8,8 +8,8 @@
 3 50 -- temps aparicio-desaparicio gemma
 12 10 -- posició heart
 3 50 -- temps aparicio-desaparicio heart
-26 18 -- posició escut
-3 50 -- temps aparicio-desaparicio escut
+28 17 -- posició escut
+12 50 -- temps aparicio-desaparicio escut
 1 -- nombre rajoles que es mouen
 5 8 -- 1a posicio (i inicial) rajola 1
 25 8 -- 2a posicio rajola 1
@@ -17,5 +17,5 @@
 27 14 -- posicio esquelet 1
 1 14 -- posicio esquelet 2
 15 16 -- esquelet 3
-19 5 -- posicio rata 1
+19 8 -- posicio rata 1
 28 10 -- posicio vampir 1	

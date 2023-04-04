@@ -8,8 +8,8 @@
 20 60 -- temps aparicio-desaparicio gemma
 12 10 -- posició heart
 3 50 -- temps aparicio-desaparicio heart
-26 18 -- posició escut
-3 50 -- temps aparicio-desaparicio escut
+26 22 -- posició escut
+25 50 -- temps aparicio-desaparicio escut
 0 -- nombre rajoles que es mouen
 2 1 0 -- nombre enemics (esquelets, rates, ratpenats)
 25 22 -- posicio esquelet 1
