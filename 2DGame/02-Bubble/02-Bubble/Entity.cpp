@@ -49,7 +49,7 @@ void Entity::update(int deltaTime)
 	if (movement[actualMovement.first].first == MOVE_LEFT)
 	{
 		position.x -= speed;
-		if (map->collisionMoveLeft(position + glm::vec2(WIDTH_OFFSET, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT)))
+		if (map->collisionMoveLeft(position + glm::vec2(WIDTH_OFFSET, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), false))
 		{
 			position.x += speed;
 			nextAnimation();
@@ -66,7 +66,7 @@ void Entity::update(int deltaTime)
 	else if (movement[actualMovement.first].first == MOVE_RIGHT)
 	{
 		position.x += speed;
-		if (map->collisionMoveRight(position + glm::vec2(WIDTH_OFFSET, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT)))
+		if (map->collisionMoveRight(position + glm::vec2(WIDTH_OFFSET, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), false))
 		{
 			position.x -= speed;
 			nextAnimation();

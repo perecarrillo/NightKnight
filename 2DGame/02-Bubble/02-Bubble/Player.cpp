@@ -47,7 +47,7 @@ void Player::update(int deltaTime)
 		if (Game::instance().getSpecialKey(GLUT_KEY_LEFT))
 		{
 			position.x -= speed;
-			if (map->collisionMoveLeft(position + glm::vec2(WIDTH_OFFSET, 0), glm::ivec2(WIDTH, HEIGHT)))
+			if (map->collisionMoveLeft(position + glm::vec2(WIDTH_OFFSET, 0), glm::ivec2(WIDTH, HEIGHT), false))
 			{
 				position.x += speed;
 				if (sprite->animation() != STAND_LEFT)
@@ -59,7 +59,7 @@ void Player::update(int deltaTime)
 		else if (Game::instance().getSpecialKey(GLUT_KEY_RIGHT))
 		{
 			position.x += speed;
-			if (map->collisionMoveRight(position + glm::vec2(WIDTH_OFFSET, 0), glm::ivec2(WIDTH, HEIGHT)))
+			if (map->collisionMoveRight(position + glm::vec2(WIDTH_OFFSET, 0), glm::ivec2(WIDTH, HEIGHT), false))
 			{
 				position.x -= speed;
 				if (sprite->animation() != STAND_RIGHT)
@@ -90,7 +90,7 @@ void Player::update(int deltaTime)
 			{
 
 				position.y = int((startY + jumpLost) - JUMP_HEIGHT * sin(3.14159f * jumpAngle / 180.f));
-				if (map->collisionMoveUp(position + glm::vec2(WIDTH_OFFSET, 0), glm::ivec2(WIDTH, HEIGHT), &position.y, HEIGHT_OFFSET)) {
+				if (map->collisionMoveUp(position + glm::vec2(WIDTH_OFFSET, 0), glm::ivec2(WIDTH, HEIGHT), &position.y, HEIGHT_OFFSET, false)) {
 					jumpAngle = 90;
 					jumpLost += position.y - int(startY - JUMP_HEIGHT * sin(3.14159f * jumpAngle / 180.f));
 				}
@@ -202,7 +202,7 @@ void Player::addYMovement(float value)
 		map->collisionMoveDown(position + glm::vec2(WIDTH_OFFSET, 0), glm::ivec2(WIDTH, HEIGHT), &position.y, 0);
 	}
 	else
-		map->collisionMoveUp(position + glm::vec2(WIDTH_OFFSET, 0), glm::ivec2(WIDTH, HEIGHT), &position.y, 0);
+		map->collisionMoveUp(position + glm::vec2(WIDTH_OFFSET, 0), glm::ivec2(WIDTH, HEIGHT), &position.y, 0, false);
 }
 
 void Player::toggleInmunity()
@@ -236,6 +236,6 @@ void Player::setPosition(glm::vec2 pos)
 	position.x = pos.x - WIDTH_OFFSET;
 	position.y = pos.y;
 	map->collisionMoveDown(position + glm::vec2(WIDTH_OFFSET, 0), glm::ivec2(WIDTH, HEIGHT), &position.y, 0);
-	map->collisionMoveUp(position + glm::vec2(WIDTH_OFFSET, 0), glm::ivec2(WIDTH, HEIGHT), &position.y, 0);
+	map->collisionMoveUp(position + glm::vec2(WIDTH_OFFSET, 0), glm::ivec2(WIDTH, HEIGHT), &position.y, 0, false);
 }
 

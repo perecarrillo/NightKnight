@@ -105,7 +105,7 @@ void Rata::updateAI(int deltaTime)
 				collisionDown = map->collisionMoveDown(position + glm::vec2(WIDTH_OFFSET_LEFT, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), &position.y, HEIGHT_OFFSET);
 
 				position.x -= speed;
-				bool collisionLeft = map->collisionMoveLeft(position + glm::vec2(WIDTH_OFFSET_LEFT, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT));
+				bool collisionLeft = map->collisionMoveLeft(position + glm::vec2(WIDTH_OFFSET_LEFT, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), false);
 				bool collisionDownLeft = map->collisionMoveDown(position + glm::vec2(-map->getTileSize() * 2, map->getTileSize()) + glm::vec2(WIDTH_OFFSET, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), &trash, HEIGHT_OFFSET);
 				pair<int, int> jumpTo = map->closestJumpPosition(position + glm::vec2(WIDTH_OFFSET_LEFT, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), true);
 				if (collisionLeft || (collisionDown && !collisionDownLeft && jumpTo.first == -1))
@@ -146,7 +146,7 @@ void Rata::updateAI(int deltaTime)
 				collisionDown = map->collisionMoveDown(position + glm::vec2(WIDTH_OFFSET, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), &position.y, HEIGHT_OFFSET);
 
 				position.x += speed;
-				bool collisionRight = map->collisionMoveRight(position + glm::vec2(WIDTH_OFFSET, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT));
+				bool collisionRight = map->collisionMoveRight(position + glm::vec2(WIDTH_OFFSET, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), false);
 				bool collisionDownRight = map->collisionMoveDown(position + glm::vec2(map->getTileSize(), map->getTileSize()) + glm::vec2(WIDTH_OFFSET, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), &trash, HEIGHT_OFFSET);
 				pair<int, int> jumpTo = map->closestJumpPosition(position + glm::vec2(WIDTH_OFFSET, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), false);
 				if (collisionRight || (collisionDown && !collisionDownRight && jumpTo.first == -1))
@@ -189,13 +189,13 @@ void Rata::updateAI(int deltaTime)
 		if (movingLeft)
 		{
 			position.x -= jumpingSpeed;
-			if (map->collisionMoveLeft(position + glm::vec2(WIDTH_OFFSET_LEFT, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT)))
+			if (map->collisionMoveLeft(position + glm::vec2(WIDTH_OFFSET_LEFT, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), false))
 				position.x += jumpingSpeed;
 		}
 		else
 		{
 			position.x += jumpingSpeed;
-			if (map->collisionMoveRight(position + glm::vec2(WIDTH_OFFSET, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT)))
+			if (map->collisionMoveRight(position + glm::vec2(WIDTH_OFFSET, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), false))
 				position.x -= jumpingSpeed;
 		}
 
@@ -211,7 +211,7 @@ void Rata::updatePredefinedMovements(int deltaTime)
 	if (movement[actualMovement.first].first == MOVE_LEFT)
 	{
 		position.x -= speed;
-		if (map->collisionMoveLeft(position + glm::vec2(WIDTH_OFFSET_LEFT, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT)))
+		if (map->collisionMoveLeft(position + glm::vec2(WIDTH_OFFSET_LEFT, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), false))
 		{
 			position.x += speed;
 			if (sprite->animation() != STAND_LEFT)
@@ -224,7 +224,7 @@ void Rata::updatePredefinedMovements(int deltaTime)
 	else if (movement[actualMovement.first].first == MOVE_RIGHT)
 	{
 		position.x += speed;
-		if (map->collisionMoveRight(position + glm::vec2(WIDTH_OFFSET, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT)))
+		if (map->collisionMoveRight(position + glm::vec2(WIDTH_OFFSET, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), false))
 		{
 			position.x -= speed;
 			if (sprite->animation() != STAND_RIGHT)
@@ -268,7 +268,7 @@ void Rata::updatePredefinedMovements(int deltaTime)
 			}
 		}
 		position.x -= jumpingSpeed;
-		if (map->collisionMoveLeft(position + glm::vec2(WIDTH_OFFSET_LEFT, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT)))
+		if (map->collisionMoveLeft(position + glm::vec2(WIDTH_OFFSET_LEFT, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), false))
 			position.x += jumpingSpeed;
 	}
 
@@ -299,7 +299,7 @@ void Rata::updatePredefinedMovements(int deltaTime)
 			}
 		}
 		position.x += jumpingSpeed;
-		if (map->collisionMoveRight(position + glm::vec2(WIDTH_OFFSET, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT)))
+		if (map->collisionMoveRight(position + glm::vec2(WIDTH_OFFSET, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), false))
 			position.x -= jumpingSpeed;
 	}
 

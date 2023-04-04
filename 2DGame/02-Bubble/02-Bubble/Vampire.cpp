@@ -6,15 +6,15 @@ Vampire::Vampire(int x, int y)
 {
 	initialPosition = glm::ivec2(x, y);
 	speed = 0.3;
-	WIDTH = 13;
+	WIDTH = 11;
 	HEIGHT = 16;
-	WIDTH_OFFSET = 11;
-	HEIGHT_OFFSET = 15;
-	BAT_HEIGHT = 19;
-	BAT_WIDTH = 21;
-	BAT_WIDTH_OFFSET = 4;
-	BAT_HEIGHT_OFFSET = 10;
-	animationsUsed = {FLY_RIGHT, FLY_LEFT, MOVE_RIGHT, MOVE_LEFT, STAND_RIGHT, STAND_LEFT, TRANSFORM_TO_BAT, LOCKED, TRANSFORM_TO_VAMPIRE, UNLOCKED};
+	WIDTH_OFFSET = 9;
+	HEIGHT_OFFSET = 16;
+	BAT_HEIGHT = 7;
+	BAT_WIDTH = 11;
+	BAT_WIDTH_OFFSET = 3;
+	BAT_HEIGHT_OFFSET = 19;
+	animationsUsed = {FLY_RIGHT, FLY_LEFT, MOVE_RIGHT, MOVE_LEFT, TRANSFORM_TO_BAT_RIGHT, TRANSFORM_TO_BAT_LEFT, TRANSFORM_TO_VAMPIRE_RIGHT, TRANSFORM_TO_VAMPIRE_LEFT};
 	animationLength = 16;
 	movingLeft = false;
 	isVampire = true;
@@ -27,10 +27,12 @@ void Vampire::update(int deltaTime)
 	sprite->update(deltaTime);
 	float trash = 0;
 
-	if (sprite->animation() == TRANSFORM_TO_BAT || sprite->animation() == TRANSFORM_TO_VAMPIRE)
+	if (sprite->animation() == TRANSFORM_TO_BAT_RIGHT || sprite->animation() == TRANSFORM_TO_BAT_LEFT || sprite->animation() == TRANSFORM_TO_VAMPIRE_RIGHT || sprite->animation() == TRANSFORM_TO_VAMPIRE_LEFT)
 	{
 		//it hasn't finished transforming
 		if (sprite->getKeyFrame() < animationLength - 1) return;
+		if (sprite->animation() == TRANSFORM_TO_BAT_RIGHT || sprite->animation() == TRANSFORM_TO_BAT_LEFT) position.x += 7;
+
 	}
 
 	if (isVampire)
@@ -38,7 +40,7 @@ void Vampire::update(int deltaTime)
 		if (movingLeft)
 		{
 			position.x -= speed;
-			if (map->collisionMoveLeft(position + glm::vec2(WIDTH_OFFSET, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT)) || 
+			if (map->collisionMoveLeft(position + glm::vec2(WIDTH_OFFSET, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), false) || 
 				!map->collisionMoveDown(position + glm::vec2(-map->getTileSize(), map->getTileSize()) + glm::vec2(WIDTH_OFFSET, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), &trash, HEIGHT_OFFSET))
 			{
 				position.x += speed;
@@ -46,11 +48,16 @@ void Vampire::update(int deltaTime)
 			}
 			else if (sprite->animation() != MOVE_LEFT)
 				sprite->changeAnimation(MOVE_LEFT);
+			if (rand() % 500 == 0)
+			{
+				isVampire = !isVampire;
+				sprite->changeAnimation(TRANSFORM_TO_BAT_LEFT);
+			}
 		}
 		else
 		{
 			position.x += speed;
-			if (map->collisionMoveRight(position + glm::vec2(WIDTH_OFFSET, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT)) || 
+			if (map->collisionMoveRight(position + glm::vec2(WIDTH_OFFSET, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), false) || 
 				!map->collisionMoveDown(position + glm::vec2(map->getTileSize(), map->getTileSize()) + glm::vec2(WIDTH_OFFSET, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), &trash, HEIGHT_OFFSET))
 			{
 				position.x -= speed;
@@ -58,16 +65,15 @@ void Vampire::update(int deltaTime)
 			}
 			else if (sprite->animation() != MOVE_RIGHT)
 				sprite->changeAnimation(MOVE_RIGHT);
+			if (rand() % 500 == 0)
+			{
+				isVampire = !isVampire;
+				sprite->changeAnimation(TRANSFORM_TO_BAT_RIGHT);
+			}
 		}
 
 		position.y += FALL_STEP;
 		map->collisionMoveDown(position + glm::vec2(WIDTH_OFFSET, HEIGHT_OFFSET), glm::ivec2(WIDTH, HEIGHT), &position.y, HEIGHT_OFFSET);
-
-		if (rand() % 500 == 0)
-		{
-			isVampire = !isVampire;
-			sprite->changeAnimation(TRANSFORM_TO_BAT);
-		}
 	}
 
 	else
@@ -75,7 +81,7 @@ void Vampire::update(int deltaTime)
 		if (movingLeft)
 		{
 			position.x -= speed;
-			if (map->collisionMoveLeft(position + glm::vec2(BAT_WIDTH_OFFSET, BAT_HEIGHT_OFFSET), glm::ivec2(BAT_WIDTH, BAT_HEIGHT)))
+			if (map->collisionMoveLeft(position + glm::vec2(BAT_WIDTH_OFFSET, BAT_HEIGHT_OFFSET), glm::ivec2(BAT_WIDTH, BAT_HEIGHT), true))
 			{
 				position.x += speed;
 				movingLeft = false;
@@ -87,7 +93,7 @@ void Vampire::update(int deltaTime)
 		else
 		{
 			position.x += speed;
-			if (map->collisionMoveRight(position + glm::vec2(BAT_WIDTH_OFFSET, BAT_HEIGHT_OFFSET), glm::ivec2(BAT_WIDTH, BAT_HEIGHT)))
+			if (map->collisionMoveRight(position + glm::vec2(BAT_WIDTH_OFFSET, BAT_HEIGHT_OFFSET), glm::ivec2(BAT_WIDTH, BAT_HEIGHT), true))
 			{
 				position.x -= speed;
 				movingLeft = true;
@@ -100,7 +106,7 @@ void Vampire::update(int deltaTime)
 		if (movingUp)
 		{
 			position.y -= speed;
-			if (map->collisionMoveUp(position + glm::vec2(BAT_WIDTH_OFFSET, BAT_HEIGHT_OFFSET), glm::ivec2(BAT_WIDTH, BAT_HEIGHT), &position.y, BAT_HEIGHT_OFFSET))
+			if (map->collisionMoveUp(position + glm::vec2(BAT_WIDTH_OFFSET, BAT_HEIGHT_OFFSET), glm::ivec2(BAT_WIDTH, BAT_HEIGHT), &position.y, BAT_HEIGHT_OFFSET, true))
 			{
 				movingUp = false;
 			}
@@ -113,8 +119,9 @@ void Vampire::update(int deltaTime)
 				movingUp = true;
 				if (rand() % 3 == 0) {
 					isVampire = !isVampire;
-					sprite->changeAnimation(TRANSFORM_TO_VAMPIRE);
-					position.y -= 3;
+					sprite->changeAnimation(TRANSFORM_TO_VAMPIRE_LEFT);
+					position.x -= 7;
+					position.y -= 6;
 				}
 			}
 		}

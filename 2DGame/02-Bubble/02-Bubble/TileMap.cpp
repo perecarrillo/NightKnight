@@ -10,8 +10,8 @@
 #define NUM_TILES_Y 26
 
 using namespace std;
-
-const set<int> TileMap::NO_COLLISION_BELOW({ 1615,1616,1617,1618,1619,1620,	1613,1614 });
+//											 Wood							Slabs	   Spikes
+const set<int> TileMap::NO_COLLISION_BELOW({ 1615,1616,1617,1618,1619,1620,	1613,1614, 1669,1670 });
 
 TileMap *TileMap::createTileMap(const string &levelFile, const glm::vec2 &minCoords, ShaderProgram &program)
 {
@@ -175,7 +175,7 @@ void TileMap::prepareArrays(const glm::vec2 &minCoords, ShaderProgram &program)
 // Method collisionMoveDown also corrects Y coordinate if the box is
 // already intersecting a tile below.
 
-bool TileMap::collisionMoveLeft(const glm::ivec2 &pos, const glm::ivec2 &size) const
+bool TileMap::collisionMoveLeft(const glm::ivec2 &pos, const glm::ivec2 &size, bool collisionWithSlabs) const
 {
 	int x, y0, y1;
 
@@ -184,14 +184,14 @@ bool TileMap::collisionMoveLeft(const glm::ivec2 &pos, const glm::ivec2 &size) c
 	y1 = (pos.y + size.y - 1) / tileSize;
 	for (int y = y0; y <= y1; y++)
 	{
-		if (hasCollision(map[y*mapSize.x + x], map[(y + 1)*mapSize.x + (x)]))
+		if (hasCollision(map[y*mapSize.x + x], map[(y + 1)*mapSize.x + (x)], collisionWithSlabs))
 			return true;
 	}
 
 	return false;
 }
 
-bool TileMap::collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size) const
+bool TileMap::collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size, bool collisionWithSlabs) const
 {
 	int x, y0, y1;
 
@@ -200,11 +200,15 @@ bool TileMap::collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size) 
 	y1 = (pos.y + size.y - 1) / tileSize;
 	for (int y = y0; y <= y1; y++)
 	{
-		if (hasCollision(map[y*mapSize.x + x], map[(y + 1)*mapSize.x + (x)]))
+		if (hasCollision(map[y*mapSize.x + x], map[(y + 1)*mapSize.x + (x)], collisionWithSlabs))
 			return true;
 	}
 
 	return false;
+}
+
+bool TileMap::hasCollisionDown(int tile) const {
+	return tile != 0 && tile != 1669 && tile != 1670;
 }
 
 bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, float *posY, int offset_y) const
@@ -216,7 +220,7 @@ bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, f
 	y = (pos.y + size.y - 1) / tileSize;
 	for (int x = x0; x <= x1; x++)
 	{
-		if (map[y*mapSize.x + x] != 0)
+		if (hasCollisionDown(map[y*mapSize.x + x]))
 		{
 			if (*posY - tileSize * y + size.y + offset_y <= 2)
 			{
@@ -229,7 +233,7 @@ bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, f
 	return false;
 }
 
-bool TileMap::collisionMoveUp(const glm::ivec2 &pos, const glm::ivec2 &size, float *posY, int offset_y) const
+bool TileMap::collisionMoveUp(const glm::ivec2 &pos, const glm::ivec2 &size, float *posY, int offset_y, bool collisionWithSlabs) const
 {
 	int x0, x1, y;
 
@@ -239,7 +243,7 @@ bool TileMap::collisionMoveUp(const glm::ivec2 &pos, const glm::ivec2 &size, flo
 	int y0 = pos.y;
 	for (int x = x0; x <= x1; x++)
 	{
-		if (hasCollision(map[(y)*mapSize.x + x], map[(y + 1)*mapSize.x + x]))
+		if (hasCollision(map[(y)*mapSize.x + x], map[(y + 1)*mapSize.x + x], collisionWithSlabs))
 		{
 			if (tileSize * (y) != *posY + offset_y && tileSize * (y + 1) > *posY + offset_y)
 			{
@@ -312,11 +316,11 @@ pair<int, int> TileMap::closestJumpPosition(const glm::ivec2 & pos, const glm::i
 }
 
 
-bool TileMap::hasCollision(int tile, int tileBelow) const
+bool TileMap::hasCollision(int tile, int tileBelow, bool collisionWithSlabs) const
 {
-	if (tile == 0) return false;
+	if (tile == 0 || tile == 1669 || tile == 1670) return false;
 	if (tileBelow != 0) return true;
-	return NO_COLLISION_BELOW.find(tile) == NO_COLLISION_BELOW.end();
+	return collisionWithSlabs || NO_COLLISION_BELOW.find(tile) == NO_COLLISION_BELOW.end();
 }
 
 void TileMap::printRajoles() {

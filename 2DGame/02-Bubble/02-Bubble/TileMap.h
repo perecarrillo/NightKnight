@@ -38,10 +38,10 @@ public:
 	
 	int getTileSize() const { return tileSize; }
 
-	bool collisionMoveLeft(const glm::ivec2 &pos, const glm::ivec2 &size) const;
-	bool collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size) const;
+	bool collisionMoveLeft(const glm::ivec2 &pos, const glm::ivec2 &size, bool collisionWithSlabs) const;
+	bool collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size, bool collisionWithSlabs) const;
 	bool collisionMoveDown(const glm::ivec2 & pos, const glm::ivec2 & size, float * posY, int offset_y) const;
-	bool collisionMoveUp(const glm::ivec2 &pos, const glm::ivec2 &size, float *posY, int offset_y) const;
+	bool collisionMoveUp(const glm::ivec2 &pos, const glm::ivec2 &size, float *posY, int offset_y, bool collisionWithSlabs) const;
 	bool collisionSpikes(const glm::ivec2 &pos, const glm::ivec2 &size) const;
 	void collisionRajola(const glm::ivec2 & pos, const glm::ivec2 & size);
 	pair<int, int> closestJumpPosition(const glm::ivec2 &pos, const glm::ivec2 &size, bool left) const;
@@ -51,7 +51,8 @@ public:
 private:
 	bool loadLevel(const string &levelFile);
 	void prepareArrays(const glm::vec2 &minCoords, ShaderProgram &program);
-	bool hasCollision(int tile, int tileBelow) const;
+	bool hasCollision(int tile, int tileBelow, bool flying) const;
+	bool hasCollisionDown(int tile) const;
 	void printRajoles();
 
 private:
