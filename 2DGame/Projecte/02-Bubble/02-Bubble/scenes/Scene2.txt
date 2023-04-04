@@ -1,0 +1,22 @@
+20 22 -- posició inicial jugador
+42 -- nombre de rajoles
+5 8 -- posició cofre
+30 18 -- posició clau
+12 8 -- posició stopwatch
+10 30 -- temps aparicio-desaparicio stopwatch
+19 16 -- posició gemma
+3 50 -- temps aparicio-desaparicio gemma
+12 11 -- posició heart
+3 50 -- temps aparicio-desaparicio heart
+26 18 -- posició escut
+3 50 -- temps aparicio-desaparicio escut
+2 -- nombre rajoles que es mouen
+7 23 -- 1a posicio (i inicial) rajola 1
+7 8 -- 2a posicio rajola 1
+23 23 -- 1a posicio (i inicial) rajola 2
+23 8 -- 2a posicio rajola 2
+2 2 0 -- nombre enemics (esquelets, rates, ratpenats)
+25 10 -- posicio esquelet 1
+6 10 -- posicio esquelet 2
+11 6 -- pos rata 1
+13 17 --pos rata 2
