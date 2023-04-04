@@ -73,7 +73,7 @@ private:
 	TileMap *map2;
 	Player *player;
 	ShaderProgram texProgram;
-	float currentTime, iniFreezeTime, iniCoinsTime, animationTime;
+	float currentTime, iniFreezeTime, iniEscutTime, iniCoinsTime, animationTime; //animationTime és el temp en que comença l'animació dels coins
 	glm::mat4 projection;	
 
 	Quad *quad;
@@ -100,6 +100,7 @@ private:
 	Item *stopwatch;
 	Item *gem;
 	Item *heart;
+	Item *escut;
 
 	bool allPressed;
 	bool unlockChest;
@@ -108,6 +109,7 @@ private:
 	bool takenStopwatch;
 	bool takenGem;
 	bool takenHeart;
+	bool takenEscut;
 	bool iniAnimationCoins;
 	bool animationCoinsFinished;
 
