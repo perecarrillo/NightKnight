@@ -1,0 +1,12 @@
+﻿  Scene.cpp
+c:\users\marco\desktop\nightknight\2dgame\02-bubble\02-bubble\scene.cpp(50): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marco\desktop\nightknight\2dgame\02-bubble\02-bubble\scene.cpp(62): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marco\desktop\nightknight\2dgame\02-bubble\02-bubble\scene.cpp(69): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\marco\desktop\nightknight\2dgame\02-bubble\02-bubble\scene.cpp(82): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\marco\desktop\nightknight\2dgame\02-bubble\02-bubble\scene.cpp(92): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\marco\desktop\nightknight\2dgame\02-bubble\02-bubble\scene.cpp(102): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\marco\desktop\nightknight\2dgame\02-bubble\02-bubble\scene.cpp(112): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\marco\desktop\nightknight\2dgame\02-bubble\02-bubble\scene.cpp(43): warning C4101: 'tile': unreferenced local variable
+c:\users\marco\desktop\nightknight\2dgame\02-bubble\02-bubble\scene.cpp(360): warning C4305: 'argument': truncation from 'double' to 'float'
+  02-Bubble.vcxproj -> C:\Users\marco\Desktop\NightKnight\2DGame\02-Bubble\Debug\02-Bubble.exe
+  02-Bubble.vcxproj -> C:\Users\marco\Desktop\NightKnight\2DGame\02-Bubble\Debug\02-Bubble.pdb (Full PDB)
