@@ -13,6 +13,7 @@
 #include "MainMenu.h"
 
 
+
 // Menu contains all the entities of our game.
 // It is responsible for updating and render them.
 
@@ -37,6 +38,8 @@ public:
 
 	int getOptionFocus();
 
+	void setFinalScore(int num);
+
 
 private:
 	void initShaders();
@@ -47,12 +50,14 @@ private:
 	MainMenu *mainMenu;
 
 	Quad *quad;
-	Texture texs[5];
+	Texture texs[6];
 	TexturedQuad *texQuad[3];
 
 	int menu;
 
+	int finalScore;
 
+	Text text;
 };
 
 

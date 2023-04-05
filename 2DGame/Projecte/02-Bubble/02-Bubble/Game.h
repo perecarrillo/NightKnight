@@ -61,6 +61,8 @@ private:
 
 	bool showReady;
 
+	bool winGame;
+
 	float readyIniTime;
 
 	float currentTime;

@@ -13,6 +13,7 @@ void SoundController::init()
 	sounds[COIN] = engine->addSoundSourceFromFile("sounds/coin.mp3");
 	sounds[CLOCK] = engine->addSoundSourceFromFile("sounds/clock.wav");
 	sounds[HEART] = engine->addSoundSourceFromFile("sounds/heart.mp3");
+	sounds[WINFINAL] = engine->addSoundSourceFromFile("sounds/win2.mp3");
 }
 
 void SoundController::play(Sounds sound, bool loop) //Loop is optional

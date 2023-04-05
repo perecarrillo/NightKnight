@@ -7,7 +7,7 @@
 
 enum State
 {
-	PLAYING, MENU, CREDITS, LOSE, PAUSE, LEVELS, READY, WIN, INSTRUCTIONS
+	PLAYING, MENU, CREDITS, LOSE, PAUSE, LEVELS, INSTRUCTIONS, WIN, READY
 };
 
 
@@ -24,6 +24,7 @@ void Game::init()
 	levelExpanding = false;
 	animationLevelSelected = false;
 	showReady = false;
+	winGame = false;
 	readyIniTime = 0.f;
 	currentTime = 0.f;
 	// Select which font you want to use
@@ -52,6 +53,16 @@ bool Game::update(int deltaTime)
 		glm::vec2 posPlayer = scene.getPosPlayer();
 		circle->changeCenter(posPlayer.x, posPlayer.y);
 		circle->changeToShrink();
+	}
+
+	if (scene.isWin() && level == 6 && !winGame) {
+		winGame = true;
+		int score = scene.getNumCoins();
+		menu.setFinalScore(score);
+		state = WIN;
+		menu.setImage(WIN);
+		SoundController::instance().setAllSoundsPaused(true);
+		SoundController::instance().play(WINFINAL);
 	}
 
 	// Circle Animation
@@ -116,9 +127,8 @@ void Game::render()
 
 void Game::keyPressed(int key)
 {
-	if(key == 27) // Escape code
-		bPlay = false;
-	if ((key == 77 || key == 109)) {// key M/m
+
+	if (key == 77 || key == 109 || key == 27) {// key M/m or Esc
 		//scene.init();
 		state = MENU;
 		menu.setImage(MENU);
@@ -286,6 +296,7 @@ bool Game::getSpecialKey(int key) const
 }
 
 void Game::changeLevel(int level) {
+	winGame = false;
 	int hearts = scene.getNumHearts();
 	int coins = scene.getNumCoins();
 	scene.changeLevel(level);
