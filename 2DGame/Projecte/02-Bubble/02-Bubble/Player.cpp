@@ -168,6 +168,14 @@ void Player::moveToChest(int deltaTime, glm::vec2 chestPosition)
 {
 	sprite->update(deltaTime);
 	time += deltaTime;
+	if (chestPosition.x > position.x + 1)
+		position.x += 1;
+	else if (chestPosition.x < position.x - 1)
+		position.x -= 1;
+	if (chestPosition.y + 4> position.y + HEIGHT + 1)
+		position.y += 1;
+	else if (chestPosition.y + 4< position.y + HEIGHT - 1)
+		position.y -= 1;
 
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + position.x), float(tileMapDispl.y + position.y)));
 }

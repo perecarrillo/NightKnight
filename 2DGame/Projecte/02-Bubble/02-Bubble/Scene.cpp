@@ -228,15 +228,19 @@ void Scene::init()
 
 void Scene::update(int deltaTime)
 {
+	int slabsPainted = 0;
 	if (!openChest) {
 		currentTime += deltaTime; //només actualitzem el temps de l'escena si no s'ha acabat el nivell
-		int slabsPainted = 0;
 		for (MovingSlab * ms : movingPlatforms) {
 			ms->update(deltaTime, player);
 			if (ms->isPainted())
 				++slabsPainted;
 		}
+	}
+	if (!openChest || numLevel == NUM_LAST_LEVEL) {
 		player->update(deltaTime);
+	}
+	if (!openChest) {
 		if (!takenStopwatch || iniFreezeTime + FREEZETIME * 1000 < currentTime) {
 			for (Entity * enemy : enemies) {
 				enemy->update(deltaTime);
@@ -255,7 +259,8 @@ void Scene::update(int deltaTime)
 		}
 	}
 	else {
-		//player->moveToChest(deltaTime, chest->getPosition());
+		if (numLevel != NUM_LAST_LEVEL)
+			player->moveToChest(deltaTime, chest->getPosition());
 	}
 	if (!iniAnimationCoins) chest->update(deltaTime, numLevel == NUM_LAST_LEVEL);
 	if (chest->isOpened()) finishLevel();
