@@ -214,6 +214,8 @@ int Player::getHeight()
 void Player::addXMovement(float value)
 {
 	position.x += value;
+	if (map->collisionMoveLeft(position + glm::vec2(WIDTH_OFFSET, 0), glm::ivec2(WIDTH, HEIGHT), false) || map->collisionMoveRight(position + glm::vec2(WIDTH_OFFSET, 0), glm::ivec2(WIDTH, HEIGHT), false))
+		position.x -= value;
 }
 
 void Player::addYMovement(float value)
