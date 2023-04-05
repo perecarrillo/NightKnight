@@ -50,22 +50,22 @@ void LevelSelector::init()
 
 
 	// Load textures
-	texs[0].loadFromFile("images/mapa4.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	texs[0].loadFromFile("images/mapa1.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	texs[0].setMagFilter(GL_NEAREST);
 
-	texs[1].loadFromFile("images/mapa5.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	texs[1].loadFromFile("images/mapa2.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	texs[1].setMagFilter(GL_NEAREST);
 
-	texs[2].loadFromFile("images/mapa6.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	texs[2].loadFromFile("images/mapa3.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	texs[2].setMagFilter(GL_NEAREST);
 
-	texs[3].loadFromFile("images/mapa2.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	texs[3].loadFromFile("images/mapa4.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	texs[3].setMagFilter(GL_NEAREST);
 
-	texs[4].loadFromFile("images/mapa1.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	texs[4].loadFromFile("images/mapa5.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	texs[4].setMagFilter(GL_NEAREST);
 
-	texs[5].loadFromFile("images/mapa3.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	texs[5].loadFromFile("images/mapa6.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	texs[5].setMagFilter(GL_NEAREST);
 
 	texs[6].loadFromFile("images/marc.png", TEXTURE_PIXEL_FORMAT_RGBA);
