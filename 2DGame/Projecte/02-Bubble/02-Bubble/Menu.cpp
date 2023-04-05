@@ -4,6 +4,8 @@
 #include "Menu.h"
 #include "Game.h"
 
+#include <GL/glut.h>
+
 
 #define SCREEN_X 9
 #define SCREEN_Y 8 //Offset pantalla
@@ -12,7 +14,7 @@
 
 enum State
 {
-	PLAYING, MENU, CREDITS, LOSE, PAUSE, LEVELS, INSTRUCTIONS
+	PLAYING, MENU, CREDITS, LOSE, PAUSE, LEVELS, INSTRUCTIONS, WIN
 };
 
 Menu::Menu()
@@ -26,6 +28,8 @@ Menu::~Menu()
 
 void Menu::init()
 {
+	finalScore = 0;
+
 	initShaders();
 
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH / (3.5) - 1), float(SCREEN_HEIGHT / (3.5) - 1), 0.f);
@@ -58,11 +62,17 @@ void Menu::init()
 	texs[4].loadFromFile("images/credits.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	texs[4].setMagFilter(GL_NEAREST);
 
+	texs[5].loadFromFile("images/win.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	texs[5].setMagFilter(GL_NEAREST);
+
 	levelSelector = new LevelSelector();
 	levelSelector->init();
 
 	mainMenu = new MainMenu();
 	mainMenu->init();
+
+	if (!text.init("fonts/Supply Center.ttf"))
+		cout << "Could not load font!!!" << endl;
 
 }
 
@@ -98,6 +108,12 @@ void Menu::render()
 		levelSelector->render();
 	}
 	else if (menu == CREDITS) texQuad[0]->render(texs[4]);
+	else if (menu == WIN) {
+		texQuad[0]->render(texs[5]);
+		text.render(std::to_string(finalScore), glm::vec2(0.45*glutGet(GLUT_WINDOW_WIDTH) + 3, 0.63*glutGet(GLUT_WINDOW_HEIGHT) + 3), 40, glm::vec4(0, 0, 0, 1));
+		text.render(std::to_string(finalScore), glm::vec2(0.45*glutGet(GLUT_WINDOW_WIDTH), 0.63*glutGet(GLUT_WINDOW_HEIGHT)), 40, glm::vec4(1, 1, 1, 1));
+
+	}
 }
 
 
@@ -163,3 +179,6 @@ int Menu::getOptionFocus()
 	return mainMenu->getOptionFocus();
 }
 
+void Menu::setFinalScore(int num) {
+	finalScore = num;
+}

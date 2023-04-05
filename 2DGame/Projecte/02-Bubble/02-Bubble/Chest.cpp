@@ -102,7 +102,7 @@ bool Chest::isOpened() {
 
 bool Chest::playerHasEntered()
 {
-	return playerIn;
+	return (playerIn || sprite->animation() == OPENED_FULL);
 }
 
 glm::vec2 Chest::getPosition()
