@@ -18,6 +18,7 @@ public:
 	void unlockChest();
 	bool isOpened();
 	bool playerHasEntered();
+	// Returns it's left bottom corner position
 	glm::vec2 getPosition();
 private:
 	int time;
