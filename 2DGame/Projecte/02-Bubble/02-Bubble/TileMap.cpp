@@ -258,14 +258,19 @@ bool TileMap::collisionMoveUp(const glm::ivec2 &pos, const glm::ivec2 &size, flo
 
 bool TileMap::collisionSpikes(const glm::ivec2 &pos, const glm::ivec2 &size) const
 {
+
 	int x0, x1, y;
 
-	x0 = (pos.x) / tileSize; 
-	x1 = (pos.x + size.x) / tileSize; 
-	y = (pos.y + size.y + 1) / tileSize;
-
-	if ((map[(y)*mapSize.x + x0] == 1669 || map[(y)*mapSize.x + x0] == 1670) 
-		&& (map[(y)*mapSize.x + x1] == 1669 || map[(y)*mapSize.x + x1] == 1670)) return true;
+	x0 = pos.x / tileSize;
+	x1 = (pos.x + size.x - 1) / tileSize;
+	y = (pos.y + size.y - 1) / tileSize;
+	for (int x = x0; x <= x1; x++)
+	{
+		if (map[(y)*mapSize.x + x] == 1669 || map[(y)*mapSize.x + x] == 1670)
+		{
+			return true;
+		}
+	}
 
 	return false;
 }
