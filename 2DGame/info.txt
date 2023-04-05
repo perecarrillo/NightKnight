@@ -16,6 +16,7 @@ Per obrir la solució de visualStudio, obrir `Projecte/02-Bubble/02-Bubble.sln`.
 - Quan el jugador toca el cofre desbloquejat, passa al seguent nivell
 - Moviment bàsic del jugador
     - Dreta - Esquerra - Salt - Gravetat
+        - `Coyote Jump`: Permetem al jugador saltar si just fa pocs frames que ha sortit d'una rajola
 - Punxes, que fan perdre una vida al jugador
 - Temps límit per cada nivell
 - Tecles per saltar contingut
