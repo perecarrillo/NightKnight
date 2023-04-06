@@ -342,6 +342,7 @@ void TileMap::printRajoles() {
 	}
 }
 
+
 int TileMap::numRajolesPressed()
 {
 	return contRajoles;

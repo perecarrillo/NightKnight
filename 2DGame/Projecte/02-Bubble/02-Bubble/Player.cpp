@@ -281,3 +281,7 @@ bool Player::godMode()
 	return terminatorMode || invincible;
 }
 
+int Player::getNumRajolesPressed() {
+	return map->numRajolesPressed();
+}
+

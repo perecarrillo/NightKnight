@@ -17,7 +17,7 @@
 #define ESCUT_TIME 5
 #define NUM_LAST_LEVEL 6
 #define COINS_ANIMATION_TIME 3000
-#define COINS_PER_SECOND 33
+#define COINS_PER_SECOND 9
 
 
 Scene::Scene()
@@ -242,7 +242,13 @@ void Scene::update(int deltaTime)
 		}
 	}
 	if (!openChest) {
+		int rajoles = player->getNumRajolesPressed();
 		player->update(deltaTime);
+		int rajolesFinals = player->getNumRajolesPressed();
+		if (rajolesFinals > rajoles) {
+			coins = coins + (rajolesFinals - rajoles);
+			SoundController::instance()->play(COIN);
+		}		
 	}
 	if (!openChest) {
 		for (Entity * enemy : enemies) {

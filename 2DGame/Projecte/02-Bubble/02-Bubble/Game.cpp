@@ -133,6 +133,7 @@ void Game::keyPressed(int key)
 {
 	if (key == 77 || key == 109 || key == 27) {// key M/m or Esc
 		//scene.init();
+		cout << "pressed" << endl;
 		state = MENU;
 		menu.setImage(MENU);
 		SoundController::instance()->pauseAll();

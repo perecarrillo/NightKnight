@@ -45,6 +45,8 @@ public:
 	glm::vec2 getPosition();
 	void setPosition(glm::vec2 pos);
 
+	int getNumRajolesPressed();
+
 private:
 	bool godMode();
 	bool bJumping;
