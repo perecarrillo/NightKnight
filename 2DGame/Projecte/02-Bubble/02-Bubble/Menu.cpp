@@ -193,3 +193,11 @@ int Menu::getOptionFocus()
 void Menu::setFinalScore(int num) {
 	finalScore = num;
 }
+
+int Menu::getInstructionsPage() {
+	return instructionsPage;
+}
+
+void Menu::setInstructionsPage(int num) {
+	instructionsPage = num;
+}

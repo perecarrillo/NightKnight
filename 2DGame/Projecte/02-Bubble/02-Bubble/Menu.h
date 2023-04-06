@@ -40,6 +40,10 @@ public:
 
 	void setFinalScore(int num);
 
+	int getInstructionsPage();
+
+	void setInstructionsPage(int num);
+
 
 private:
 	void initShaders();

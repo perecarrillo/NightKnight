@@ -228,14 +228,26 @@ void Game::keyReleased(int key)
 void Game::specialKeyPressed(int key)
 {
 	specialKeys[key] = true;
-	if (key == GLUT_KEY_RIGHT && state == LEVELS && !animationLevelSelected) {
-		int num = menu.getLevelFocus();
-		if (num % 3 < 2) menu.setLevelFocus(++num);
+	if (key == GLUT_KEY_RIGHT) {
+		if (state == LEVELS && !animationLevelSelected) {
+			int num = menu.getLevelFocus();
+			if (num % 3 < 2) menu.setLevelFocus(++num);
+		}
+		if (state == INSTRUCTIONS) {
+			int page = menu.getInstructionsPage();
+			if (page == 1) menu.setInstructionsPage(2);
+		}
 		SoundController::instance()->play(ARROW);
 	}
-	if (key == GLUT_KEY_LEFT && state == LEVELS && !animationLevelSelected) {
-		int num = menu.getLevelFocus();
-		if (num % 3 > 0) menu.setLevelFocus(--num);
+	if (key == GLUT_KEY_LEFT) {
+		if (state == LEVELS && !animationLevelSelected) {
+			int num = menu.getLevelFocus();
+			if (num % 3 > 0) menu.setLevelFocus(--num);
+		}
+		if (state == INSTRUCTIONS) {
+			int page = menu.getInstructionsPage();
+			if (page == 2) menu.setInstructionsPage(1);
+		}
 		SoundController::instance()->play(ARROW);
 
 	}
