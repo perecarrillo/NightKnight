@@ -31,8 +31,8 @@ void Game::init()
 	if (!text.init("fonts/Supply Center.ttf"))
 		cout << "Could not load font!!!" << endl;
 	
-	SoundController::instance().init();
-	SoundController::instance().play(MENUU);
+	SoundController::instance()->init();
+	SoundController::instance()->play(MENUU);
 }
 
 bool Game::update(int deltaTime)
@@ -47,7 +47,7 @@ bool Game::update(int deltaTime)
 	int level = scene.getNumLevel();
 
 	if (scene.isWin() && level < 6 && !changingLevel) {
-		SoundController::instance().play(WINN);
+		SoundController::instance()->play(WINN);
 		changingLevel = true;
 		circle->changeRadius(400.f);
 		glm::vec2 posPlayer = scene.getPosPlayer();
@@ -61,8 +61,8 @@ bool Game::update(int deltaTime)
 		menu.setFinalScore(score);
 		state = WIN;
 		menu.setImage(WIN);
-		SoundController::instance().setAllSoundsPaused(true);
-		SoundController::instance().play(WINFINAL);
+		SoundController::instance()->pauseAll();
+		SoundController::instance()->play(WINFINAL);
 	}
 
 	// Circle Animation
@@ -97,16 +97,16 @@ bool Game::update(int deltaTime)
 			showReady = false;
 		}
 		else state = PLAYING;
-		SoundController::instance().setAllSoundsPaused(true);
-		SoundController::instance().play(MAINTHEME);
+		SoundController::instance()->pauseAll();
+		SoundController::instance()->play(MAINTHEME);
 	}
 
 	// If it has passed more than READY_TIME since the message appeared, the level will start
 	if (state == READY && ((currentTime - readyIniTime) > READY_TIME)) {
 		state = PLAYING;
-		SoundController::instance().setAllSoundsPaused(true);
-		SoundController::instance().play(READYY);
-		SoundController::instance().play(MAINTHEME);
+		SoundController::instance()->pauseAll();
+		SoundController::instance()->play(READYY);
+		SoundController::instance()->play(MAINTHEME);
 	}
 	return bPlay;
 }
@@ -127,64 +127,63 @@ void Game::render()
 
 void Game::keyPressed(int key)
 {
-
 	if (key == 77 || key == 109 || key == 27) {// key M/m or Esc
 		//scene.init();
 		state = MENU;
 		menu.setImage(MENU);
 	}
-	if ((key == 82 || key == 114) && (state == LOSE || state == PAUSE)) { // key R/r
+	else if ((key == 82 || key == 114) && (state == LOSE || state == PAUSE)) { // key R/r
 		scene.init();
 		state = PLAYING;
 	}
-	if ((key == 80 || key == 112) && state == PLAYING) { // key P/p
+	else if ((key == 80 || key == 112) && state == PLAYING) { // key P/p
 		state = PAUSE;
 		menu.setImage(PAUSE);
-		SoundController::instance().setAllSoundsPaused(true);
-		SoundController::instance().play(MENUU);
+		SoundController::instance()->pauseAll();
+		SoundController::instance()->play(MENUU);
 	}
-	if ((key == 67 || key == 99) && state == PAUSE) { // key C/c
+	else if ((key == 67 || key == 99) && state == PAUSE) { // key C/c
 		state = PLAYING;
-		SoundController::instance().setAllSoundsPaused(false);
-		SoundController::instance().play(MAINTHEME);
+		SoundController::instance()->unPauseAll();
+		SoundController::instance()->play(MAINTHEME);
 	}
-	if ((key == 71 || key == 103) && state == PLAYING) { // key G/g
+	else if ((key == 71 || key == 103) && state == PLAYING) { // key G/g
 		scene.togglePlayerInmunity();
 	}
-	if ((key == 75 || key == 107) && state == PLAYING) { // key K/k
+	else if ((key == 75 || key == 107) && state == PLAYING) { // key K/k
 		scene.makeKeyAppear();
 	}
-	if ((key == 108 || key == 76)) { // key L/l
+	else if ((key == 108 || key == 76)) { // key L/l
 		state = LEVELS;
 		menu.setImage(LEVELS);
-		SoundController::instance().setAllSoundsPaused(true);
-		SoundController::instance().play(MENUU);
+		SoundController::instance()->pauseAll();
+		SoundController::instance()->play(MENUU);
 	}
-	if ((key == 97 || key == 49) && state == MENU) { // key 1
+	else if ((key == 49) && state == MENU) { // key 1
 		if (scene.getNumLevel() != 1 || scene.isGameOver()) scene.changeLevel(1);
 		state = PLAYING;
 	}
-	if ((key == 98 || key == 50) && state == MENU) { // key 2
+	else if ((key == 50) && state == MENU) { // key 2
 		if (scene.getNumLevel() != 2 || scene.isGameOver()) scene.changeLevel(2);
 		state = PLAYING;
 	}
-	if ((key == 99 || key == 51) && state == MENU) { // key 3
+	else if ((key == 51) && state == MENU) { // key 3
 		if (scene.getNumLevel() != 3 || scene.isGameOver()) scene.changeLevel(3);
 		state = PLAYING;
 	}
-	if ((key == 100 || key == 52) && state == MENU) { // key 4
+	else if ((key == 52) && state == MENU) { // key 4
 		if (scene.getNumLevel() != 4 || scene.isGameOver()) scene.changeLevel(4);
 		state = PLAYING;
 	}
-	if ((key == 101 || key == 53) && state == MENU) { // key 5
+	else if ((key == 53) && state == MENU) { // key 5
 		if (scene.getNumLevel() != 5 || scene.isGameOver()) scene.changeLevel(5);
 		state = PLAYING;
 	}
-	if ((key == 102 || key == 54) && state == MENU) { // key 6
+	else if ((key == 54) && state == MENU) { // key 6
 		if (scene.getNumLevel() != 6 || scene.isGameOver()) scene.changeLevel(6);
 		state = PLAYING;
 	}
-	if (key == 13) { // enter
+	else if (key == 13) { // enter
 		if (state == LEVELS && !animationLevelSelected) { 
 			menu.expandLevelSelector();
 			animationLevelSelected = true;
@@ -232,24 +231,24 @@ void Game::specialKeyPressed(int key)
 	if (key == GLUT_KEY_RIGHT && state == LEVELS && !animationLevelSelected) {
 		int num = menu.getLevelFocus();
 		if (num % 3 < 2) menu.setLevelFocus(++num);
-		SoundController::instance().play(ARROW);
+		SoundController::instance()->play(ARROW);
 	}
 	if (key == GLUT_KEY_LEFT && state == LEVELS && !animationLevelSelected) {
 		int num = menu.getLevelFocus();
 		if (num % 3 > 0) menu.setLevelFocus(--num);
-		SoundController::instance().play(ARROW);
+		SoundController::instance()->play(ARROW);
 
 	}
 	if (key == GLUT_KEY_DOWN) {
 		if (state == LEVELS && !animationLevelSelected) {
 			int num = menu.getLevelFocus();
 			if (num < 3) menu.setLevelFocus(num + 3);
-			SoundController::instance().play(ARROW);
+			SoundController::instance()->play(ARROW);
 		}
 		else if (state == MENU) {
 			int num = menu.getOptionFocus();
 			if (num < 3) menu.setOptionFocus(++num);
-			SoundController::instance().play(ARROW);
+			SoundController::instance()->play(ARROW);
 		}
 
 	}
@@ -257,12 +256,12 @@ void Game::specialKeyPressed(int key)
 		if (state == LEVELS && !animationLevelSelected) {
 			int num = menu.getLevelFocus();
 			if (num > 2) menu.setLevelFocus(num - 3);
-			SoundController::instance().play(ARROW);
+			SoundController::instance()->play(ARROW);
 		}
 		else if (state == MENU) {
 			int num = menu.getOptionFocus();
 			if (num > 0) menu.setOptionFocus(--num);
-			SoundController::instance().play(ARROW);
+			SoundController::instance()->play(ARROW);
 		}
 	}
 

@@ -272,7 +272,7 @@ void Scene::update(int deltaTime)
 		if (animationTime < COINS_ANIMATION_TIME) {
 			float m = animationTime/(COINS_ANIMATION_TIME);
 			coins = initialCoins + int(m * (finalCoins - initialCoins));
-			if (int(animationTime)%150 < 20) SoundController::instance().play(COIN);
+			if (int(animationTime)%150 < 20) SoundController::instance()->play(COIN);
 			currentTime = iniCoinsTime + (TIME*1000 - iniCoinsTime) * m;
 		}
 		else {
@@ -318,7 +318,7 @@ void Scene::checkCollisions()
 		glm::ivec2 enemyMax = stopwatch->getBoundingBoxMax();
 		if ((playerMin.x < enemyMax.x && enemyMin.x < playerMax.x) && (playerMin.y < enemyMax.y && enemyMin.y < playerMax.y)) {
 			takenStopwatch = true;
-			SoundController::instance().play(CLOCK);
+			SoundController::instance()->play(CLOCK);
 			iniFreezeTime = currentTime;
 		}
 	}
@@ -328,7 +328,7 @@ void Scene::checkCollisions()
 		if ((playerMin.x < enemyMax.x && enemyMin.x < playerMax.x) && (playerMin.y < enemyMax.y && enemyMin.y < playerMax.y)) {
 			takenGem = true;
 			coins += 500; 
-			SoundController::instance().play(COIN);
+			SoundController::instance()->play(COIN);
 		}
 	}
 	int numHearts = player->getNumHearts();
@@ -338,7 +338,7 @@ void Scene::checkCollisions()
 		if ((playerMin.x < enemyMax.x && enemyMin.x < playerMax.x) && (playerMin.y < enemyMax.y && enemyMin.y < playerMax.y)) {
 			takenHeart = true;
 			player->setNumHearts(++numHearts);
-			SoundController::instance().play(HEART);
+			SoundController::instance()->play(HEART);
 		}
 	}
 	if (!takenEscut && escut->shouldCheckCollision()) {
