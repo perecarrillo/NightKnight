@@ -116,6 +116,7 @@ private:
 	bool iniAnimationCoins;
 	bool animationCoinsFinished;
 	bool terminatorEnd;
+	bool keySound;
 
 };
 

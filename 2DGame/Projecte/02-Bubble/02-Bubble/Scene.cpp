@@ -177,6 +177,7 @@ void Scene::init()
 	animationCoinsFinished = false;
 	iniAnimationCoins = false;
 	terminatorEnd = false;
+	keySound = false;
 
 	iniFreezeTime = 0.f;
 	iniEscutTime = 0.f;
@@ -253,6 +254,10 @@ void Scene::update(int deltaTime)
 	if (!openChest) {
 		for (Entity * enemy : enemies) {
 			enemy->update(deltaTime, !(!takenStopwatch || iniFreezeTime + FREEZETIME * 1000 < currentTime));
+		}
+		if (allPressed && !keySound) {
+			keySound = true;
+			SoundController::instance()->play(APPEAR_KEY);
 		}
 		key->update(deltaTime);
 		if (!takenStopwatch || iniFreezeTime + FREEZETIME * 1000 < currentTime) {
@@ -443,7 +448,7 @@ void Scene::render(bool playing, bool changingLevel)
 
 	// Print coins
 	string textCoins;
-	if (coins > 9999) textCoins = "9999"; // 9999 is the maximum value of the coins
+	if (coins > 99999) textCoins = "99999"; // 99999 is the maximum value of the coins
 	else textCoins = std::to_string(coins);
 	text.render(textCoins, glm::vec2(0.34*glutGet(GLUT_WINDOW_WIDTH) + 3, 0.12*glutGet(GLUT_WINDOW_HEIGHT) + 3), 30, glm::vec4(0, 0, 0, 1));
 	if (playing) text.render(textCoins, glm::vec2(0.34*glutGet(GLUT_WINDOW_WIDTH), 0.12*glutGet(GLUT_WINDOW_HEIGHT)), 30, glm::vec4(1, 1, 1, 1));

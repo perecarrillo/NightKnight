@@ -22,6 +22,7 @@ void SoundController::init()
 	sounds[GAME_OVER] = engine->addSoundSourceFromFile("sounds/gameOver.mp3");
 	sounds[COLLISION] = engine->addSoundSourceFromFile("sounds/collision.mp3");
 	sounds[POP] = engine->addSoundSourceFromFile("sounds/pop3.mp3");
+	sounds[APPEAR_KEY] = engine->addSoundSourceFromFile("sounds/appearKey.mp3");
 }
 
 void SoundController::play(Sounds id, bool loop) //Loop is optional
