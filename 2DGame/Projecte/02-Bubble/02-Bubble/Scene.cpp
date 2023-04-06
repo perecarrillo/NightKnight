@@ -302,6 +302,7 @@ void Scene::checkCollisions(bool enemyCheck)
 			if (!player->isInmune() && (playerMin.x < enemyMax.x && enemyMin.x < playerMax.x) && (playerMin.y < enemyMax.y && enemyMin.y < playerMax.y)) {
 				//cout << "Collision"<<endl;
 				player->loseHeart();
+				SoundController::instance()->play(COLLISION);
 			}
 		}
 	}
@@ -311,12 +312,14 @@ void Scene::checkCollisions(bool enemyCheck)
 		if ((playerMin.x < enemyMax.x && enemyMin.x < playerMax.x) && (playerMin.y < enemyMax.y && enemyMin.y < playerMax.y)) {
 			unlockChest = true;
 			chest->unlockChest();
+			SoundController::instance()->play(KEY);
 		}
 	}
 	if (unlockChest) {
 		glm::ivec2 enemyMin = chest->getBoundingBoxMin();
 		glm::ivec2 enemyMax = chest->getBoundingBoxMax();
 		if ((playerMin.x < enemyMax.x && enemyMin.x < playerMax.x) && (playerMin.y < enemyMax.y && enemyMin.y < playerMax.y)) {
+			SoundController::instance()->play(OPENING_CHEST);
 			openChest = true;
 			chest->openChest();
 		}
@@ -354,7 +357,7 @@ void Scene::checkCollisions(bool enemyCheck)
 		glm::ivec2 enemyMax = escut->getBoundingBoxMax();
 		if ((playerMin.x < enemyMax.x && enemyMin.x < playerMax.x) && (playerMin.y < enemyMax.y && enemyMin.y < playerMax.y)) {
 			takenEscut = true;
-			//SoundController::instance().play(CLOCK);
+			SoundController::instance()->play(ESCUT);
 			iniEscutTime = currentTime;
 			player->setTerminatorMode(true);
 		}
@@ -382,7 +385,8 @@ void Scene::render(bool playing, bool changingLevel)
 
 	if (allPressed && !unlockChest) key->render();
 	chest->render();
-	if(!takenStopwatch) stopwatch->render();
+	if (heart->firstAppear() || escut->firstAppear() || gem->firstAppear() || stopwatch->firstAppear()) SoundController::instance()->play(POP);
+	if (!takenStopwatch) stopwatch->render();
 	if (!takenGem) gem->render();
 	if (!takenHeart && player->getNumHearts() < 5) heart->render();
 	if (!takenEscut) escut->render();

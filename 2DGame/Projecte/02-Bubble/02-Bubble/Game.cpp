@@ -13,6 +13,8 @@ enum State
 
 void Game::init()
 {
+	SoundController::instance()->init();
+	SoundController::instance()->play(MENUU);
 	circle = new CircleAnimation(SCREEN_WIDTH, SCREEN_HEIGHT);
 	bPlay = true;
 	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
@@ -31,8 +33,6 @@ void Game::init()
 	if (!text.init("fonts/Supply Center.ttf"))
 		cout << "Could not load font!!!" << endl;
 	
-	SoundController::instance()->init();
-	SoundController::instance()->play(MENUU);
 }
 
 bool Game::update(int deltaTime)
@@ -44,6 +44,8 @@ bool Game::update(int deltaTime)
 		menu.setImage(LOSE);
 		int score = scene.getNumCoins();
 		menu.setFinalScore(score);
+		SoundController::instance()->stopAll();
+		SoundController::instance()->play(GAME_OVER);
 	}
 
 	int level = scene.getNumLevel();

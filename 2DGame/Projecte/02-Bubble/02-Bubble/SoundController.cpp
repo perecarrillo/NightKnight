@@ -13,15 +13,23 @@ void SoundController::init()
 	sounds[READYY] = engine->addSoundSourceFromFile("sounds/Ready.mp3");
 	sounds[ARROW] = engine->addSoundSourceFromFile("sounds/Arrow.mp3");
 	sounds[COIN] = engine->addSoundSourceFromFile("sounds/coin.mp3");
-	sounds[CLOCK] = engine->addSoundSourceFromFile("sounds/clock.wav");
+	sounds[CLOCK] = engine->addSoundSourceFromFile("sounds/fast_clock.mp3");
 	sounds[HEART] = engine->addSoundSourceFromFile("sounds/heart.mp3");
 	sounds[WINFINAL] = engine->addSoundSourceFromFile("sounds/win2.mp3");
+	sounds[OPENING_CHEST] = engine->addSoundSourceFromFile("sounds/opening_chest.mp3");
+	sounds[ESCUT] = engine->addSoundSourceFromFile("sounds/escut.mp3");
+	sounds[KEY] = engine->addSoundSourceFromFile("sounds/key.mp3");
+	sounds[GAME_OVER] = engine->addSoundSourceFromFile("sounds/gameOver.mp3");
+	sounds[COLLISION] = engine->addSoundSourceFromFile("sounds/collision.mp3");
+	sounds[POP] = engine->addSoundSourceFromFile("sounds/pop3.mp3");
 }
 
 void SoundController::play(Sounds id, bool loop) //Loop is optional
 {
 	//std::cout<<sounds[sound]<<std::endl;
-	ISound *sound = engine->play2D(sounds[id], loop, false, true);
+	ISound *sound;
+	if (id ==  MENUU || id == MAINTHEME) sound = engine->play2D(sounds[id], true, false, true);
+	else sound = engine->play2D(sounds[id], loop, false, true);
 	playing[id].push_back(sound);
 }
 

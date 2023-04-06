@@ -18,6 +18,8 @@ Item::Item(int x, int y, float appear, float disappear)
 	disappearTime = disappear;
 	appearTime = appear;
 	time = 0;
+	firstRender = false;
+	secondRender = false;
 }
 
 void Item::update(int deltaTime)
@@ -30,6 +32,7 @@ void Item::update(int deltaTime)
 
 void Item::render() {
 	if (time/1000 > appearTime) {
+		if (!firstRender) firstRender = true;
 		if (time/1000 < disappearTime - 10) sprite->render();
 		else if (time/1000 < disappearTime && int(time) % 400 < 200) sprite->render();
 	}
@@ -38,4 +41,12 @@ void Item::render() {
 
 bool Item::shouldCheckCollision() {
 	return time / 1000 > appearTime && time / 1000 < disappearTime;
+}
+
+bool Item::firstAppear() {
+	if (firstRender && !secondRender) {
+		secondRender = true;
+		return true;
+	}
+	return false;
 }

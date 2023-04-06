@@ -9,7 +9,7 @@
 
 using namespace irrklang;
 
-enum Sounds {CLOCK, LAUGH, MAINTHEME, MENUU, JUMP, WINN, READYY, ARROW, COIN, HEART, WINFINAL};
+enum Sounds {CLOCK, LAUGH, MAINTHEME, MENUU, JUMP, WINN, READYY, ARROW, COIN, HEART, WINFINAL, OPENING_CHEST, ESCUT, KEY, GAME_OVER, COLLISION, POP};
 
 class SoundController : public ISoundStopEventReceiver
 {

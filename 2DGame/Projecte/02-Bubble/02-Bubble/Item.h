@@ -15,12 +15,14 @@ public:
 
 	bool shouldCheckCollision();
 
+	bool firstAppear();
+
 
 private:
 	float time;
 	float disappearTime;
 	float appearTime;
-	
+	bool firstRender, secondRender;
 };
 
 
