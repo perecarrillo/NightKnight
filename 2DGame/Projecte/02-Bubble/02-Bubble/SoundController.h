@@ -1,3 +1,4 @@
+#pragma single
 #ifndef _SOUND_CONTROLLER_INCLUDE
 #define _SOUND_CONTROLLER_INCLUDE
 

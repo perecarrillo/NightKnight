@@ -237,7 +237,7 @@ void Scene::update(int deltaTime)
 				++slabsPainted;
 		}
 	}
-	if (!openChest || numLevel == NUM_LAST_LEVEL) {
+	if (!openChest) {
 		player->update(deltaTime);
 	}
 	if (!openChest) {
