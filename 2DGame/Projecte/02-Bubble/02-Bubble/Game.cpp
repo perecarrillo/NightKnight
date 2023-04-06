@@ -42,6 +42,8 @@ bool Game::update(int deltaTime)
 	if (scene.isGameOver()) {
 		state = LOSE;
 		menu.setImage(LOSE);
+		int score = scene.getNumCoins();
+		menu.setFinalScore(score);
 	}
 
 	int level = scene.getNumLevel();
@@ -61,7 +63,7 @@ bool Game::update(int deltaTime)
 		menu.setFinalScore(score);
 		state = WIN;
 		menu.setImage(WIN);
-		SoundController::instance()->pauseAll();
+		SoundController::instance()->stopAll();
 		SoundController::instance()->play(WINFINAL);
 	}
 
@@ -97,14 +99,14 @@ bool Game::update(int deltaTime)
 			showReady = false;
 		}
 		else state = PLAYING;
-		SoundController::instance()->pauseAll();
+		SoundController::instance()->stopAll();
 		SoundController::instance()->play(MAINTHEME);
 	}
 
 	// If it has passed more than READY_TIME since the message appeared, the level will start
 	if (state == READY && ((currentTime - readyIniTime) > READY_TIME)) {
 		state = PLAYING;
-		SoundController::instance()->pauseAll();
+		SoundController::instance()->stopAll();
 		SoundController::instance()->play(READYY);
 		SoundController::instance()->play(MAINTHEME);
 	}
@@ -131,10 +133,14 @@ void Game::keyPressed(int key)
 		//scene.init();
 		state = MENU;
 		menu.setImage(MENU);
+		SoundController::instance()->pauseAll();
+		SoundController::instance()->play(MENUU);
 	}
-	else if ((key == 82 || key == 114) && (state == LOSE || state == PAUSE)) { // key R/r
+	else if ((key == 82 || key == 114) && (state == PAUSE)) { // key R/r
 		scene.init();
 		state = PLAYING;
+		SoundController::instance()->stopAll();
+		SoundController::instance()->play(MAINTHEME);
 	}
 	else if ((key == 80 || key == 112) && state == PLAYING) { // key P/p
 		state = PAUSE;
@@ -144,8 +150,9 @@ void Game::keyPressed(int key)
 	}
 	else if ((key == 67 || key == 99) && state == PAUSE) { // key C/c
 		state = PLAYING;
+		SoundController::instance()->stop(MENUU);
 		SoundController::instance()->unPauseAll();
-		SoundController::instance()->play(MAINTHEME);
+		//SoundController::instance()->play(MAINTHEME);
 	}
 	else if ((key == 71 || key == 103) && state == PLAYING) { // key G/g
 		scene.togglePlayerInmunity();

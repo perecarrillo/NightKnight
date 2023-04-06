@@ -51,7 +51,7 @@ void Menu::init()
 	texs[0].loadFromFile("images/menu.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	texs[0].setMagFilter(GL_NEAREST);
 
-	texs[1].loadFromFile("images/gameover.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	texs[1].loadFromFile("images/lose.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	texs[1].setMagFilter(GL_NEAREST);
 
 	texs[2].loadFromFile("images/Pause2.png", TEXTURE_PIXEL_FORMAT_RGBA);
@@ -108,7 +108,11 @@ void Menu::render()
 		texQuad[0]->render(texs[0]);
 		mainMenu->render();
 	}
-	else if (menu == LOSE) texQuad[0]->render(texs[1]);
+	else if (menu == LOSE) {
+		texQuad[0]->render(texs[1]);
+		text.render(std::to_string(finalScore), glm::vec2(0.45*glutGet(GLUT_WINDOW_WIDTH) + 3, 0.63*glutGet(GLUT_WINDOW_HEIGHT) + 3), 40, glm::vec4(0, 0, 0, 1));
+		text.render(std::to_string(finalScore), glm::vec2(0.45*glutGet(GLUT_WINDOW_WIDTH), 0.63*glutGet(GLUT_WINDOW_HEIGHT)), 40, glm::vec4(1, 1, 1, 1));
+	}
 	else if (menu == PAUSE)  texQuad[0]->render(texs[2]);
 	else if (menu == LEVELS) {
 		texQuad[0]->render(texs[3]);
