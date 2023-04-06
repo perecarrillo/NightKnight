@@ -260,8 +260,9 @@ void Scene::update(int deltaTime)
 			if (!takenGem) gem->update(deltaTime);
 			if (!takenHeart) heart->update(deltaTime);
 			if (!takenEscut) escut->update(deltaTime);
-			if (map->numRajolesPressed() + slabsPainted >= numRajoles) allPressed = true;
 		}
+		if (map->numRajolesPressed() + slabsPainted >= numRajoles) allPressed = true;
+
 		checkCollisions(!takenEscut || iniEscutTime + ESCUT_TIME * 1000 < currentTime);
 		if (takenEscut && iniEscutTime + ESCUT_TIME * 1000 < currentTime && !terminatorEnd) {
 			player->setTerminatorMode(false);
