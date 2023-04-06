@@ -110,7 +110,7 @@ void Entity::update(int deltaTime, bool frozen)
 void Entity::render(bool unfreezing)
 {
 	if (unfreezing) {
-		float x = position.x + 0.2 * sin((time * 3.141592f)/30);
+		float x = position.x + 0.4 * sin((time * 3.141592f)/30);
 		sprite->setPosition(glm::vec2(float(tileMapDispl.x + x), float(tileMapDispl.y + int(position.y))));
 	}
 	sprite->render();
