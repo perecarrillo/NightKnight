@@ -29,6 +29,7 @@ Menu::~Menu()
 void Menu::init()
 {
 	finalScore = 0;
+	instructionsPage = 1;
 
 	initShaders();
 
@@ -64,6 +65,12 @@ void Menu::init()
 
 	texs[5].loadFromFile("images/win.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	texs[5].setMagFilter(GL_NEAREST);
+
+	texs[6].loadFromFile("images/instructions1.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	texs[6].setMagFilter(GL_NEAREST);
+
+	texs[7].loadFromFile("images/instructions2.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	texs[7].setMagFilter(GL_NEAREST);
 
 	levelSelector = new LevelSelector();
 	levelSelector->init();
@@ -113,6 +120,10 @@ void Menu::render()
 		text.render(std::to_string(finalScore), glm::vec2(0.45*glutGet(GLUT_WINDOW_WIDTH) + 3, 0.63*glutGet(GLUT_WINDOW_HEIGHT) + 3), 40, glm::vec4(0, 0, 0, 1));
 		text.render(std::to_string(finalScore), glm::vec2(0.45*glutGet(GLUT_WINDOW_WIDTH), 0.63*glutGet(GLUT_WINDOW_HEIGHT)), 40, glm::vec4(1, 1, 1, 1));
 
+	}
+	else if (menu == INSTRUCTIONS) {
+		if (instructionsPage == 1) texQuad[0]->render(texs[6]);
+		else if (instructionsPage == 2) texQuad[0]->render(texs[7]);
 	}
 }
 

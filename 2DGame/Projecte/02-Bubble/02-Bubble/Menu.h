@@ -50,12 +50,14 @@ private:
 	MainMenu *mainMenu;
 
 	Quad *quad;
-	Texture texs[6];
+	Texture texs[8];
 	TexturedQuad *texQuad[3];
 
 	int menu;
 
 	int finalScore;
+
+	int instructionsPage;
 
 	Text text;
 };
