@@ -19,6 +19,7 @@
 #include "StopWatch.h"
 #include "Item.h"
 #include "SoundController.h"
+#include "AnimationEscut.h"
 
 #include <iostream>
 #include <fstream>
@@ -94,6 +95,8 @@ private:
 	int initialCoins;
 	int finalCoins;
 	int coins;
+
+	AnimationEscut *animationEscut;
 
 	Chest *chest;
 	Item *key;

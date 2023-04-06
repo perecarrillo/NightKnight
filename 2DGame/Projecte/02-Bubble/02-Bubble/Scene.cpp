@@ -198,6 +198,10 @@ void Scene::init()
 
 	loadScene();
 
+	animationEscut = new AnimationEscut(20, 1);
+	animationEscut->init("images/animationEscut.png", glm::ivec2(SCREEN_X, SCREEN_Y), texProgram, map);
+	animationEscut->setAnimationTime(ESCUT_TIME);
+
 	projection = glm::ortho(0.f, float(SCREEN_WIDTH/(3.5) - 1), float(SCREEN_HEIGHT/(3.5) - 1), 0.f);
 	currentTime = 0.0f;
 
@@ -257,6 +261,8 @@ void Scene::update(int deltaTime)
 			player->setTerminatorMode(false);
 			terminatorEnd = true;
 		}
+
+		if (takenEscut && iniEscutTime + ESCUT_TIME * 1000 >= currentTime) animationEscut->update(deltaTime);
 	}
 	else {
 		if (numLevel != NUM_LAST_LEVEL)
@@ -380,6 +386,7 @@ void Scene::render(bool playing, bool changingLevel)
 	if (!takenGem) gem->render();
 	if (!takenHeart && player->getNumHearts() < 5) heart->render();
 	if (!takenEscut) escut->render();
+	if (takenEscut && iniEscutTime + ESCUT_TIME * 1000 >= currentTime) animationEscut->render();
 	for (MovingSlab * ms : movingPlatforms) {
 		ms->render();
 	}
@@ -440,8 +447,6 @@ void Scene::render(bool playing, bool changingLevel)
 	modelview = glm::translate(glm::mat4(1.0f), glm::vec3(20.f + 61.f, 18.f, 0.f));
 	texProgram.setUniformMatrix4f("modelview", modelview);
 	texQuad[0]->render(texs[2]);
-
-
 }
 
 bool Scene::isGameOver()

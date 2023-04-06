@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="animationEscut.h" />
     <ClInclude Include="AnimKeyframes.h" />
     <ClInclude Include="Chest.h" />
     <ClInclude Include="CircleAnimation.h" />
@@ -39,6 +40,7 @@
     <ClInclude Include="Vampire.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="animationEscut.cpp" />
     <ClCompile Include="Chest.cpp" />
     <ClCompile Include="CircleAnimation.cpp" />
     <ClCompile Include="Entity.cpp" />

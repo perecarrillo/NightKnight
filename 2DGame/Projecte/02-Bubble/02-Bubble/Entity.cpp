@@ -12,6 +12,9 @@ Entity::Entity()
 Entity::Entity(int x, int y)
 {
 	initialPosition = glm::vec2(x, y);
+	animationLength = 12;
+	animationsUsed = {MOVE_LEFT};
+	speed = 0.2;
 }
 
 void Entity::init(string textureFile, const glm::ivec2 & tileMapPos, ShaderProgram & shaderProgram, TileMap *map)

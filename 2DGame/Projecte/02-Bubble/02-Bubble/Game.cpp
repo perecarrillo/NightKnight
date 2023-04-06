@@ -159,27 +159,27 @@ void Game::keyPressed(int key)
 		SoundController::instance()->pauseAll();
 		SoundController::instance()->play(MENUU);
 	}
-	else if ((key == 49) && state == MENU) { // key 1
+	else if (key == 49) { // key 1
 		if (scene.getNumLevel() != 1 || scene.isGameOver()) scene.changeLevel(1);
 		state = PLAYING;
 	}
-	else if ((key == 50) && state == MENU) { // key 2
+	else if (key == 50) { // key 2
 		if (scene.getNumLevel() != 2 || scene.isGameOver()) scene.changeLevel(2);
 		state = PLAYING;
 	}
-	else if ((key == 51) && state == MENU) { // key 3
+	else if (key == 51) { // key 3
 		if (scene.getNumLevel() != 3 || scene.isGameOver()) scene.changeLevel(3);
 		state = PLAYING;
 	}
-	else if ((key == 52) && state == MENU) { // key 4
+	else if (key == 52) { // key 4
 		if (scene.getNumLevel() != 4 || scene.isGameOver()) scene.changeLevel(4);
 		state = PLAYING;
 	}
-	else if ((key == 53) && state == MENU) { // key 5
+	else if (key == 53) { // key 5
 		if (scene.getNumLevel() != 5 || scene.isGameOver()) scene.changeLevel(5);
 		state = PLAYING;
 	}
-	else if ((key == 54) && state == MENU) { // key 6
+	else if (key == 54) { // key 6
 		if (scene.getNumLevel() != 6 || scene.isGameOver()) scene.changeLevel(6);
 		state = PLAYING;
 	}
@@ -232,23 +232,25 @@ void Game::specialKeyPressed(int key)
 		if (state == LEVELS && !animationLevelSelected) {
 			int num = menu.getLevelFocus();
 			if (num % 3 < 2) menu.setLevelFocus(++num);
+			SoundController::instance()->play(ARROW);
 		}
 		if (state == INSTRUCTIONS) {
 			int page = menu.getInstructionsPage();
 			if (page == 1) menu.setInstructionsPage(2);
+			SoundController::instance()->play(ARROW);
 		}
-		SoundController::instance()->play(ARROW);
 	}
 	if (key == GLUT_KEY_LEFT) {
 		if (state == LEVELS && !animationLevelSelected) {
 			int num = menu.getLevelFocus();
 			if (num % 3 > 0) menu.setLevelFocus(--num);
+			SoundController::instance()->play(ARROW);
 		}
 		if (state == INSTRUCTIONS) {
 			int page = menu.getInstructionsPage();
 			if (page == 2) menu.setInstructionsPage(1);
+			SoundController::instance()->play(ARROW);
 		}
-		SoundController::instance()->play(ARROW);
 
 	}
 	if (key == GLUT_KEY_DOWN) {
