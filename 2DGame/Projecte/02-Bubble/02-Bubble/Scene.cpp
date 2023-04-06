@@ -306,7 +306,7 @@ void Scene::checkCollisions(bool enemyCheck)
 			}
 		}
 	}
-	if (allPressed) {
+	if (allPressed && !unlockChest) {
 		glm::ivec2 enemyMin = key->getBoundingBoxMin();
 		glm::ivec2 enemyMax = key->getBoundingBoxMax();
 		if ((playerMin.x < enemyMax.x && enemyMin.x < playerMax.x) && (playerMin.y < enemyMax.y && enemyMin.y < playerMax.y)) {
