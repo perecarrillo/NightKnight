@@ -1,18 +1,22 @@
-8 7 -- posició inicial jugador
+20 22 -- posició inicial jugador
 42 -- nombre de rajoles
-20 5 -- posició cofre
-8 22-- posició clau
-13 13 -- posició stopwatch
-12 35 -- temps aparicio-desaparicio stopwatch
-19 13 -- posició gemma
-15 45 -- temps aparicio-desaparicio gemma
-12 10 -- posició heart
+5 8 -- posició cofre
+30 18 -- posició clau
+12 8 -- posició stopwatch
+10 30 -- temps aparicio-desaparicio stopwatch
+19 16 -- posició gemma
+3 50 -- temps aparicio-desaparicio gemma
+12 11 -- posició heart
 3 50 -- temps aparicio-desaparicio heart
-26 19 -- posició escut
+26 18 -- posició escut
 3 50 -- temps aparicio-desaparicio escut
-0 -- nombre rajoles que es mouen
-2 0 2 -- nombre enemics (esquelets, rates, ratpenats)
-8 22 -- posicio esquelet 1
-23 22 -- posicio esquelet 2
-6 11 -- pos vampir 1
-22 11 --pos vampir 2
+2 -- nombre rajoles que es mouen
+7 23 -- 1a posicio (i inicial) rajola 1
+7 8 -- 2a posicio rajola 1
+23 23 -- 1a posicio (i inicial) rajola 2
+23 8 -- 2a posicio rajola 2
+2 2 0 -- nombre enemics (esquelets, rates, ratpenats)
+25 10 -- posicio esquelet 1
+6 10 -- posicio esquelet 2
+11 6 -- pos rata 1
+13 17 --pos rata 2
