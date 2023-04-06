@@ -105,7 +105,6 @@ void Menu::render()
 	texProgram.setUniform1f("opacity", 1);
 	// it will render one of the different menus
 	if (menu == MENU) {
-		cout << "hello" << endl;
 		texQuad[0]->render(texs[0]);
 		mainMenu->render();
 	}
