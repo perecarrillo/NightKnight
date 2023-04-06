@@ -16,6 +16,7 @@ Entity::Entity(int x, int y)
 
 void Entity::init(string textureFile, const glm::ivec2 & tileMapPos, ShaderProgram & shaderProgram, TileMap *map)
 {
+	time = 0;
 	position = glm::vec2(initialPosition * map->getTileSize());
 	this->map = map;
 	if (animationSpeed == -1) animationSpeed = animationLength;
@@ -42,8 +43,10 @@ void Entity::init(string textureFile, const glm::ivec2 & tileMapPos, ShaderProgr
 
 }
 
-void Entity::update(int deltaTime)
+void Entity::update(int deltaTime, bool frozen)
 {
+	time += deltaTime;
+	if (frozen) return;
 	float trash = 0;
 	sprite->update(deltaTime);
 	if (movement[actualMovement.first].first == MOVE_LEFT)
@@ -101,9 +104,12 @@ void Entity::update(int deltaTime)
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + int(position.x)), float(tileMapDispl.y + int(position.y))));
 }
 
-void Entity::render()
+void Entity::render(bool unfreezing)
 {
-
+	if (unfreezing) {
+		float x = position.x + 0.2 * sin((time * 3.141592f)/30);
+		sprite->setPosition(glm::vec2(float(tileMapDispl.x + x), float(tileMapDispl.y + int(position.y))));
+	}
 	sprite->render();
 }
 

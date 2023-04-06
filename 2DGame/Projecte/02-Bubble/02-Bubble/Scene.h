@@ -65,7 +65,7 @@ public:
 private:
 	void initShaders();
 	void printHearts();
-	void checkCollisions();
+	void checkCollisions(bool enemyCheck);
 	void finishLevel();
 	void startAnimationCoins();
 

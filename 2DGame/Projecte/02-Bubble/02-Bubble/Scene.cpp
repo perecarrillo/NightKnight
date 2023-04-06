@@ -241,18 +241,18 @@ void Scene::update(int deltaTime)
 		player->update(deltaTime);
 	}
 	if (!openChest) {
+		for (Entity * enemy : enemies) {
+			enemy->update(deltaTime, !(!takenStopwatch || iniFreezeTime + FREEZETIME * 1000 < currentTime));
+		}
+		key->update(deltaTime);
 		if (!takenStopwatch || iniFreezeTime + FREEZETIME * 1000 < currentTime) {
-			for (Entity * enemy : enemies) {
-				enemy->update(deltaTime);
-			}
-			key->update(deltaTime);
 			if (!takenStopwatch) stopwatch->update(deltaTime);
 			if (!takenGem) gem->update(deltaTime);
 			if (!takenHeart) heart->update(deltaTime);
 			if (!takenEscut) escut->update(deltaTime);
 			if (map->numRajolesPressed() + slabsPainted >= numRajoles) allPressed = true;
 		}
-		if (!takenEscut || iniEscutTime + ESCUT_TIME * 1000 < currentTime) checkCollisions();
+		checkCollisions(!takenEscut || iniEscutTime + ESCUT_TIME * 1000 < currentTime);
 		if (takenEscut && iniEscutTime + ESCUT_TIME * 1000 < currentTime && !terminatorEnd) {
 			player->setTerminatorMode(false);
 			terminatorEnd = true;
@@ -284,17 +284,19 @@ void Scene::update(int deltaTime)
 	}
 }
 
-void Scene::checkCollisions()
+void Scene::checkCollisions(bool enemyCheck)
 {
 	//Mirarem les colisions Player - Enemy i Player/Enemy - Boxes
 	glm::ivec2 playerMin = player->getBoundingBoxMin();
 	glm::ivec2 playerMax = player->getBoundingBoxMax();
-	for (Entity *enemy : enemies) {
-		glm::ivec2 enemyMin = enemy->getBoundingBoxMin();
-		glm::ivec2 enemyMax = enemy->getBoundingBoxMax();
-		if (!player->isInmune() && (playerMin.x < enemyMax.x && enemyMin.x < playerMax.x) && (playerMin.y < enemyMax.y && enemyMin.y < playerMax.y)) {
-			//cout << "Collision"<<endl;
-			player->loseHeart();
+	if (enemyCheck) {
+		for (Entity *enemy : enemies) {
+			glm::ivec2 enemyMin = enemy->getBoundingBoxMin();
+			glm::ivec2 enemyMax = enemy->getBoundingBoxMax();
+			if (!player->isInmune() && (playerMin.x < enemyMax.x && enemyMin.x < playerMax.x) && (playerMin.y < enemyMax.y && enemyMin.y < playerMax.y)) {
+				//cout << "Collision"<<endl;
+				player->loseHeart();
+			}
 		}
 	}
 	if (allPressed) {
@@ -382,7 +384,11 @@ void Scene::render(bool playing, bool changingLevel)
 		ms->render();
 	}
 	for (Entity * enemy : enemies) {
-		enemy->render();
+		if (takenStopwatch && iniFreezeTime + (FREEZETIME - 1) * 1000 < currentTime && !(iniFreezeTime + (FREEZETIME) * 1000 < currentTime)) {
+			//cout << "unfreeezing" << endl;
+			enemy->render(true);
+		}
+		else enemy->render();
 	}
 	if (!chest->isOpened()) {
 		//cout << "rendering player" << endl;

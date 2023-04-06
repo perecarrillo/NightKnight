@@ -42,8 +42,10 @@ void Rata::setUp()
 	waiting = 0;
 }
 
-void Rata::update(int deltaTime)
+void Rata::update(int deltaTime, bool frozen)
 {
+	time += deltaTime;
+	if (frozen) return;
 	if (useAI)
 		updateAI(deltaTime);
 	else

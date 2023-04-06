@@ -17,8 +17,8 @@ public:
 	Entity();
 	Entity(int x, int y);
 	virtual void init(string textureFile, const glm::ivec2 &tileMapPos, ShaderProgram &shaderProgram, TileMap *map);
-	virtual void update(int deltaTime);
-	virtual void render();
+	virtual void update(int deltaTime, bool frozen = false);
+	virtual void render(bool unfreezing = false);
 
 	virtual void setTileMap(TileMap *tileMap);
 	virtual void setPosition(const glm::vec2 &pos);
@@ -42,6 +42,7 @@ protected:
 	vector<Animations> animationsUsed;
 	int animationSpeed = -1;
 	
+	int time;
 	glm::ivec2 tileMapDispl;
 	glm::vec2 position;
 	Texture spritesheet;

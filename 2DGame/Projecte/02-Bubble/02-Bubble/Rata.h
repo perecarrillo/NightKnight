@@ -11,7 +11,7 @@ public:
 	Rata(int x, int y);
 	Rata(int x, int y, vector<pair<int, int>> movement);
 	
-	void update(int deltaTime);
+	void update(int deltaTime, bool frozen = false);
 
 	glm::ivec2 Rata::getBoundingBoxMin();
 	glm::ivec2 Rata::getBoundingBoxMax();

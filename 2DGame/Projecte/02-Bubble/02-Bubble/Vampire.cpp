@@ -22,8 +22,10 @@ Vampire::Vampire(int x, int y)
 	animationSpeed = 8;
 }
 
-void Vampire::update(int deltaTime)
+void Vampire::update(int deltaTime, bool frozen)
 {
+	time += deltaTime;
+	if (frozen) return;
 	sprite->update(deltaTime);
 	float trash = 0;
 

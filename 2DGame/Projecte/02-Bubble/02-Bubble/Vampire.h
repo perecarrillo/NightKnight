@@ -8,7 +8,7 @@ class Vampire : public Entity
 public:
 	Vampire(int x, int y);
 
-	void update(int deltaTime);
+	void update(int deltaTime, bool frozen = false);
 
 	glm::ivec2 getBoundingBoxMin();
 	glm::ivec2 getBoundingBoxMax();
