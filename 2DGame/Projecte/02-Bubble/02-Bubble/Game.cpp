@@ -39,11 +39,12 @@ bool Game::update(int deltaTime)
 {
 	currentTime += deltaTime;
 	if (state == PLAYING && !changingLevel) scene.update(deltaTime);	
-	if (scene.isGameOver()) {
+	if (scene.isGameOver() && state != LOSE) {
 		state = LOSE;
 		menu.setImage(LOSE);
 		int score = scene.getNumCoins();
 		menu.setFinalScore(score);
+		scene.changeLevel(1);
 		SoundController::instance()->stopAll();
 		SoundController::instance()->play(GAME_OVER);
 	}

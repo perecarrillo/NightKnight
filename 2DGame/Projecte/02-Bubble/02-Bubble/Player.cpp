@@ -149,6 +149,7 @@ void Player::update(int deltaTime)
 		if (!godMode() && !inmune && map->collisionSpikes(position + glm::vec2(WIDTH_OFFSET, 0), glm::ivec2(WIDTH, HEIGHT))) {
 			sprite->changeAnimation(DYING);
 			if (hearts > 0) --hearts;
+			SoundController::instance()->play(COLLISION);
 			position.y += 4;
 		}
 
