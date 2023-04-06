@@ -350,39 +350,39 @@ void Rata::calculateJumpParameters(pair<int, int> jumpTo)
 	nx = jumpTo.first;
 	y = (position.y + HEIGHT_OFFSET + 1) / map->getTileSize();
 	ny = jumpTo.second - 1;
-	cout << "y: " << y << " ny: " << ny << endl;
+	//cout << "y: " << y << " ny: " << ny << endl;
 
 	if (y == ny)
 	{
-		cout << "Same height" << endl;
+		//cout << "Same height" << endl;
 		JUMP_ANGLE_STEP = 5;
 		JUMP_HEIGHT = 8;
 		return;
 	}
 	else if (y == ny + 1)
 	{
-		cout << "from below" << endl;
+		//cout << "from below" << endl;
 		JUMP_ANGLE_STEP = 3;
 		JUMP_HEIGHT = 12;
 		return;
 	}
 	else if (y == ny - 1)
 	{
-		cout << "from above" << endl;
+		//cout << "from above" << endl;
 		JUMP_ANGLE_STEP = 5;
 		JUMP_HEIGHT = 4;
 		return;
 	}
 	else if (y == ny + 2)
 	{
-		cout << "from very below" << endl;
+		//cout << "from very below" << endl;
 		JUMP_ANGLE_STEP = 3;
 		JUMP_HEIGHT = 16;
 		return;
 	}
 	else if (y == ny - 2)
 	{
-		cout << "from very above" << endl;
+		//cout << "from very above" << endl;
 		JUMP_ANGLE_STEP = 5;
 		JUMP_HEIGHT = 4;
 		return;
