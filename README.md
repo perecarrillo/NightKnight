@@ -1,6 +1,6 @@
 # 2D Game - NightKnight
 
-![Ingame photo](NightKnight.png)
+![Ingame photo](https://github.com/perecarrillo/NightKnight/blob/main/IMG_4377.gif)
 
 A 2D platformer game based in [NightKnight](https://www.usebox.net/jjm/night-knight/).
 
