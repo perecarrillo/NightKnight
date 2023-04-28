@@ -3,36 +3,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-enum TerrainType {Plain, Button, Stair};
+enum TerrainType {Button, Plain, Stair};
 public class LevelCreator : MonoBehaviour
 {
-    public GameObject plainPrefab, buttonPrefab, stairPrefab;
+    public GameObject buttonPrefab, plainPrefab, stairPrefab;
     int numTiles = 3;
+    bool left = false;
     System.Random random = new System.Random();
 
     // Start is called before the first frame update
     void Start() {
         GameObject obj;
         TerrainType type = TerrainType.Plain;
-        int prevX = 0, prevY = 0, prevZ = 0;
-        int x = 0, y = 0, z = 0;
+        Vector3 pos = new Vector3(0, 0, 0);
         for (uint i = 0; i < 15; ++i) {
-            obj = (GameObject)Instantiate(GetPrefabTerrainType(type));
-            obj.transform.Translate(x, y, z);
+            obj = (GameObject)Instantiate(buttonPrefab);
+            obj.transform.Translate(pos);
             obj.transform.parent = transform;
-            type = (TerrainType)(random.Next(numTiles));
-            if (type == TerrainType.Button) {
-                int rand = random.Next(2);
-                if (rand == 0) {
-                    ++x;
-                }
-                else if (rand == 1) {
-                    ++z;
-                }
+            int size = random.Next(2, 10);
+            if (left) ++pos.x;
+            else ++pos.z;
+            for (uint j = 0; j < size; ++j) {
+                if (random.Next(100) < 20) type = TerrainType.Stair;
+                else type = TerrainType.Plain;
+                obj = (GameObject)Instantiate(GetPrefabTerrainType(type));
+                obj.transform.Translate(pos);
+                obj.transform.parent = transform;
+                if (left) ++pos.x;
+                else ++pos.z;
+                if (type == TerrainType.Stair) --pos.y;
             }
-            prevX = x;
-            prevY = y;
-            prevZ = z;
+            left = !left;
         }
     }
 
