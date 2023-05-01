@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     float angle;
     MoveDirection currentDirection, moveDirection;
     Vector3 initPos;
+    Vector3 movement;
 
     // Start is called before the first frame update
     void Start()
@@ -19,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
         // bRotating = false;
         bReleased = true;
         currentDirection = MoveDirection.RIGHT;
+        movement = new Vector3 (0, 0, 1);
     }
 
     // Update is called once per frame
@@ -41,7 +43,11 @@ public class PlayerMovement : MonoBehaviour
                 moveDirection = MoveDirection.LEFT;
             }
         }
-       
+        // move the player
+        //transform.Translate(speed * movement * Time.deltaTime);
+        if (currentDirection == MoveDirection.RIGHT) transform.position +=  new Vector3(0, 0, speed * Time.deltaTime);
+        else if (currentDirection == MoveDirection.LEFT) transform.position +=  new Vector3(speed * Time.deltaTime, 0, 0);
+
         
     }
 }
