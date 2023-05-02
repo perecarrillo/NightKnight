@@ -8,6 +8,7 @@ public class LevelCreator : MonoBehaviour
 {
     public GameObject buttonPrefab, plainPrefab, stairPrefab;
     int numTiles = 3;
+    bool doNotSkip = true;
     bool left = false;
     System.Random random = new System.Random();
 
@@ -24,7 +25,14 @@ public class LevelCreator : MonoBehaviour
             if (left) ++pos.x;
             else ++pos.z;
             for (uint j = 0; j < size; ++j) {
-                if (random.Next(100) < 20) type = TerrainType.Stair;
+                int rand = random.Next(100);
+                if (rand < 20) type = TerrainType.Stair;
+                else if (!doNotSkip && rand < 30) {
+                    if (left) ++pos.x;
+                    else ++pos.z;
+                    doNotSkip = true;
+                    continue;
+                }   
                 else type = TerrainType.Plain;
                 obj = (GameObject)Instantiate(GetPrefabTerrainType(type));
                 obj.transform.Translate(pos);
@@ -32,6 +40,7 @@ public class LevelCreator : MonoBehaviour
                 if (left) ++pos.x;
                 else ++pos.z;
                 if (type == TerrainType.Stair) --pos.y;
+                doNotSkip = false;
             }
             left = !left;
         }
