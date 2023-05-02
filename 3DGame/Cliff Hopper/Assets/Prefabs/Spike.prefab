@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 4126764904819603351}
   - component: {fileID: 1980042536524020912}
   m_Layer: 0
-  m_Name: Button
-  m_TagString: Corner
+  m_Name: Spike
+  m_TagString: Spike
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 32e07c0e5028c7941ad03081745035cf, type: 2}
+  - {fileID: 2100000, guid: bd6729992cc939f419423ce3ad0dac7d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

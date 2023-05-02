@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -431,6 +431,7 @@ MonoBehaviour:
   buttonPrefab: {fileID: 8930112747873295232, guid: b021f30051cf741478dd8f022ced51ee, type: 3}
   plainPrefab: {fileID: 8930112747873295232, guid: bf6c03d86cb3d97448aaf5145e18eff7, type: 3}
   stairPrefab: {fileID: 8930112747873295232, guid: cf9279a2c28a71b4ea5ac30184fecdd5, type: 3}
+  spikePrefab: {fileID: 8930112747873295232, guid: f41d3ad74096b6140a9364ae43012cab, type: 3}
 --- !u!4 &1779661150
 Transform:
   m_ObjectHideFlags: 0
