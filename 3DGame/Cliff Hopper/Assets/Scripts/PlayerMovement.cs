@@ -44,9 +44,9 @@ public class PlayerMovement : MonoBehaviour
             }
         }
         // move the player
-        //transform.Translate(speed * movement * Time.deltaTime);
-        if (currentDirection == MoveDirection.RIGHT) transform.position +=  new Vector3(0, 0, speed * Time.deltaTime);
-        else if (currentDirection == MoveDirection.LEFT) transform.position +=  new Vector3(speed * Time.deltaTime, 0, 0);
+        transform.Translate(speed * movement * Time.deltaTime);
+        // if (currentDirection == MoveDirection.RIGHT) transform.position +=  new Vector3(0, 0, speed * Time.deltaTime);
+        // else if (currentDirection == MoveDirection.LEFT) transform.position +=  new Vector3(speed * Time.deltaTime, 0, 0);
 
         
     }
