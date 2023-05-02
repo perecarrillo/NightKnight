@@ -3,7 +3,11 @@ guid: bbc99a42e3ceed04bae5b68ca5a1952c
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - buttonPrefab: {fileID: 8930112747873295232, guid: b021f30051cf741478dd8f022ced51ee, type: 3}
+  - plainPrefab: {fileID: 8930112747873295232, guid: bf6c03d86cb3d97448aaf5145e18eff7, type: 3}
+  - stairPrefab: {fileID: 8930112747873295232, guid: cf9279a2c28a71b4ea5ac30184fecdd5, type: 3}
+  - spikePrefab: {fileID: 8930112747873295232, guid: f41d3ad74096b6140a9364ae43012cab, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
