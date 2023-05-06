@@ -13,6 +13,9 @@ public class PlayerMovement : MonoBehaviour
     MoveDirection currentDirection, moveDirection;
     Vector3 initPos;
     Vector3 movement;
+    Rigidbody rb;
+    public float jumpSpeed = 5000f;
+    bool canJump;
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +24,17 @@ public class PlayerMovement : MonoBehaviour
         bReleased = true;
         currentDirection = MoveDirection.RIGHT;
         movement = new Vector3 (0, 0, 1);
+        rb = GetComponent<Rigidbody>();
+    }
+
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if(other.gameObject.tag == "Corner")
+        {
+            canJump = false;
+        }
+        else canJump = true;
     }
 
     // Update is called once per frame
@@ -32,15 +46,20 @@ public class PlayerMovement : MonoBehaviour
         if (bReleased && (Input.GetKey(KeyCode.Space))) {
             bReleased = false;
             initPos = transform.position;
-            if (currentDirection == MoveDirection.RIGHT) {
-                currentDirection = MoveDirection.LEFT;
-                transform.Rotate(0.0f, 90.0f, 0.0f);
-                moveDirection = MoveDirection.RIGHT;
+            if (!canJump) {
+                if (currentDirection == MoveDirection.RIGHT) {
+                    currentDirection = MoveDirection.LEFT;
+                    transform.Rotate(0.0f, 90.0f, 0.0f);
+                    moveDirection = MoveDirection.RIGHT;
+                }
+                else if (currentDirection == MoveDirection.LEFT) {
+                    currentDirection = MoveDirection.RIGHT;
+                    transform.Rotate(0.0f, -90.0f, 0.0f);
+                    moveDirection = MoveDirection.LEFT;
+                }
             }
-            else if (currentDirection == MoveDirection.LEFT) {
-                currentDirection = MoveDirection.RIGHT;
-                transform.Rotate(0.0f, -90.0f, 0.0f);
-                moveDirection = MoveDirection.LEFT;
+            else {
+                rb.AddForce(0f, jumpSpeed * Time.deltaTime, 0f);
             }
         }
         // move the player
