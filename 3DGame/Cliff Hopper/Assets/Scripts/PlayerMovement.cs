@@ -9,7 +9,6 @@ public class PlayerMovement : MonoBehaviour
     Vector3 actPos;
     public float speed;
     bool bReleased;
-    float angle;
     MoveDirection currentDirection;
     Vector3 initPos;
     Vector3 movement;
@@ -19,7 +18,11 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 jump;
     float jumpForce = 60.0f;
 
-    public bool isGrounded;
+    bool isGrounded;
+
+    public GameObject leftArm;
+    float time;
+    float angle, anglePrev;
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +34,7 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
 
         jump = new Vector3(0.0f, 2.0f, 0.0f);
+        angle = anglePrev = 0.0f;
     }
 
 
@@ -40,7 +44,10 @@ public class PlayerMovement : MonoBehaviour
         {
             isCorner = true;
         }
-        else isCorner = false;
+    }
+
+    private void OnCollisionExit(Collision other) {
+        if (other.gameObject.tag == "Corner") isCorner = false;
     }
 
     void OnCollisionStay(){
@@ -50,6 +57,9 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        time += Time.deltaTime;
+        anglePrev = angle;
+        angle = +90 + 90.0f * Mathf.Sin(time*10);
         if(Input.GetKeyDown(KeyCode.Space) && isGrounded)  {
             initPos = transform.position;
             if (isCorner) {
@@ -70,6 +80,8 @@ public class PlayerMovement : MonoBehaviour
                 isGrounded = false;
             }
         }
+
+        leftArm.gameObject.transform.Rotate((angle - anglePrev), 0.0f, 0.0f);
         // move the player
         transform.Translate(speed * movement * Time.deltaTime);
         // if (currentDirection == MoveDirection.RIGHT) transform.position +=  new Vector3(0, 0, speed * Time.deltaTime);
