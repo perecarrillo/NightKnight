@@ -20,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
 
     bool isGrounded;
 
-    public GameObject leftArm;
+    public GameObject leftArm, rightArm, leftLeg, rightLeg;
     float time;
     float angle, anglePrev;
 
@@ -82,6 +82,11 @@ public class PlayerMovement : MonoBehaviour
         }
 
         leftArm.gameObject.transform.Rotate((angle - anglePrev), 0.0f, 0.0f);
+        rightArm.gameObject.transform.Rotate(-(angle - anglePrev), 0.0f, 0.0f);
+        leftLeg.gameObject.transform.Rotate(-(angle - anglePrev), 0.0f, 0.0f);
+        rightLeg.gameObject.transform.Rotate((angle - anglePrev), 0.0f, 0.0f);
+
+
         // move the player
         transform.Translate(speed * movement * Time.deltaTime);
         // if (currentDirection == MoveDirection.RIGHT) transform.position +=  new Vector3(0, 0, speed * Time.deltaTime);
