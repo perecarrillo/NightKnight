@@ -11,21 +11,20 @@ public class LevelCreator : MonoBehaviour
     bool noSpike = true;
     bool left = false;
     Vector3 pos;
+    Queue<GameObject> level = new Queue<GameObject>();
     // TODO: fer una cua per tenir els chunks i anar eliminant-los
     System.Random random = new System.Random();
 
 
     void GenerateTerrain() {
-        GameObject obj;
-        TerrainType type = TerrainType.Plain;
         GameObject chunk = new GameObject();
         chunk.transform.Translate(pos);
-        for (uint i = 0; i < 5; ++i) {
-            obj = (GameObject)Instantiate(buttonPrefab);
+        for (uint i = 0; i < 15; ++i) {
+            GameObject obj = (GameObject)Instantiate(buttonPrefab);
             obj.transform.Translate(pos);
             obj.transform.parent = chunk.transform;
 
-            if (i == 3)
+            if (i == 12)
                 transform.position = (pos + new Vector3(0, 1, 0));
 
             // section generation
@@ -35,6 +34,7 @@ public class LevelCreator : MonoBehaviour
             noGap = true; // To not put a jump right after a turn
             noSpike = true;
             for (uint j = 0; j < size; ++j) {
+                TerrainType type;
                 int rand = random.Next(100);
                 if (rand < 20) type = TerrainType.Stair;
                 else if (!noGap && rand < 30) {
@@ -70,6 +70,13 @@ public class LevelCreator : MonoBehaviour
             }
             left = !left;
         }
+
+        if (level.Count >= 3) {
+            //Debug.Log("Deleting");
+            GameObject prev = level.Dequeue();
+            Destroy(prev);
+        }
+        level.Enqueue(chunk);
     }
     // Start is called before the first frame update
     void Start() {
