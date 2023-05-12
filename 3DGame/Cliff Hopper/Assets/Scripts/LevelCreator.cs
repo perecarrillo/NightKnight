@@ -10,23 +10,31 @@ public class LevelCreator : MonoBehaviour
     bool noGap = true;
     bool noSpike = true;
     bool left = false;
+    Vector3 pos;
+    Queue<GameObject> level = new Queue<GameObject>();
+    // TODO: fer una cua per tenir els chunks i anar eliminant-los
     System.Random random = new System.Random();
 
-    // Start is called before the first frame update
-    void Start() {
-        GameObject obj;
-        TerrainType type = TerrainType.Plain;
-        Vector3 pos = new Vector3(0, 0, 0);
+
+    void GenerateTerrain() {
+        GameObject chunk = new GameObject();
+        chunk.transform.Translate(pos);
         for (uint i = 0; i < 15; ++i) {
-            obj = (GameObject)Instantiate(buttonPrefab);
+            GameObject obj = (GameObject)Instantiate(buttonPrefab);
             obj.transform.Translate(pos);
-            obj.transform.parent = transform;
+            obj.transform.parent = chunk.transform;
+
+            if (i == 12)
+                transform.position = (pos + new Vector3(0, 1, 0));
+
+            // section generation
             int size = random.Next(2, 10);
             if (left) ++pos.x;
             else ++pos.z;
             noGap = true; // To not put a jump right after a turn
             noSpike = true;
             for (uint j = 0; j < size; ++j) {
+                TerrainType type;
                 int rand = random.Next(100);
                 if (rand < 20) type = TerrainType.Stair;
                 else if (!noGap && rand < 30) {
@@ -45,14 +53,14 @@ public class LevelCreator : MonoBehaviour
                 else type = TerrainType.Plain;
                 obj = (GameObject)Instantiate(GetPrefabTerrainType(type));
                 obj.transform.Translate(pos);
-                obj.transform.parent = transform;
+                obj.transform.parent = chunk.transform;
                 if (left) {
                     ++pos.x;
                 }
                 else ++pos.z;
                 if (type == TerrainType.Stair) {
                     pos.y -= 0.5f;
-                    if (left) obj.transform.Rotate(new Vector3(0, 90, 0));
+                    if (!left) obj.transform.Rotate(new Vector3(0, -90, 0));
                 }
                 else {
                     obj.transform.Rotate(new Vector3(0, random.Next(4) * 90,0));
@@ -62,6 +70,18 @@ public class LevelCreator : MonoBehaviour
             }
             left = !left;
         }
+
+        if (level.Count >= 3) {
+            //Debug.Log("Deleting");
+            GameObject prev = level.Dequeue();
+            Destroy(prev);
+        }
+        level.Enqueue(chunk);
+    }
+    // Start is called before the first frame update
+    void Start() {
+        pos = new Vector3(0, 0, 0);
+        GenerateTerrain();
     }
 
     GameObject GetPrefabTerrainType(TerrainType type) {
@@ -73,6 +93,11 @@ public class LevelCreator : MonoBehaviour
             case TerrainType.Spike: return spikePrefab;
         }
         return null;
+    }
+
+    void OnTriggerEnter(Collider other) {
+        Debug.Log("Collision!");
+        GenerateTerrain();
     }
 
     void Update() {
