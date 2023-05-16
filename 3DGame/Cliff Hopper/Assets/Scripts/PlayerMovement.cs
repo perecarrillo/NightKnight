@@ -17,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
     bool isCorner;
     bool hasRotated;
 
+    bool hasDoubleJump;
     int isGrounded = 0;
 
     public Vector3 jump;
@@ -31,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
     {
         // bRotating = false;
         // bReleased = true;
+        hasDoubleJump = false;
         currentDirection = MoveDirection.RIGHT;
         movement = new Vector3 (0, 0, 1);
         rb = GetComponent<Rigidbody>();
@@ -49,6 +51,7 @@ public class PlayerMovement : MonoBehaviour
                 isCorner = true;
                 return;
             case "Spike":
+
                 SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
                 return;
             case "Stair":
@@ -77,13 +80,18 @@ public class PlayerMovement : MonoBehaviour
     }
 
     void OnCollisionEnter(Collision other) {
-        ++isGrounded;
+        if (other.gameObject.tag == "Stair") {
+            ++isGrounded;
+        }
+        hasDoubleJump = false;
     }
 
     void OnCollisionExit(Collision other) {
         float lastY = other.gameObject.transform.position.y;
         Debug.Log(lastY);
-        --isGrounded;
+        if (other.gameObject.tag == "Stair") {
+            --isGrounded;
+        }
     }
 
     // Update is called once per frame
@@ -102,11 +110,12 @@ public class PlayerMovement : MonoBehaviour
                 }
                 hasRotated = true;
             }
-            else if (isGrounded != 0) {
+            else if (isGrounded != 0 || hasDoubleJump) {
                 //rb.AddForce(0f, jumpSpeed * Time.deltaTime, 0f);
                 //rb.AddForce(0, jumpSpeed, 0, ForceMode.Impulse);
                 // rb.AddForce(Vector3.up * jumpSpeed,ForceMode.Impulse);
                 rb.AddForce(jump * jumpForce, ForceMode.Impulse);
+                hasDoubleJump = !hasDoubleJump;
             }
         }
 
