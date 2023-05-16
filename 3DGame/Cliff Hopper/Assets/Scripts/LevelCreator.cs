@@ -8,7 +8,6 @@ public class LevelCreator : MonoBehaviour
 {
     public GameObject buttonPrefab, plainPrefab, stairPrefab, spikePrefab;
     bool noGap = true;
-    bool noSpike = true;
     bool left = false;
     Vector3 pos;
     Queue<GameObject> level = new Queue<GameObject>();
@@ -32,7 +31,6 @@ public class LevelCreator : MonoBehaviour
             if (left) ++pos.x;
             else ++pos.z;
             noGap = true; // To not put a jump right after a turn
-            noSpike = true;
             for (uint j = 0; j < size; ++j) {
                 TerrainType type;
                 int rand = random.Next(100);
@@ -43,14 +41,14 @@ public class LevelCreator : MonoBehaviour
                     noGap = true;
                     continue;
                 }
-                else if (!noSpike && rand < 40) {
+                else if (!noGap && rand < 40) {
                     type = TerrainType.Spike;
-                    if (left) ++pos.x;
-                    else ++pos.z;
-                    noSpike = true;
-                    continue;
+                    noGap = true;
                 }
-                else type = TerrainType.Plain;
+                else {
+                    type = TerrainType.Plain;
+                    noGap = false;
+                }
                 obj = (GameObject)Instantiate(GetPrefabTerrainType(type));
                 obj.transform.Translate(pos);
                 obj.transform.parent = chunk.transform;
@@ -65,8 +63,6 @@ public class LevelCreator : MonoBehaviour
                 else {
                     obj.transform.Rotate(new Vector3(0, random.Next(4) * 90,0));
                 }
-                noGap = false;
-                noSpike = false;
             }
             left = !left;
         }

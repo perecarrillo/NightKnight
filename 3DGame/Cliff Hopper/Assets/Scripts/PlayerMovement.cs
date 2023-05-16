@@ -42,6 +42,14 @@ public class PlayerMovement : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         //Debug.Log("Collision with " + other.gameObject.tag);
+        switch (other.gameObject.tag)
+        {
+            case "Corner":
+                isCorner = true;
+                return;
+            default:
+                return;
+        }
         if(other.gameObject.tag == "Corner")
         {
             isCorner = true;
