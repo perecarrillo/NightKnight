@@ -7,9 +7,7 @@ enum MoveDirection { LEFT, RIGHT };
 
 public class PlayerMovement : MonoBehaviour
 {
-    Vector3 actPos;
     public float speed;
-    bool bReleased;
     MoveDirection currentDirection;
     Vector3 initPos;
     Vector3 movement;
@@ -17,7 +15,8 @@ public class PlayerMovement : MonoBehaviour
     bool isCorner;
     bool hasRotated;
 
-    bool hasDoubleJump;
+    bool hasFallen = false;
+    bool hasDoubleJump = false;
     int isGrounded = 0;
 
     public Vector3 jump;
@@ -30,9 +29,6 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // bRotating = false;
-        // bReleased = true;
-        hasDoubleJump = false;
         currentDirection = MoveDirection.RIGHT;
         movement = new Vector3 (0, 0, 1);
         rb = GetComponent<Rigidbody>();
@@ -51,11 +47,14 @@ public class PlayerMovement : MonoBehaviour
                 isCorner = true;
                 return;
             case "Spike":
-
                 SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
                 return;
             case "Stair":
                 ++isGrounded;
+                return;
+            case "Gap":
+                Debug.Log("You have fallen");
+                hasFallen = true;
                 return;
             default:
                 return;
@@ -80,24 +79,24 @@ public class PlayerMovement : MonoBehaviour
     }
 
     void OnCollisionEnter(Collision other) {
-        if (other.gameObject.tag == "Stair") {
-            ++isGrounded;
+        if (hasFallen) {
+            Debug.Log("Deleted collision");
+            Destroy(other.gameObject.GetComponent<Collider>());
         }
+        ++isGrounded;
         hasDoubleJump = false;
     }
 
     void OnCollisionExit(Collision other) {
         float lastY = other.gameObject.transform.position.y;
         Debug.Log(lastY);
-        if (other.gameObject.tag == "Stair") {
-            --isGrounded;
-        }
+        --isGrounded;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))  {
+        if(!hasFallen && Input.GetKeyDown(KeyCode.Space))  {
             initPos = transform.position;
             if (isCorner && !hasRotated) {
                 if (currentDirection == MoveDirection.RIGHT) {
@@ -111,9 +110,6 @@ public class PlayerMovement : MonoBehaviour
                 hasRotated = true;
             }
             else if (isGrounded != 0 || hasDoubleJump) {
-                //rb.AddForce(0f, jumpSpeed * Time.deltaTime, 0f);
-                //rb.AddForce(0, jumpSpeed, 0, ForceMode.Impulse);
-                // rb.AddForce(Vector3.up * jumpSpeed,ForceMode.Impulse);
                 rb.AddForce(jump * jumpForce, ForceMode.Impulse);
                 hasDoubleJump = !hasDoubleJump;
             }
@@ -130,9 +126,5 @@ public class PlayerMovement : MonoBehaviour
 
         // move the player
         transform.Translate(speed * movement * Time.deltaTime);
-        // if (currentDirection == MoveDirection.RIGHT) transform.position +=  new Vector3(0, 0, speed * Time.deltaTime);
-        // else if (currentDirection == MoveDirection.LEFT) transform.position +=  new Vector3(speed * Time.deltaTime, 0, 0);
-
-        
     }
 }

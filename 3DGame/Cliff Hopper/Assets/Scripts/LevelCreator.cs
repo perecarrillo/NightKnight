@@ -3,10 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-enum TerrainType {Button, Plain, Stair, Spike};
+enum TerrainType {Button, Plain, Stair, Spike, Gap};
 public class LevelCreator : MonoBehaviour
 {
-    public GameObject buttonPrefab, plainPrefab, stairPrefab, spikePrefab;
+    public GameObject buttonPrefab, plainPrefab, stairPrefab, spikePrefab, gapPrefab;
     bool noGap = true;
     bool left = false;
     Vector3 pos;
@@ -36,10 +36,8 @@ public class LevelCreator : MonoBehaviour
                 int rand = random.Next(100);
                 if (rand < 20) type = TerrainType.Stair;
                 else if (!noGap && rand < 30) {
-                    if (left) ++pos.x;
-                    else ++pos.z;
+                    type = TerrainType.Gap;
                     noGap = true;
-                    continue;
                 }
                 else if (!noGap && rand < 40) {
                     type = TerrainType.Spike;
@@ -87,6 +85,7 @@ public class LevelCreator : MonoBehaviour
             case TerrainType.Button: return buttonPrefab;
             case TerrainType.Stair: return stairPrefab;
             case TerrainType.Spike: return spikePrefab;
+            case TerrainType.Gap: return gapPrefab;
         }
         return null;
     }
