@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 enum MoveDirection { LEFT, RIGHT };
 
@@ -16,10 +17,10 @@ public class PlayerMovement : MonoBehaviour
     bool isCorner;
     bool hasRotated;
 
+    int isGrounded = 0;
+
     public Vector3 jump;
     float jumpForce = 60.0f;
-
-    bool isGrounded;
 
     public GameObject leftArm, rightArm, leftLeg, rightLeg;
     float time;
@@ -47,30 +48,48 @@ public class PlayerMovement : MonoBehaviour
             case "Corner":
                 isCorner = true;
                 return;
+            case "Spike":
+                SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
+                return;
+            case "Stair":
+                ++isGrounded;
+                return;
             default:
                 return;
-        }
-        if(other.gameObject.tag == "Corner")
-        {
-            isCorner = true;
         }
     }
 
     private void OnTriggerExit(Collider other) {
-        if (other.gameObject.tag == "Corner") {
-            isCorner = false;
-            hasRotated = false;
+        switch (other.gameObject.tag)
+        {
+            case "Corner":
+                isCorner = false;
+                hasRotated = false;
+                return;
+            case "Spike":
+                return;
+            case "Stair":
+                --isGrounded;
+                return;
+            default:
+                return;
         }
     }
 
-    void OnCollisionStay(){
-        isGrounded = true;
+    void OnCollisionEnter(Collision other) {
+        ++isGrounded;
+    }
+
+    void OnCollisionExit(Collision other) {
+        float lastY = other.gameObject.transform.position.y;
+        Debug.Log(lastY);
+        --isGrounded;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space) && isGrounded)  {
+        if(Input.GetKeyDown(KeyCode.Space))  {
             initPos = transform.position;
             if (isCorner && !hasRotated) {
                 if (currentDirection == MoveDirection.RIGHT) {
@@ -83,12 +102,11 @@ public class PlayerMovement : MonoBehaviour
                 }
                 hasRotated = true;
             }
-            else {
+            else if (isGrounded != 0) {
                 //rb.AddForce(0f, jumpSpeed * Time.deltaTime, 0f);
                 //rb.AddForce(0, jumpSpeed, 0, ForceMode.Impulse);
                 // rb.AddForce(Vector3.up * jumpSpeed,ForceMode.Impulse);
                 rb.AddForce(jump * jumpForce, ForceMode.Impulse);
-                isGrounded = false;
             }
         }
 

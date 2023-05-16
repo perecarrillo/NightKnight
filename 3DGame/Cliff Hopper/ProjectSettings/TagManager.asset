@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Corner
   - Spike
+  - Stair
   layers:
   - Default
   - TransparentFX
