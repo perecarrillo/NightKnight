@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     Vector3 movement;
     Rigidbody rb;
     bool isCorner;
+    bool hasRotated;
 
     public Vector3 jump;
     float jumpForce = 60.0f;
@@ -38,16 +39,20 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-    private void OnCollisionEnter(Collision other)
+    private void OnTriggerEnter(Collider other)
     {
+        //Debug.Log("Collision with " + other.gameObject.tag);
         if(other.gameObject.tag == "Corner")
         {
             isCorner = true;
         }
     }
 
-    private void OnCollisionExit(Collision other) {
-        if (other.gameObject.tag == "Corner") isCorner = false;
+    private void OnTriggerExit(Collider other) {
+        if (other.gameObject.tag == "Corner") {
+            isCorner = false;
+            hasRotated = false;
+        }
     }
 
     void OnCollisionStay(){
@@ -57,12 +62,9 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        time += Time.deltaTime;
-        anglePrev = angle;
-        angle = +90 + 90.0f * Mathf.Sin(time*10);
         if(Input.GetKeyDown(KeyCode.Space) && isGrounded)  {
             initPos = transform.position;
-            if (isCorner) {
+            if (isCorner && !hasRotated) {
                 if (currentDirection == MoveDirection.RIGHT) {
                     currentDirection = MoveDirection.LEFT;
                     transform.Rotate(0.0f, 90.0f, 0.0f);
@@ -71,6 +73,7 @@ public class PlayerMovement : MonoBehaviour
                     currentDirection = MoveDirection.RIGHT;
                     transform.Rotate(0.0f, -90.0f, 0.0f);
                 }
+                hasRotated = true;
             }
             else {
                 //rb.AddForce(0f, jumpSpeed * Time.deltaTime, 0f);
@@ -81,6 +84,9 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
+        time += Time.deltaTime;
+        anglePrev = angle;
+        angle = +90 + 90.0f * Mathf.Sin(time*10);
         leftArm.gameObject.transform.Rotate((angle - anglePrev), 0.0f, 0.0f);
         rightArm.gameObject.transform.Rotate(-(angle - anglePrev), 0.0f, 0.0f);
         leftLeg.gameObject.transform.Rotate(-(angle - anglePrev), 0.0f, 0.0f);
