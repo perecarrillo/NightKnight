@@ -89,7 +89,7 @@ public class PlayerMovement : MonoBehaviour
 
     void OnCollisionExit(Collision other) {
         float lastY = other.gameObject.transform.position.y;
-        Debug.Log(lastY);
+        //Debug.Log(lastY);
         --isGrounded;
     }
 

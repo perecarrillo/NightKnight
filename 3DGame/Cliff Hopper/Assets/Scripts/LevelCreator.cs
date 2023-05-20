@@ -3,19 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-enum TerrainType {Button, Plain, Stair, Spike, Gap};
+enum TerrainType {Button, Plain, Stair, Spike, Gap, Slowdown};
 public class LevelCreator : MonoBehaviour
 {
-    public GameObject buttonPrefab, plainPrefab, stairPrefab, spikePrefab, gapPrefab;
+    [SerializeField] GameObject player;
+    public GameObject buttonPrefab, plainPrefab, stairPrefab, spikePrefab, gapPrefab, slowdownPrefab;
     bool noGap = true;
     bool left = false;
     Vector3 pos;
     Queue<GameObject> level = new Queue<GameObject>();
-    // TODO: fer una cua per tenir els chunks i anar eliminant-los
     System.Random random = new System.Random();
 
 
-    void GenerateTerrain() {
+    void GenerateTerrain(bool start) {
         GameObject chunk = new GameObject();
         chunk.transform.Translate(pos);
         for (uint i = 0; i < 15; ++i) {
@@ -28,6 +28,7 @@ public class LevelCreator : MonoBehaviour
 
             // section generation
             int size = random.Next(2, 10);
+            if (start) size = 15;
             if (left) ++pos.x;
             else ++pos.z;
             noGap = true; // To not put a jump right after a turn
@@ -35,11 +36,14 @@ public class LevelCreator : MonoBehaviour
                 TerrainType type;
                 int rand = random.Next(100);
                 if (rand < 20) type = TerrainType.Stair;
-                else if (!noGap && rand < 30) {
+                else if (rand < 25) {
+                    type = TerrainType.Slowdown;
+                }
+                else if (!start && !noGap && rand < 35) {
                     type = TerrainType.Gap;
                     noGap = true;
                 }
-                else if (!noGap && rand < 40) {
+                else if (!start && !noGap && rand < 45) {
                     type = TerrainType.Spike;
                     noGap = true;
                 }
@@ -48,6 +52,9 @@ public class LevelCreator : MonoBehaviour
                     noGap = false;
                 }
                 obj = (GameObject)Instantiate(GetPrefabTerrainType(type));
+                if (type == TerrainType.Slowdown) {
+                    obj.GetComponent<SlowDown>().player = player;
+                }
                 obj.transform.Translate(pos);
                 obj.transform.parent = chunk.transform;
                 if (left) {
@@ -62,6 +69,7 @@ public class LevelCreator : MonoBehaviour
                     obj.transform.Rotate(new Vector3(0, random.Next(4) * 90,0));
                 }
             }
+            start = false;
             left = !left;
         }
 
@@ -75,7 +83,7 @@ public class LevelCreator : MonoBehaviour
     // Start is called before the first frame update
     void Start() {
         pos = new Vector3(0, 0, 0);
-        GenerateTerrain();
+        GenerateTerrain(true);
     }
 
     GameObject GetPrefabTerrainType(TerrainType type) {
@@ -86,13 +94,14 @@ public class LevelCreator : MonoBehaviour
             case TerrainType.Stair: return stairPrefab;
             case TerrainType.Spike: return spikePrefab;
             case TerrainType.Gap: return gapPrefab;
+            case TerrainType.Slowdown: return slowdownPrefab;
         }
         return null;
     }
 
     void OnTriggerEnter(Collider other) {
-        Debug.Log("Collision!");
-        GenerateTerrain();
+        Debug.Log("Generating new terrain");
+        GenerateTerrain(false);
     }
 
     void Update() {
