@@ -6,11 +6,11 @@ public class SlowDown : MonoBehaviour
 {
     public GameObject player;
     float initialSpeed;
+    public float slowdownValue = 0.6f;
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("asdagsdfg");
         initialSpeed = player.GetComponent<PlayerMovement>().speed;
-        player.GetComponent<PlayerMovement>().speed = initialSpeed*0.6f;
+        player.GetComponent<PlayerMovement>().speed = initialSpeed*slowdownValue;
 
     }
 
