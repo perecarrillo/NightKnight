@@ -2,17 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Slowdown : MonoBehaviour
+public class SlowDown : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public GameObject player;
+    float initialSpeed;
+    public float slowdownValue = 0.6f;
+    void OnTriggerEnter(Collider other)
     {
-        
+        initialSpeed = player.GetComponent<PlayerMovement>().speed;
+        player.GetComponent<PlayerMovement>().speed = initialSpeed*slowdownValue;
+
     }
 
-    // Update is called once per frame
-    void Update()
+    void OnTriggerExit(Collider other)
     {
-        
+        player.GetComponent<PlayerMovement>().speed = initialSpeed;
     }
 }

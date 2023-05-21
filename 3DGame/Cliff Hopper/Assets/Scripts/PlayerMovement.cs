@@ -26,6 +26,9 @@ public class PlayerMovement : MonoBehaviour
     float time;
     float angle, anglePrev;
 
+    bool dying = false;
+    float deathTime;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -47,7 +50,10 @@ public class PlayerMovement : MonoBehaviour
                 isCorner = true;
                 return;
             case "Spike":
-                SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
+                dying = true;
+                deathTime = Time.time;
+                //other.transform.gameObject.GetComponent<Animation>().Play("SpikeAnimation");
+                //SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
                 return;
             case "Stair":
                 ++isGrounded;
@@ -96,35 +102,42 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!hasFallen && Input.GetKeyDown(KeyCode.Space))  {
-            initPos = transform.position;
-            if (isCorner && !hasRotated) {
-                if (currentDirection == MoveDirection.RIGHT) {
-                    currentDirection = MoveDirection.LEFT;
-                    transform.Rotate(0.0f, 90.0f, 0.0f);
-                }
-                else if (currentDirection == MoveDirection.LEFT) {
-                    currentDirection = MoveDirection.RIGHT;
-                    transform.Rotate(0.0f, -90.0f, 0.0f);
-                }
-                hasRotated = true;
-            }
-            else if (isGrounded != 0 || hasDoubleJump) {
-                rb.AddForce(jump * jumpForce, ForceMode.Impulse);
-                hasDoubleJump = !hasDoubleJump;
+        if (dying) {
+            if (Time.time - deathTime >= 5) {
+                SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
             }
         }
+        else {
+            if(!hasFallen && Input.GetKeyDown(KeyCode.Space))  {
+                initPos = transform.position;
+                if (isCorner && !hasRotated) {
+                    if (currentDirection == MoveDirection.RIGHT) {
+                        currentDirection = MoveDirection.LEFT;
+                        transform.Rotate(0.0f, 90.0f, 0.0f);
+                    }
+                    else if (currentDirection == MoveDirection.LEFT) {
+                        currentDirection = MoveDirection.RIGHT;
+                        transform.Rotate(0.0f, -90.0f, 0.0f);
+                    }
+                    hasRotated = true;
+                }
+                else if (isGrounded != 0 || hasDoubleJump) {
+                    rb.AddForce(jump * jumpForce, ForceMode.Impulse);
+                    hasDoubleJump = !hasDoubleJump;
+                }
+            }
 
-        time += Time.deltaTime;
-        anglePrev = angle;
-        angle = +90 + 90.0f * Mathf.Sin(time*10);
-        leftArm.gameObject.transform.Rotate((angle - anglePrev), 0.0f, 0.0f);
-        rightArm.gameObject.transform.Rotate(-(angle - anglePrev), 0.0f, 0.0f);
-        leftLeg.gameObject.transform.Rotate(-(angle - anglePrev), 0.0f, 0.0f);
-        rightLeg.gameObject.transform.Rotate((angle - anglePrev), 0.0f, 0.0f);
+            time += Time.deltaTime;
+            anglePrev = angle;
+            angle = +90 + 90.0f * Mathf.Sin(time*10);
+            leftArm.gameObject.transform.Rotate((angle - anglePrev), 0.0f, 0.0f);
+            rightArm.gameObject.transform.Rotate(-(angle - anglePrev), 0.0f, 0.0f);
+            leftLeg.gameObject.transform.Rotate(-(angle - anglePrev), 0.0f, 0.0f);
+            rightLeg.gameObject.transform.Rotate((angle - anglePrev), 0.0f, 0.0f);
 
 
-        // move the player
-        transform.Translate(speed * movement * Time.deltaTime);
+            // move the player
+            transform.Translate(speed * movement * Time.deltaTime);
+        }
     }
 }
