@@ -52,6 +52,7 @@ public class PlayerMovement : MonoBehaviour
             case "Spike":
                 dying = true;
                 deathTime = Time.time;
+                FindObjectOfType<AudioController>().Play("laugh");
                 //other.transform.gameObject.GetComponent<Animation>().Play("SpikeAnimation");
                 //SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
                 return;
