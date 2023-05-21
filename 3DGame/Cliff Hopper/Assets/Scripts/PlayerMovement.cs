@@ -29,6 +29,8 @@ public class PlayerMovement : MonoBehaviour
     bool dying = false;
     float deathTime;
 
+    float recolocate = 0.1f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -48,6 +50,7 @@ public class PlayerMovement : MonoBehaviour
         {
             case "Corner":
                 isCorner = true;
+                other.gameObject.transform.parent.gameObject.transform.Find("buttonNotPressed").gameObject.SetActive(false);
                 return;
             case "Spike":
                 dying = true;
@@ -139,6 +142,22 @@ public class PlayerMovement : MonoBehaviour
 
             // move the player
             transform.Translate(speed * movement * Time.deltaTime);
+            if (currentDirection == MoveDirection.RIGHT) {
+                Debug.Log("should recollocate the player");
+                float pos = transform.position.x;
+                int goal = (int)Mathf.Round(pos);
+                float deviation = transform.position.x - Mathf.Floor(transform.position.x);
+                Debug.Log("deviation: " + deviation);
+                if (deviation == 0){}
+                else if ((deviation > 0.5) && ((deviation + recolocate) < 1)) {
+                    Debug.Log("go further: " + deviation + recolocate);
+                    transform.Translate(recolocate, 0, 0);
+                }
+                else if ((deviation < 0.5) && (deviation - recolocate) < 0) {
+                    Debug.Log("go nearer: " + (deviation - recolocate));
+                    transform.Translate(-recolocate, 0, 0);
+                }
+            }
         }
     }
 }

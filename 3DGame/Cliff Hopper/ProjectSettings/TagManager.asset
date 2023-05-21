@@ -8,6 +8,8 @@ TagManager:
   - Spike
   - Stair
   - Gap
+  - Unpressed
+  - Pressed
   layers:
   - Default
   - TransparentFX
