@@ -154,20 +154,14 @@ public class PlayerMovement : MonoBehaviour
                 int goal = (int)Mathf.Round(pos);
                 float deviation = pos - goal;
                 deviation = Mathf.Abs(deviation);
-                Debug.Log("goal: " + goal);
-                Debug.Log("pos: " + pos);
-                Debug.Log("deviation: " + deviation);
                 if (deviation < recolocate){
-                    Debug.Log("deviation < recolocate");
                     if (goal > pos) transform.Translate(deviation, 0, 0);
                     else if (goal > pos) transform.Translate(-deviation, 0, 0);
                 }
                 else if (pos < goal) {
-                    Debug.Log("menor");
                     transform.Translate(recolocate, 0, 0);
                 }
                 else if (pos > goal) {
-                    Debug.Log("mayor");
                     transform.Translate(-recolocate, 0, 0);
                 }
             }
@@ -176,20 +170,14 @@ public class PlayerMovement : MonoBehaviour
                 int goal = (int)Mathf.Round(pos);
                 float deviation = pos - goal;
                 deviation = Mathf.Abs(deviation);
-                Debug.Log("goal: " + goal);
-                Debug.Log("pos: " + pos);
-                Debug.Log("deviation: " + deviation);
                 if (deviation < recolocate){
-                    Debug.Log("deviation < recolocate");
                     if (goal > pos) transform.Translate(-deviation, 0, 0);
                     else if (goal > pos) transform.Translate(deviation, 0, 0);
                 }
                 else if (pos < goal) {
-                    Debug.Log("menor");
                     transform.Translate(-recolocate, 0, 0);
                 }
                 else if (pos > goal) {
-                    Debug.Log("mayor");
                     transform.Translate(recolocate, 0, 0);
                 }
             }
