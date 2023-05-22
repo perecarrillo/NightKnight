@@ -8,6 +8,8 @@ enum MoveDirection { LEFT, RIGHT };
 public class PlayerMovement : MonoBehaviour
 {
     public float speed;
+    [HideInInspector]
+    public float initialSpeed;
     MoveDirection currentDirection;
     Vector3 initPos;
     Vector3 movement;
@@ -34,6 +36,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        initialSpeed = speed;
         currentDirection = MoveDirection.RIGHT;
         movement = new Vector3 (0, 0, 1);
         rb = GetComponent<Rigidbody>();
@@ -42,6 +45,9 @@ public class PlayerMovement : MonoBehaviour
         angle = anglePrev = 0.0f;
     }
 
+    public void setSpeedToInitialSpeed() {
+        speed = initialSpeed;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
