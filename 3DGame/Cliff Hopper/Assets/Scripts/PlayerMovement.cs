@@ -31,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
     bool dying = false;
     float deathTime;
 
-    float recolocate = 0.1f;
+    float recolocate = 0.005f;
 
     // Start is called before the first frame update
     void Start()
@@ -146,24 +146,57 @@ public class PlayerMovement : MonoBehaviour
             rightLeg.gameObject.transform.Rotate((angle - anglePrev), 0.0f, 0.0f);
 
 
-            // move the player
+            // move the player and center the player 
             transform.Translate(speed * movement * Time.deltaTime);
+        
             if (currentDirection == MoveDirection.RIGHT) {
-                Debug.Log("should recollocate the player");
                 float pos = transform.position.x;
                 int goal = (int)Mathf.Round(pos);
-                float deviation = transform.position.x - Mathf.Floor(transform.position.x);
+                float deviation = pos - goal;
+                deviation = Mathf.Abs(deviation);
+                Debug.Log("goal: " + goal);
+                Debug.Log("pos: " + pos);
                 Debug.Log("deviation: " + deviation);
-                if (deviation == 0){}
-                else if ((deviation > 0.5) && ((deviation + recolocate) < 1)) {
-                    Debug.Log("go further: " + deviation + recolocate);
+                if (deviation < recolocate){
+                    Debug.Log("deviation < recolocate");
+                    if (goal > pos) transform.Translate(deviation, 0, 0);
+                    else if (goal > pos) transform.Translate(-deviation, 0, 0);
+                }
+                else if (pos < goal) {
+                    Debug.Log("menor");
                     transform.Translate(recolocate, 0, 0);
                 }
-                else if ((deviation < 0.5) && (deviation - recolocate) < 0) {
-                    Debug.Log("go nearer: " + (deviation - recolocate));
+                else if (pos > goal) {
+                    Debug.Log("mayor");
                     transform.Translate(-recolocate, 0, 0);
                 }
             }
+            else {
+                float pos = transform.position.z;
+                int goal = (int)Mathf.Round(pos);
+                float deviation = pos - goal;
+                deviation = Mathf.Abs(deviation);
+                Debug.Log("goal: " + goal);
+                Debug.Log("pos: " + pos);
+                Debug.Log("deviation: " + deviation);
+                if (deviation < recolocate){
+                    Debug.Log("deviation < recolocate");
+                    if (goal > pos) transform.Translate(-deviation, 0, 0);
+                    else if (goal > pos) transform.Translate(deviation, 0, 0);
+                }
+                else if (pos < goal) {
+                    Debug.Log("menor");
+                    transform.Translate(-recolocate, 0, 0);
+                }
+                else if (pos > goal) {
+                    Debug.Log("mayor");
+                    transform.Translate(recolocate, 0, 0);
+                }
+            }
+            
+        
+
+            
         }
     }
 }
