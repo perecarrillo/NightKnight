@@ -24,6 +24,7 @@ public class LevelCreator : MonoBehaviour
             else obj = (GameObject)Instantiate(buttonPrefab);
             obj.transform.Translate(pos);
             obj.transform.parent = chunk.transform;
+            obj.transform.Rotate(new Vector3(0, random.Next(4) * 90,0));
 
             if (i == 12)
                 transform.position = (pos + new Vector3(0, 1, 0));
