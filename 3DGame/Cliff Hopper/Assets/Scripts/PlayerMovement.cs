@@ -14,13 +14,14 @@ public class PlayerMovement : MonoBehaviour
     Vector3 initPos;
     Vector3 movement;
     Rigidbody rb;
-    bool isCorner;
+    bool isCorner = false;
     bool hasRotated;
 
     bool hasFallen = false;
     bool hasDoubleJump = false;
     int isGrounded = 0;
 
+    [HideInInspector]
     public Vector3 jump;
     float jumpForce = 60.0f;
 
@@ -51,7 +52,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //Debug.Log("Collision with " + other.gameObject.tag);
         switch (other.gameObject.tag)
         {
             case "Corner":
