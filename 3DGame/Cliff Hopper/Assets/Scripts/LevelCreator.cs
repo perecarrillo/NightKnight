@@ -19,7 +19,9 @@ public class LevelCreator : MonoBehaviour
         GameObject chunk = new GameObject();
         chunk.transform.Translate(pos);
         for (uint i = 0; i < 15; ++i) {
-            GameObject obj = (GameObject)Instantiate(buttonPrefab);
+            GameObject obj;
+            if (start) obj = (GameObject)Instantiate(plainPrefab);
+            else obj = (GameObject)Instantiate(buttonPrefab);
             obj.transform.Translate(pos);
             obj.transform.parent = chunk.transform;
 
@@ -35,7 +37,7 @@ public class LevelCreator : MonoBehaviour
             for (uint j = 0; j < size; ++j) {
                 TerrainType type;
                 int rand = random.Next(100);
-                if (rand < 20) type = TerrainType.Stair;
+                if ((!start || j > 6) && rand < 20) type = TerrainType.Stair;
                 else if (rand < 25) {
                     type = TerrainType.Slowdown;
                 }
@@ -82,7 +84,7 @@ public class LevelCreator : MonoBehaviour
     }
     // Start is called before the first frame update
     void Start() {
-        pos = new Vector3(0, 0, 0);
+        pos = new Vector3(0, 0, -4);
         GenerateTerrain(true);
     }
 
