@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
     bool dying = false;
     float deathTime;
 
-    float recolocate = 0.005f;
+    float recolocate = 0.01f;
 
     // Start is called before the first frame update
     void Start()
