@@ -11,6 +11,7 @@ public class CubeMovement : MonoBehaviour
     MoveDirection currentDirection = MoveDirection.RIGHT;
     Vector3 direction = Vector3.forward;
     float goDown = 0;
+    Queue<Collider> alreadyCollided = new Queue<Collider>();
 
     
     private void OnTriggerEnter(Collider other)
@@ -27,7 +28,13 @@ public class CubeMovement : MonoBehaviour
                 }
                 return;
             case "StairStone":
-                goDown += 0.5f;
+                if (!alreadyCollided.Contains(other)) {
+                    goDown += 0.5f;
+                    alreadyCollided.Enqueue(other);
+                    if (alreadyCollided.Count >= 10) {
+                        alreadyCollided.Dequeue();
+                    }
+                }
                 return;
             default:
                 return;
@@ -43,6 +50,7 @@ public class CubeMovement : MonoBehaviour
             }
             Vector3 anchor = transform.position + (Vector3.down + direction) * 0.5f;
             Vector3 axis = Vector3.Cross(Vector3.up, direction);
+            Debug.Log("Rotate over anchor:" + anchor + " axis: " + axis);
             StartCoroutine(Roll(anchor, axis));
         }
     }
