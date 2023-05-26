@@ -32,6 +32,8 @@ public class PlayerMovement : MonoBehaviour
     bool dying = false;
     float deathTime;
 
+    int numCoins;
+
     float recolocate = 0.01f;
 
     // Start is called before the first frame update
@@ -41,6 +43,7 @@ public class PlayerMovement : MonoBehaviour
         currentDirection = MoveDirection.RIGHT;
         movement = new Vector3 (0, 0, 1);
         rb = GetComponent<Rigidbody>();
+        numCoins = 0;
 
         jump = new Vector3(0.0f, 2.0f, 0.0f);
         angle = anglePrev = 0.0f;
@@ -71,6 +74,11 @@ public class PlayerMovement : MonoBehaviour
             case "Gap":
                 Debug.Log("You have fallen");
                 hasFallen = true;
+                return;
+            case "Coin":
+                Debug.Log("entra");
+                ++numCoins;
+                other.gameObject.SetActive(false);
                 return;
             default:
                 return;
