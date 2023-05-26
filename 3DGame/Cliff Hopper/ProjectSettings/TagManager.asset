@@ -11,6 +11,7 @@ TagManager:
   - Unpressed
   - Pressed
   - StairStone
+  - Coin
   layers:
   - Default
   - TransparentFX
