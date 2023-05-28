@@ -39,10 +39,10 @@ public class LevelCreator : MonoBehaviour
                 TerrainType type;
                 int rand = random.Next(100);
                 if ((!start || j > 6) && rand < 20) type = TerrainType.Stair;
-                else if (rand < 23) {
+                else if (rand < 30) {
                     type = TerrainType.Slowdown;
                 }
-                else if (!start && !noGap && rand < 35) {
+                else if (!start && !noGap && rand < 40) {
                     type = TerrainType.Gap;
                     noGap = true;
                 }

@@ -615,6 +615,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rollSpeed: 5
+  player: {fileID: 467519709}
 --- !u!54 &775536769
 Rigidbody:
   m_ObjectHideFlags: 0

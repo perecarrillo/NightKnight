@@ -76,7 +76,7 @@ public class PlayerMovement : MonoBehaviour
                 hasFallen = true;
                 return;
             case "Coin":
-                Debug.Log("entra");
+                //Debug.Log("entra");
                 ++numCoins;
                 other.gameObject.SetActive(false);
                 return;
