@@ -159,7 +159,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddadf08dd9e733c43ba7d14024c5bd99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 775536767}
+  target: {fileID: 467519715}
   smoothSpeed: 0.125
   locationOffset: {x: 0, y: 0, z: 0}
   rotationOffset: {x: 0, y: 0, z: 0}
@@ -235,6 +235,11 @@ Transform:
 --- !u!1 &467519709 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3212034008317142865, guid: c54c27d79249c9548ab77e5a300b72b3, type: 3}
+  m_PrefabInstance: {fileID: 3212034009875968551}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &467519715 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3212034008063311807, guid: c54c27d79249c9548ab77e5a300b72b3, type: 3}
   m_PrefabInstance: {fileID: 3212034009875968551}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &475092251
@@ -9510,6 +9515,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3212034008317142865, guid: c54c27d79249c9548ab77e5a300b72b3, type: 3}
       propertyPath: m_Name
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 3212034008317142865, guid: c54c27d79249c9548ab77e5a300b72b3, type: 3}
+      propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []

@@ -36,6 +36,8 @@ public class CubeMovement : MonoBehaviour
                     }
                 }
                 return;
+            case "Player":
+                return;
             default:
                 return;
         }
