@@ -150,6 +150,7 @@ public class PlayerMovement : MonoBehaviour
                     hasRotated = true;
                 }
                 else if (isGrounded != 0 || hasDoubleJump) {
+                    rb.velocity = Vector3.zero;
                     rb.AddForce(jump * jumpForce, ForceMode.Impulse);
                     hasDoubleJump = !hasDoubleJump;
                 }
