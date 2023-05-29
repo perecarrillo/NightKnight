@@ -69,6 +69,8 @@ public class PlayerMovement : MonoBehaviour
                 other.gameObject.transform.parent.gameObject.transform.Find("buttonNotPressed").gameObject.SetActive(false);
                 return;
             case "Spike":
+                other.gameObject.transform.Find("pinxos").gameObject.GetComponent<Animator>().SetTrigger("ActivateSpikes");
+                rb.AddForce(new Vector3(100, 300, 100), ForceMode.Impulse);
                 Die();
                 //other.transform.gameObject.GetComponent<Animation>().Play("SpikeAnimation");
                 //SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
