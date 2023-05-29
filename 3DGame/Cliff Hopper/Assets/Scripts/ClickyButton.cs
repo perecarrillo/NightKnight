@@ -17,6 +17,7 @@ public class ClickyButton : MonoBehaviour,IPointerDownHandler, IPointerUpHandler
     public void OnPointerDown(PointerEventData eventData) {
         _img.sprite = _pressed;
         _source.PlayOneShot(_compressClip);
+        Time.timeScale = 1f;
     }
 
     public void OnPointerUp(PointerEventData eventData) {

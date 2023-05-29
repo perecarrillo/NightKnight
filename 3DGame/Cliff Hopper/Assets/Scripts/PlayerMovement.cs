@@ -133,7 +133,7 @@ public class PlayerMovement : MonoBehaviour
             Die();
         }
         if (dying) {
-            if (Time.time - deathTime >= 5) {
+            if (Time.time - deathTime >= 1) {
                 SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
             }
         }
