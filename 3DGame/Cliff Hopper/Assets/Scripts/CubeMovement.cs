@@ -8,7 +8,6 @@ public class CubeMovement : MonoBehaviour
     [SerializeField] 
     private float rollSpeed = 2;
     private bool isMoving;
-    MoveDirection currentDirection = MoveDirection.RIGHT;
     Vector3 direction = Vector3.forward;
     [SerializeField]
     GameObject player;
@@ -42,6 +41,8 @@ public class CubeMovement : MonoBehaviour
                 }
                 return;
             case "Player":
+                Debug.Log("T'han xafat");
+                player.GetComponent<PlayerMovement>().Die();
                 return;
             default:
                 return;
@@ -81,24 +82,16 @@ public class CubeMovement : MonoBehaviour
     private IEnumerator Roll(Vector3 anchor, Vector3 axis) {
         Debug.Log("Position: " + transform.position);
         float totalDegrees = 90.0f;
-        float step = totalDegrees/rollSpeed;
-        while (totalDegrees > rollSpeed) {
+        float rest = totalDegrees;
+        while (rest > rollSpeed) {
+        float step = totalDegrees/rollSpeed; // Avg = 0.637*peak
+        //float step = 
             transform.RotateAround(anchor, axis, step);
             yield return new WaitForFixedUpdate();
-            totalDegrees -= step;
+            rest -= step;
         }
-        transform.RotateAround(anchor, axis, totalDegrees);
+        transform.RotateAround(anchor, axis, rest);
         yield return new WaitForFixedUpdate();
-
-        // for (int i = 0; i < 90 / rollSpeed; i++) {
-        //     // if (goDown > 0) {
-        //     //     anchor.y -= 0.1f;
-        //     //     goDown -= 0.1f;
-        //     // }
-        //     transform.RotateAround(anchor, axis, rollSpeed);
-        //     yield return new WaitForFixedUpdate();//WaitForSeconds(0.005f);
-        // }
-        //yield return new WaitForSeconds(0.01f);
         isMoving = false;
         Debug.Log("Position2: " + transform.position);
     }

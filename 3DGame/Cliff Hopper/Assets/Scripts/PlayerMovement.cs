@@ -49,6 +49,10 @@ public class PlayerMovement : MonoBehaviour
         angle = anglePrev = 0.0f;
     }
 
+    public void Die() {
+        dying = true;
+    }
+
     public void setSpeedToInitialSpeed() {
         speed = initialSpeed;
     }
@@ -62,7 +66,7 @@ public class PlayerMovement : MonoBehaviour
                 other.gameObject.transform.parent.gameObject.transform.Find("buttonNotPressed").gameObject.SetActive(false);
                 return;
             case "Spike":
-                dying = true;
+                Die();
                 deathTime = Time.time;
                 FindObjectOfType<AudioController>().Play("laugh");
                 //other.transform.gameObject.GetComponent<Animation>().Play("SpikeAnimation");
