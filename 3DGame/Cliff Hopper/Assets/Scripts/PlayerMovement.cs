@@ -20,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
     bool hasFallen = false;
     bool hasDoubleJump = false;
     int isGrounded = 0;
+    float lastY = 0;
 
     [HideInInspector]
     public Vector3 jump;
@@ -52,6 +53,7 @@ public class PlayerMovement : MonoBehaviour
     public void Die() {
         deathTime = Time.time;
         dying = true;
+        FindObjectOfType<AudioController>().Play("laugh");
     }
 
     public void setSpeedToInitialSpeed() {
@@ -68,8 +70,6 @@ public class PlayerMovement : MonoBehaviour
                 return;
             case "Spike":
                 Die();
-                deathTime = Time.time;
-                FindObjectOfType<AudioController>().Play("laugh");
                 //other.transform.gameObject.GetComponent<Animation>().Play("SpikeAnimation");
                 //SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
                 return;
@@ -79,6 +79,7 @@ public class PlayerMovement : MonoBehaviour
             case "Gap":
                 Debug.Log("You have fallen");
                 hasFallen = true;
+                Die();
                 return;
             case "Coin":
                 //Debug.Log("entra");
@@ -117,7 +118,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     void OnCollisionExit(Collision other) {
-        float lastY = other.gameObject.transform.position.y;
+        lastY = other.gameObject.transform.position.y;
         //Debug.Log(lastY);
         --isGrounded;
     }
@@ -125,6 +126,10 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (lastY - transform.position.y > 7 && !dying) {
+            Debug.Log("T'has caigut huhu");
+            Die();
+        }
         if (dying) {
             if (Time.time - deathTime >= 5) {
                 SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
