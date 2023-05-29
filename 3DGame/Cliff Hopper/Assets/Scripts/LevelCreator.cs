@@ -8,6 +8,7 @@ public class LevelCreator : MonoBehaviour
 {
     [SerializeField] GameObject player;
     public GameObject buttonPrefab, plainPrefab, stairPrefab, spikePrefab, gapPrefab, slowdownPrefab;
+    public GameObject coinPrefab;
     bool noGap = true;
     bool left = false;
     Vector3 pos;
@@ -36,6 +37,11 @@ public class LevelCreator : MonoBehaviour
             else ++pos.z;
             noGap = true; // To not put a jump right after a turn
             for (uint j = 0; j < size; ++j) {
+                if (random.Next(100) < 15) {
+                    obj = (GameObject)Instantiate(coinPrefab);
+                    obj.transform.Translate(pos + new Vector3(0, 1, 0));
+                    obj.transform.parent = chunk.transform;
+                }
                 TerrainType type;
                 int rand = random.Next(100);
                 if ((!start || j > 6) && rand < 20) type = TerrainType.Stair;
@@ -60,6 +66,8 @@ public class LevelCreator : MonoBehaviour
                 }
                 obj.transform.Translate(pos);
                 obj.transform.parent = chunk.transform;
+
+
                 if (left) {
                     ++pos.x;
                 }

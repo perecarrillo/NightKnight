@@ -50,6 +50,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public void Die() {
+        deathTime = Time.time;
         dying = true;
     }
 
