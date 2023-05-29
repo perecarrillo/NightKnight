@@ -12,6 +12,7 @@ public class CubeMovement : MonoBehaviour
     [SerializeField]
     GameObject player;
     float goDown = 0;
+    bool goDownOnNextRoll = false;
     Queue<Collider> alreadyCollided = new Queue<Collider>();
 
     private void Start() {
@@ -33,6 +34,7 @@ public class CubeMovement : MonoBehaviour
                 return;
             case "StairStone":
                 if (!alreadyCollided.Contains(other)) {
+                    goDownOnNextRoll = true;
                     goDown += 0.5f;
                     alreadyCollided.Enqueue(other);
                     if (alreadyCollided.Count >= 10) {
@@ -71,6 +73,10 @@ public class CubeMovement : MonoBehaviour
                 transform.position += Vector3.down*dist;
                 goDown -= dist;
             }
+            /*if (goDownOnNextRoll) {
+                goDown += 0.5f;
+                goDownOnNextRoll = false;
+            }*/
             Vector3 anchor = transform.position + (Vector3.down + direction) * 0.5f;
             Vector3 axis = Vector3.Cross(Vector3.up, direction);
             //Debug.Log("Rotate over anchor:" + anchor + " axis: " + axis);
@@ -80,11 +86,11 @@ public class CubeMovement : MonoBehaviour
     }
  
     private IEnumerator Roll(Vector3 anchor, Vector3 axis) {
-        Debug.Log("Position: " + transform.position);
+        //Debug.Log("Position: " + transform.position);
         float totalDegrees = 90.0f;
         float rest = totalDegrees;
-        while (rest > rollSpeed) {
-        float step = totalDegrees/rollSpeed; // Avg = 0.637*peak
+        float step = totalDegrees/rollSpeed; // Avg(Abs(cos)) = 0.637*peak
+        while (rest > step) {
         //float step = 
             transform.RotateAround(anchor, axis, step);
             yield return new WaitForFixedUpdate();
@@ -93,6 +99,6 @@ public class CubeMovement : MonoBehaviour
         transform.RotateAround(anchor, axis, rest);
         yield return new WaitForFixedUpdate();
         isMoving = false;
-        Debug.Log("Position2: " + transform.position);
+        //Debug.Log("Position2: " + transform.position);
     }
 }
