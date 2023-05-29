@@ -12,7 +12,6 @@ public class CubeMovement : MonoBehaviour
     [SerializeField]
     GameObject player;
     float goDown = 0;
-    bool goDownOnNextRoll = false;
     Queue<Collider> alreadyCollided = new Queue<Collider>();
 
     private void Start() {
@@ -34,7 +33,6 @@ public class CubeMovement : MonoBehaviour
                 return;
             case "StairStone":
                 if (!alreadyCollided.Contains(other)) {
-                    goDownOnNextRoll = true;
                     goDown += 0.5f;
                     alreadyCollided.Enqueue(other);
                     if (alreadyCollided.Count >= 10) {
