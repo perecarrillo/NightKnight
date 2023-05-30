@@ -53,7 +53,7 @@ public class CubeMovement : MonoBehaviour
         if (!isMoving) {
             // Update velocity
             float distance = Vector3.Distance(transform.position, player.transform.position);
-            Debug.Log("roolSpeed: " + rollSpeed);
+            //Debug.Log("roolSpeed: " + rollSpeed);
             if (distance > 10 && rollSpeed > 15) {
                 rollSpeed -= rollSpeed*0.11f;
             }
