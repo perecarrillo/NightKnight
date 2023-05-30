@@ -446,7 +446,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddadf08dd9e733c43ba7d14024c5bd99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 2083982744}
+  target: {fileID: 1830212983}
   smoothSpeed: 0.125
   locationOffset: {x: 0, y: 0, z: 0}
   rotationOffset: {x: 0, y: 0, z: 0}
@@ -7003,6 +7003,11 @@ BoxCollider:
 --- !u!1 &1830212982 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4994568255866417909, guid: 91e216f50f1b0b149b97c1ff7c06f3bd, type: 3}
+  m_PrefabInstance: {fileID: 4994568255244527491}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1830212983 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4994568256120285723, guid: 91e216f50f1b0b149b97c1ff7c06f3bd, type: 3}
   m_PrefabInstance: {fileID: 4994568255244527491}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1944461325
