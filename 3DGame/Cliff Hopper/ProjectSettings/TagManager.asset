@@ -13,6 +13,7 @@ TagManager:
   - StairStone
   - Coin
   - Box
+  - God
   layers:
   - Default
   - TransparentFX

@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     MoveDirection currentDirection;
     Vector3 initPos;
     Vector3 movement;
+    [SerializeField]
     Rigidbody rb;
     bool isCorner = false;
     bool hasRotated;
@@ -37,7 +38,10 @@ public class PlayerMovement : MonoBehaviour
 
     float recolocate = 0.01f;
 
-    bool godMode = false;
+    [HideInInspector]
+    public bool godMode = false;
+    [HideInInspector]
+    public bool jumpNext = false;
 
     // Start is called before the first frame update
     void Start()
@@ -45,7 +49,6 @@ public class PlayerMovement : MonoBehaviour
         initialSpeed = speed;
         currentDirection = MoveDirection.RIGHT;
         movement = new Vector3 (0, 0, 1);
-        rb = GetComponent<Rigidbody>();
         numCoins = 0;
 
         jump = new Vector3(0.0f, 2.0f, 0.0f);
@@ -67,6 +70,17 @@ public class PlayerMovement : MonoBehaviour
         switch (other.gameObject.tag)
         {
             case "Corner":
+                if (godMode && !hasRotated) {
+                    if (currentDirection == MoveDirection.RIGHT) {
+                        currentDirection = MoveDirection.LEFT;
+                        transform.Rotate(0.0f, 90.0f, 0.0f);
+                    }
+                    else if (currentDirection == MoveDirection.LEFT) {
+                        currentDirection = MoveDirection.RIGHT;
+                        transform.Rotate(0.0f, -90.0f, 0.0f);
+                    }
+                    hasRotated = true;
+                }
                 isCorner = true;
                 other.gameObject.transform.parent.gameObject.transform.Find("buttonNotPressed").gameObject.SetActive(false);
                 return;
@@ -130,6 +144,9 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.G)) {
+            godMode = !godMode;
+        }
         if (lastY - transform.position.y > 7 && !dying) {
             Debug.Log("T'has caigut huhu");
             Die();
@@ -140,7 +157,8 @@ public class PlayerMovement : MonoBehaviour
             }
         }
         else {
-            if(!hasFallen && Input.GetKeyDown(KeyCode.Space))  {
+            if(!hasFallen && (Input.GetKeyDown(KeyCode.Space) || jumpNext))  {
+                jumpNext = false;
                 initPos = transform.position;
                 if (isCorner && !hasRotated) {
                     if (currentDirection == MoveDirection.RIGHT) {
@@ -204,10 +222,6 @@ public class PlayerMovement : MonoBehaviour
                     transform.Translate(recolocate, 0, 0);
                 }
             }
-            
-        
-
-            
         }
     }
 }
