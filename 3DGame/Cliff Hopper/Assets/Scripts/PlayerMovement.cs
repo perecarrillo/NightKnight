@@ -37,6 +37,8 @@ public class PlayerMovement : MonoBehaviour
 
     float recolocate = 0.01f;
 
+    bool godMode = false;
+
     // Start is called before the first frame update
     void Start()
     {
