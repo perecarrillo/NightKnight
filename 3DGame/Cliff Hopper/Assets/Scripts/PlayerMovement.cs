@@ -72,7 +72,7 @@ public class PlayerMovement : MonoBehaviour
                 return;
             case "Spike":
                 other.gameObject.transform.Find("pinxos").gameObject.GetComponent<Animator>().SetTrigger("ActivateSpikes");
-                rb.AddForce(new Vector3(100, 300, 100), ForceMode.Impulse);
+                rb.AddForce(new Vector3(100, 300, 0), ForceMode.Impulse);
                 Die();
                 //other.transform.gameObject.GetComponent<Animation>().Play("SpikeAnimation");
                 //SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
