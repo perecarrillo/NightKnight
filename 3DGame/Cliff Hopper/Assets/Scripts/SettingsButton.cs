@@ -6,11 +6,8 @@ using UnityEngine.UI;
 
 public class SettingsButton : MonoBehaviour
 {
-    bool stopped = false;
-
     public void StopTime(){
-        if (stopped) Time.timeScale = 1f;
+        if (Time.timeScale == 0f) Time.timeScale = 1f;
         else Time.timeScale = 0f;
-        stopped = !stopped;
     }
 }
