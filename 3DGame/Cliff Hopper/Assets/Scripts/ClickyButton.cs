@@ -25,7 +25,5 @@ public class ClickyButton : MonoBehaviour,IPointerDownHandler, IPointerUpHandler
         _source.PlayOneShot(_uncompressClip);
     }
 
-    public void IWasClicked() {
-        Debug.Log("Clicked!");
-    }
+
 }
