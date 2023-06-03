@@ -27,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 jump;
     float jumpForce = 60.0f;
 
-    public GameObject leftArm, rightArm, leftLeg, rightLeg;
+    public GameObject leftArm, rightArm, leftLeg, rightLeg, body, godBody;
     float time;
     float angle, anglePrev;
 
@@ -146,6 +146,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.G)) {
             godMode = !godMode;
+            body.SetActive(!godMode);
+            godBody.SetActive(godMode);
         }
         if (lastY - transform.position.y > 7 && !dying) {
             Debug.Log("T'has caigut huhu");
