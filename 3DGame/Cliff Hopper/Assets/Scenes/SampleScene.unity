@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7301,6 +7301,30 @@ MonoBehaviour:
   - name: laugh
     clip: {fileID: 8300000, guid: 4bd5de5944cfb8e4682bc2de2509e7cf, type: 3}
     volume: 0.413
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: Fall
+    clip: {fileID: 8300000, guid: 8ce5b8c5c6e46df499e997b3d962ec82, type: 3}
+    volume: 0.413
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: Jump
+    clip: {fileID: 8300000, guid: 196d37ddb57a2694387c3db0561f46b2, type: 3}
+    volume: 0.545
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: Coin
+    clip: {fileID: 8300000, guid: 84bff785529947940b7e7ddfeced1016, type: 3}
+    volume: 0.191
     volumeVariance: 0
     pitch: 1
     pitchVariance: 0
@@ -27910,6 +27934,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1223131935}
     - target: {fileID: 4994568256120285721, guid: 91e216f50f1b0b149b97c1ff7c06f3bd, type: 3}
+      propertyPath: speed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4994568256120285721, guid: 91e216f50f1b0b149b97c1ff7c06f3bd, type: 3}
       propertyPath: godBody
       value: 
       objectReference: {fileID: 1579998180}
@@ -27917,7 +27945,12 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 5503803823346643122, guid: 91e216f50f1b0b149b97c1ff7c06f3bd, type: 3}
+      propertyPath: speed
+      value: 4
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 5503803823346643122, guid: 91e216f50f1b0b149b97c1ff7c06f3bd, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 91e216f50f1b0b149b97c1ff7c06f3bd, type: 3}
 --- !u!23 &4995172086399461902
 MeshRenderer:

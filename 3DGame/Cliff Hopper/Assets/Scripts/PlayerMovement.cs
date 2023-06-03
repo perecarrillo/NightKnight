@@ -58,7 +58,7 @@ public class PlayerMovement : MonoBehaviour
     public void Die() {
         deathTime = Time.time;
         dying = true;
-        FindObjectOfType<AudioController>().Play("laugh");
+        FindObjectOfType<AudioController>().Play("Fall");
     }
 
     public void setSpeedToInitialSpeed() {
@@ -103,6 +103,7 @@ public class PlayerMovement : MonoBehaviour
                 //Debug.Log("entra");
                 ++numCoins;
                 other.gameObject.SetActive(false);
+                FindObjectOfType<AudioController>().Play("Coin");
                 return;
             default:
                 return;
@@ -149,12 +150,12 @@ public class PlayerMovement : MonoBehaviour
             body.SetActive(!godMode);
             godBody.SetActive(godMode);
         }
-        if (lastY - transform.position.y > 7 && !dying) {
+        if (lastY - transform.position.y > 5 && !dying) {
             Debug.Log("T'has caigut huhu");
             Die();
         }
         if (dying) {
-            if (Time.time - deathTime >= 1) {
+            if (Time.time - deathTime >= 2) {
                 SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
             }
         }
@@ -176,6 +177,7 @@ public class PlayerMovement : MonoBehaviour
                 else if (isGrounded != 0 || hasDoubleJump) {
                     rb.velocity = Vector3.zero;
                     rb.AddForce(jump * jumpForce, ForceMode.Impulse);
+                    FindObjectOfType<AudioController>().Play("Jump");
                     hasDoubleJump = !hasDoubleJump;
                 }
             }
