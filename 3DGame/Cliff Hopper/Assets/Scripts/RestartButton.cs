@@ -7,5 +7,6 @@ public class RestartButton : MonoBehaviour
 {
     public void RestartLevel() {
         SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
+        Application.targetFrameRate = -1;
     }
 }
