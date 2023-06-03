@@ -19,30 +19,13 @@ public class LevelCreator : MonoBehaviour
     void GenerateTerrain(bool start) {
         GameObject chunk = new GameObject();
         chunk.transform.Translate(pos);
+        bool cannonNext = false;
         for (uint i = 0; i < 15; ++i) {
             GameObject obj;
-            if (start) obj = (GameObject)Instantiate(plainPrefab);
-            else obj = (GameObject)Instantiate(buttonPrefab);
-            obj.transform.Translate(pos);
-            obj.transform.parent = chunk.transform;
-            obj.transform.Rotate(new Vector3(0, random.Next(4) * 90,0));
-
-            if (i == 12)
-                transform.position = (pos + new Vector3(0, 1, 0));
-
-            // Cannon
-            if (random.Next(100) < 100) {
-                obj = (GameObject)Instantiate(cannonPrefab);
-                Vector3 disp = new Vector3(2, 0, 0);
-                if (left) disp = new Vector3(0, 0, 2);
-                obj.transform.Translate(pos + disp);
-                obj.transform.parent = chunk.transform;
-                if (left) obj.transform.Rotate(new Vector3(0, 90, 0));
-                else obj.transform.Rotate(new Vector3(0, 180, 0));
-            }
 
             // section generation
             int size = random.Next(2, 10);
+            if (cannonNext) size = random.Next(5, 8);
             if (start) size = 15;
             if (left) ++pos.x;
             else ++pos.z;
@@ -55,23 +38,23 @@ public class LevelCreator : MonoBehaviour
                 }
                 TerrainType type;
                 int rand = random.Next(100);
-                if ((!start || j > 6) && rand < 20) type = TerrainType.Stair;
-                else if (rand < 30) {
+                if (rand < 10) {
                     type = TerrainType.Slowdown;
                 }
-                else if (!start && !noGap && rand < 30) {
+                else if (!cannonNext && (!start || j > 6) && rand < 30) type = TerrainType.Stair;
+                else if (!cannonNext && !start && !noGap && rand < 35) {
                     type = TerrainType.Gap;
                     noGap = true;
                 }
-                else if (!start && !noGap && rand < 45) {
+                else if (!cannonNext && !start && !noGap && rand < 47) {
                     type = TerrainType.Spike;
                     noGap = true;
                 }
-                else if (!start && !noGap && rand < 50) {
+                else if (!cannonNext && !start && !noGap && rand < 55) {
                     type = TerrainType.Lava;
                     noGap = true;
                 }
-                else if (!start && !noGap && rand < 53) {
+                else if (!cannonNext && !start && !noGap && rand < 57) {
                     type = TerrainType.Moving;
                     noGap = true;
                 }
@@ -105,6 +88,29 @@ public class LevelCreator : MonoBehaviour
                     obj.transform.Rotate(new Vector3(0, random.Next(4) * 90,0));
                 }
             }
+
+            obj = (GameObject)Instantiate(buttonPrefab);
+            obj.transform.Translate(pos);
+            obj.transform.parent = chunk.transform;
+            obj.transform.Rotate(new Vector3(0, random.Next(4) * 90,0));
+
+            if (i == 10)
+                transform.position = (pos + new Vector3(0, 1, 0));
+
+            // Cannon
+            if (cannonNext) {
+                cannonNext = false;
+                obj = (GameObject)Instantiate(cannonPrefab);
+                Vector3 disp = new Vector3(2, 0, 0);
+                if (!left) disp = new Vector3(0, 0, 2);
+                obj.transform.Translate(pos + disp);
+                obj.transform.parent = chunk.transform;
+                if (!left) obj.transform.Rotate(new Vector3(0, 90, 0));
+                else obj.transform.Rotate(new Vector3(0, 180, 0));
+            }
+
+            if (random.Next(100) < 10) cannonNext = true;
+
             start = false;
             left = !left;
         }

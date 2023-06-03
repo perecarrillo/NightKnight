@@ -223,6 +223,7 @@ GameObject:
   - component: {fileID: 4994568255386957576}
   - component: {fileID: 4994568255386957582}
   - component: {fileID: 4994568255386957583}
+  - component: {fileID: 6770647353831250321}
   m_Layer: 0
   m_Name: GodModeCollider
   m_TagString: God
@@ -271,6 +272,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 4994568255866417909}
+--- !u!65 &6770647353831250321
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4994568255386957577}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.2, y: 0.8, z: 0.2}
+  m_Center: {x: 0, y: 0.5, z: 0.4}
 --- !u!1 &4994568255665942687
 GameObject:
   m_ObjectHideFlags: 0

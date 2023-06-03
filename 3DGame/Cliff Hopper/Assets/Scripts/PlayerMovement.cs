@@ -70,7 +70,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.gameObject.tag);
+        //Debug.Log(other.gameObject.tag);
         switch (other.gameObject.tag)
         {
             case "Corner":
