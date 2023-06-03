@@ -15,6 +15,7 @@ TagManager:
   - Box
   - God
   - Lava
+  - Ball
   layers:
   - Default
   - TransparentFX

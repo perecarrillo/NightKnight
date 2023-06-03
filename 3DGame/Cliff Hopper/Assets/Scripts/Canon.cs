@@ -12,9 +12,14 @@ public class Canon : MonoBehaviour
         {
             case "Player":
                 Debug.Log("Shoot ball");
-                GameObject ball = (GameObject)Instantiate(ballPrefab);
-                ball.transform.Translate(transform.position - new Vector3(-4,0,0));
-                ball.transform.parent = transform;
+                // GameObject ball = (GameObject)Instantiate(ballPrefab);
+                // ball.transform.Translate(transform.position - new Vector3(4,1,0));
+                // Quaternion q = transform.rotation;
+                // Vector3 v = q.ToEulerAngles();
+                // ball.transform.Rotate(v);
+                // ball.transform.parent = transform;
+
+                transform.Find("Ball").gameObject.GetComponent<BallMovement>().activeBall();
                 return;
         }
     }

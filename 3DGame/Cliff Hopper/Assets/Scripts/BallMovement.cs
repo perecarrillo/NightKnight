@@ -9,7 +9,7 @@ public class BallMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        speed = 5f;
+        speed = 0f;
         movement = new Vector3(1,0,0);
     }
 
@@ -17,5 +17,9 @@ public class BallMovement : MonoBehaviour
     void Update()
     {
         transform.Translate(speed * movement * Time.deltaTime);
+    }
+
+    public void activeBall() {
+        speed = 3f;
     }
 }
