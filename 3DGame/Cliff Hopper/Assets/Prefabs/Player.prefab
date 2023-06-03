@@ -238,7 +238,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4994568255386957577}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.3, z: 0.674}
+  m_LocalPosition: {x: 0, y: -0.423, z: 0.715}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -317,13 +317,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
+  jump: {x: 0, y: 0, z: 0}
+  jumpForce: 60
   initialSpeed: 0
   rb: {fileID: 4994568256120285722}
-  jump: {x: 0, y: 0, z: 0}
   leftArm: {fileID: 4994568256738055043}
   rightArm: {fileID: 4994568255273740022}
   leftLeg: {fileID: 4994568256097300107}
   rightLeg: {fileID: 4994568256396352526}
+  body: {fileID: 0}
+  godBody: {fileID: 0}
   godMode: 0
   jumpNext: 0
 --- !u!1 &4994568255756042339
@@ -477,13 +480,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
+  jump: {x: 0, y: 0, z: 0}
+  jumpForce: 60
   initialSpeed: 0
   rb: {fileID: 4994568256120285722}
-  jump: {x: 0, y: 0, z: 0}
   leftArm: {fileID: 4994568256738055043}
   rightArm: {fileID: 4994568255273740022}
   leftLeg: {fileID: 4994568256097300107}
   rightLeg: {fileID: 4994568256396352526}
+  body: {fileID: 0}
+  godBody: {fileID: 0}
   godMode: 0
   jumpNext: 0
 --- !u!54 &4994568256120285722
@@ -501,7 +507,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 122
-  m_CollisionDetection: 0
+  m_CollisionDetection: 3
 --- !u!1 &4994568256064037262
 GameObject:
   m_ObjectHideFlags: 0

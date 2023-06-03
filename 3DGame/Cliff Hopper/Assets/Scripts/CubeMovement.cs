@@ -61,10 +61,10 @@ public class CubeMovement : MonoBehaviour
                 rollSpeed -= rollSpeed*0.15f;
             }
             else if (distance > 3 && rollSpeed > 12) {
-                rollSpeed -= rollSpeed*0.08f;
+                rollSpeed -= rollSpeed*0.06f;
             }
             else if (distance < 3) {
-                rollSpeed += rollSpeed*0.02f;
+                rollSpeed += rollSpeed*0.03f;
                 if (rollSpeed == 0) rollSpeed = 0.1f;
             }
             else if (distance < 1.5f) {

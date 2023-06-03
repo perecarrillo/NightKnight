@@ -169,7 +169,6 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (time > 2f) {
             if(!hasFallen && (Input.GetKeyDown(KeyCode.Space) || jumpNext))  {
-                jumpNext = false;
                 initPos = transform.position;
                 if (isCorner && !hasRotated) {
                     if (currentDirection == MoveDirection.RIGHT) {
@@ -182,12 +181,14 @@ public class PlayerMovement : MonoBehaviour
                     }
                     hasRotated = true;
                 }
-                else if (isGrounded != 0 || hasDoubleJump) {
+                else if (isGrounded != 0 || hasDoubleJump || jumpNext) {
                     rb.velocity = Vector3.zero;
                     rb.AddForce(jump * jumpForce, ForceMode.Impulse);
                     FindObjectOfType<AudioController>().Play("Jump");
                     hasDoubleJump = !hasDoubleJump;
+                    if (isGrounded != 0) hasDoubleJump = true;
                 }
+                jumpNext = false;
             }
 
             time += Time.deltaTime;

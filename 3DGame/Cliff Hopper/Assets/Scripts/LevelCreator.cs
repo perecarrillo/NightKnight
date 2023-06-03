@@ -3,11 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-enum TerrainType {Button, Plain, Stair, Spike, Gap, Slowdown, Lava, Cannon};
+enum TerrainType {Button, Plain, Stair, Spike, Gap, Slowdown, Lava, Cannon, Moving};
 public class LevelCreator : MonoBehaviour
 {
     [SerializeField] GameObject player;
-    public GameObject buttonPrefab, plainPrefab, stairPrefab, spikePrefab, gapPrefab, slowdownPrefab, lavaPrefab, cannonPrefab;
+    public GameObject buttonPrefab, plainPrefab, stairPrefab, spikePrefab, gapPrefab, slowdownPrefab, lavaPrefab, cannonPrefab, movingPrefab;
     public GameObject coinPrefab;
     bool noGap = true;
     bool left = false;
@@ -71,6 +71,10 @@ public class LevelCreator : MonoBehaviour
                     type = TerrainType.Lava;
                     noGap = true;
                 }
+                else if (!start && !noGap && rand < 53) {
+                    type = TerrainType.Moving;
+                    noGap = true;
+                }
                 else {
                     type = TerrainType.Plain;
                     noGap = false;
@@ -90,6 +94,12 @@ public class LevelCreator : MonoBehaviour
                 if (type == TerrainType.Stair) {
                     pos.y -= 0.5f;
                     if (!left) obj.transform.Rotate(new Vector3(0, -90, 0));
+                }
+                else if (type == TerrainType.Moving) {
+                    if (left) obj.transform.Rotate(new Vector3(0, 0, 0));
+                    else obj.transform.Rotate(new Vector3(0, -90, 0));
+                    if (left) pos.x += 2;
+                    else pos.z += 2;
                 }
                 else {
                     obj.transform.Rotate(new Vector3(0, random.Next(4) * 90,0));
@@ -123,6 +133,7 @@ public class LevelCreator : MonoBehaviour
             case TerrainType.Slowdown: return slowdownPrefab;
             case TerrainType.Lava: return lavaPrefab;
             case TerrainType.Cannon: return cannonPrefab;
+            case TerrainType.Moving: return movingPrefab;
         }
         return null;
     }

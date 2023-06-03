@@ -8087,6 +8087,7 @@ MonoBehaviour:
   slowdownPrefab: {fileID: 8930112747873295232, guid: 0bf83a5c480b86648b59ebde0601642d, type: 3}
   lavaPrefab: {fileID: 8036109320514562443, guid: 3ae422ecd0dd9ee4fa9b91de172e1204, type: 3}
   cannonPrefab: {fileID: 2394849329280871302, guid: a73527009d59d1746b02e64c6ad824cb, type: 3}
+  movingPrefab: {fileID: 7570578724972523699, guid: f8abb73d801782e4eaa368e47df7f8d3, type: 3}
   coinPrefab: {fileID: 1252352595344069091, guid: 776e4240411e21843aa0ab1c255f0e84, type: 3}
 --- !u!4 &1779661150
 Transform:
