@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 5750329764107547298}
   - component: {fileID: 4841936564942488447}
+  - component: {fileID: 2442614312890919667}
   m_Layer: 0
   m_Name: Ball
-  m_TagString: Untagged
+  m_TagString: Ball
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -47,6 +48,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   movement: {x: 0, y: 0, z: 0}
+--- !u!65 &2442614312890919667
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4128512248605880337}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.39008197, y: 0.4072076, z: 0.401716}
+  m_Center: {x: -0.026001647, y: 0.99251264, z: -0.0057721734}
 --- !u!1001 &5734223709706871164
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -117,6 +131,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 4f0be70ca1770ff45a829de8e9d4c4e7, type: 3}
       propertyPath: m_Name
       value: ball
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 4f0be70ca1770ff45a829de8e9d4c4e7, type: 3}
+      propertyPath: m_TagString
+      value: Ball
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4f0be70ca1770ff45a829de8e9d4c4e7, type: 3}

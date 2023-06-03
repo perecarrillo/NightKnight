@@ -70,6 +70,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log(other.gameObject.tag);
         switch (other.gameObject.tag)
         {
             case "Corner":
@@ -95,7 +96,11 @@ public class PlayerMovement : MonoBehaviour
                 //SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
                 return;
             case "Lava":
-            rb.AddForce(new Vector3(10, 10, 0), ForceMode.Impulse);
+                rb.AddForce(new Vector3(10, 10, 0), ForceMode.Impulse);
+                Die();
+                return;
+            case "Ball":
+                rb.AddForce(new Vector3(0, 0, -20), ForceMode.Impulse);
                 Die();
                 return;
             case "Stair":
