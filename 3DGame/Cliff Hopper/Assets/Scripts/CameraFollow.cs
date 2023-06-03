@@ -7,9 +7,13 @@ public class CameraFollow : MonoBehaviour
 
 {
     public Transform target;
-    public float smoothSpeed = 0.125f;
-    public Vector3 locationOffset;
-    public Vector3 rotationOffset;
+    public float animationTime = 1f;
+    float currentTime = 0f;
+    public Vector3 desiredPosition;
+    public Quaternion desiredRotation;
+    public Vector3 initialPosition;
+    public Quaternion initialRotation;
+    float lastY = 4f;
   
     // void Update()
     // {
@@ -18,12 +22,20 @@ public class CameraFollow : MonoBehaviour
 
     void FixedUpdate()
     {
-        Vector3 desiredPosition = target.position + locationOffset;
-        Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
+        currentTime += Time.deltaTime;
+        float alpha = currentTime/animationTime;
+        float currentY = target.position.y;
+        Debug.Log("currentY" + currentY);
+        Debug.Log("lastY" + lastY);
+        if (currentY < lastY) lastY = currentY;
+        Vector3 targetPosition = new Vector3(target.position.x, lastY, target.position.z);
+        //Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition + targetPosition, alpha);
+        Vector3 smoothedPosition = Vector3.Lerp(initialPosition, desiredPosition + targetPosition, alpha);
         transform.position = smoothedPosition;
 
-        // Quaternion desiredrotation = target.rotation * Quaternion.Euler(rotationOffset);
-        // Quaternion smoothedrotation = Quaternion.Lerp(transform.rotation, desiredrotation, smoothSpeed);
-        // transform.rotation = smoothedrotation;
+       // Quaternion desiredrotation = target.rotation;
+        //Quaternion smoothedrotation = Quaternion.Lerp(transform.rotation, desiredRotation, alpha);
+        Quaternion smoothedrotation = Quaternion.Lerp(initialRotation, desiredRotation, alpha);
+        transform.rotation = smoothedrotation;
     }
 }
