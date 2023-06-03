@@ -27935,12 +27935,16 @@ PrefabInstance:
       objectReference: {fileID: 1223131935}
     - target: {fileID: 4994568256120285721, guid: 91e216f50f1b0b149b97c1ff7c06f3bd, type: 3}
       propertyPath: speed
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4994568256120285721, guid: 91e216f50f1b0b149b97c1ff7c06f3bd, type: 3}
       propertyPath: godBody
       value: 
       objectReference: {fileID: 1579998180}
+    - target: {fileID: 4994568256120285721, guid: 91e216f50f1b0b149b97c1ff7c06f3bd, type: 3}
+      propertyPath: jumpForce
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 4994568256130232599, guid: 91e216f50f1b0b149b97c1ff7c06f3bd, type: 3}
       propertyPath: m_IsActive
       value: 1

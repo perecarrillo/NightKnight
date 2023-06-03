@@ -9,6 +9,10 @@ public class PlayerMovement : MonoBehaviour
 {
     public float speed;
     [HideInInspector]
+    public Vector3 jump;
+    [SerializeField]
+    float jumpForce = 60.0f;
+    [HideInInspector]
     public float initialSpeed;
     MoveDirection currentDirection;
     Vector3 initPos;
@@ -22,10 +26,6 @@ public class PlayerMovement : MonoBehaviour
     bool hasDoubleJump = false;
     int isGrounded = 0;
     float lastY = 0;
-
-    [HideInInspector]
-    public Vector3 jump;
-    float jumpForce = 60.0f;
 
     public GameObject leftArm, rightArm, leftLeg, rightLeg, body, godBody;
     float time;
@@ -56,9 +56,11 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public void Die() {
-        deathTime = Time.time;
+        if (!dying) {
+            FindObjectOfType<AudioController>().Play("Fall");
+            deathTime = Time.time;
+        }
         dying = true;
-        FindObjectOfType<AudioController>().Play("Fall");
     }
 
     public void setSpeedToInitialSpeed() {
