@@ -3,11 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-enum TerrainType {Button, Plain, Stair, Spike, Gap, Slowdown};
+enum TerrainType {Button, Plain, Stair, Spike, Gap, Slowdown, Lava};
 public class LevelCreator : MonoBehaviour
 {
     [SerializeField] GameObject player;
-    public GameObject buttonPrefab, plainPrefab, stairPrefab, spikePrefab, gapPrefab, slowdownPrefab;
+    public GameObject buttonPrefab, plainPrefab, stairPrefab, spikePrefab, gapPrefab, slowdownPrefab, lavaPrefab;
     public GameObject coinPrefab;
     bool noGap = true;
     bool left = false;
@@ -54,6 +54,10 @@ public class LevelCreator : MonoBehaviour
                 }
                 else if (!start && !noGap && rand < 45) {
                     type = TerrainType.Spike;
+                    noGap = true;
+                }
+                else if (!start && !noGap && rand < 50) {
+                    type = TerrainType.Lava;
                     noGap = true;
                 }
                 else {
@@ -106,6 +110,7 @@ public class LevelCreator : MonoBehaviour
             case TerrainType.Spike: return spikePrefab;
             case TerrainType.Gap: return gapPrefab;
             case TerrainType.Slowdown: return slowdownPrefab;
+            case TerrainType.Lava: return lavaPrefab;
         }
         return null;
     }

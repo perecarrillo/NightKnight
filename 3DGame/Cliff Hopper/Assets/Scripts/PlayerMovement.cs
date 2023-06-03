@@ -95,7 +95,7 @@ public class PlayerMovement : MonoBehaviour
                 //SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
                 return;
             case "Lava":
-            rb.AddForce(new Vector3(10, 300, 0), ForceMode.Impulse);
+            rb.AddForce(new Vector3(10, 10, 0), ForceMode.Impulse);
                 Die();
                 return;
             case "Stair":
