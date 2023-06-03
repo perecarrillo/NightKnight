@@ -7,7 +7,7 @@ public class CameraFollow : MonoBehaviour
 
 {
     public Transform target;
-    public float animationTime = 1f;
+    public float animationTime = 0.7f;
     float currentTime = 0f;
     public Vector3 desiredPosition;
     public Quaternion desiredRotation;
