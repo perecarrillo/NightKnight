@@ -9,6 +9,10 @@ public class PlayerMovement : MonoBehaviour
 {
     public float speed;
     [HideInInspector]
+    public Vector3 jump;
+    [SerializeField]
+    float jumpForce = 60.0f;
+    [HideInInspector]
     public float initialSpeed;
     MoveDirection currentDirection;
     Vector3 initPos;
@@ -22,10 +26,6 @@ public class PlayerMovement : MonoBehaviour
     bool hasDoubleJump = false;
     int isGrounded = 0;
     float lastY = 0;
-
-    [HideInInspector]
-    public Vector3 jump;
-    float jumpForce = 60.0f;
 
     public GameObject leftArm, rightArm, leftLeg, rightLeg, body, godBody;
     float time;
@@ -56,9 +56,11 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public void Die() {
-        deathTime = Time.time;
+        if (!dying) {
+            FindObjectOfType<AudioController>().Play("Fall");
+            deathTime = Time.time;
+        }
         dying = true;
-        FindObjectOfType<AudioController>().Play("laugh");
     }
 
     public void setSpeedToInitialSpeed() {
@@ -103,6 +105,7 @@ public class PlayerMovement : MonoBehaviour
                 //Debug.Log("entra");
                 ++numCoins;
                 other.gameObject.SetActive(false);
+                FindObjectOfType<AudioController>().Play("Coin");
                 return;
             default:
                 return;
@@ -149,12 +152,12 @@ public class PlayerMovement : MonoBehaviour
             body.SetActive(!godMode);
             godBody.SetActive(godMode);
         }
-        if (lastY - transform.position.y > 7 && !dying) {
+        if (lastY - transform.position.y > 5 && !dying) {
             Debug.Log("T'has caigut huhu");
             Die();
         }
         if (dying) {
-            if (Time.time - deathTime >= 1) {
+            if (Time.time - deathTime >= 2) {
                 SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
             }
         }
@@ -176,6 +179,7 @@ public class PlayerMovement : MonoBehaviour
                 else if (isGrounded != 0 || hasDoubleJump) {
                     rb.velocity = Vector3.zero;
                     rb.AddForce(jump * jumpForce, ForceMode.Impulse);
+                    FindObjectOfType<AudioController>().Play("Jump");
                     hasDoubleJump = !hasDoubleJump;
                 }
             }
