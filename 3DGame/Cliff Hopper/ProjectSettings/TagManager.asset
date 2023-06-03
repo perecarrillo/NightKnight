@@ -16,6 +16,7 @@ TagManager:
   - God
   - Lava
   - Moving
+  - Ball
   layers:
   - Default
   - TransparentFX
