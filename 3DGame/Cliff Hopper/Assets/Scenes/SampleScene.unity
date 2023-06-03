@@ -536,6 +536,7 @@ GameObject:
   - component: {fileID: 401640863}
   - component: {fileID: 401640862}
   - component: {fileID: 401640861}
+  - component: {fileID: 401640867}
   m_Layer: 0
   m_Name: Menu Button
   m_TagString: Untagged
@@ -769,6 +770,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 401640867}
+        m_TargetAssemblyTypeName: ButtonsFunctions, Assembly-CSharp
+        m_MethodName: goMainMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &401640865
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -807,6 +820,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 401640859}
   m_CullTransparentMesh: 1
+--- !u!114 &401640867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 401640859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4187405912bb5684bbbf40bd9dbb7355, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &466945003
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2232,7 +2257,7 @@ RectTransform:
   m_GameObject: {fileID: 794017637}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.6983, y: 1.6983, z: 1.6983}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1049166772}
@@ -2489,7 +2514,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 430}
+  m_AnchoredPosition: {x: 0, y: 513}
   m_SizeDelta: {x: 492.9285, y: 329.1793}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1049166773
@@ -2977,7 +3002,7 @@ MonoBehaviour:
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
-  m_ScreenMatchMode: 0
+  m_ScreenMatchMode: 1
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
