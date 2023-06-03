@@ -8142,6 +8142,7 @@ MonoBehaviour:
   spikePrefab: {fileID: 8930112747873295232, guid: f41d3ad74096b6140a9364ae43012cab, type: 3}
   gapPrefab: {fileID: 844295113770736484, guid: b9d07e83d78fce843a15a583ed9bfc27, type: 3}
   slowdownPrefab: {fileID: 8930112747873295232, guid: 0bf83a5c480b86648b59ebde0601642d, type: 3}
+  lavaPrefab: {fileID: 8036109320514562443, guid: 3ae422ecd0dd9ee4fa9b91de172e1204, type: 3}
   coinPrefab: {fileID: 1252352595344069091, guid: 776e4240411e21843aa0ab1c255f0e84, type: 3}
 --- !u!4 &1779661150
 Transform:
