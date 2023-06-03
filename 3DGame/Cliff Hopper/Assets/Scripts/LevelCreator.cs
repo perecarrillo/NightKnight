@@ -3,11 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-enum TerrainType {Button, Plain, Stair, Spike, Gap, Slowdown, Lava};
+enum TerrainType {Button, Plain, Stair, Spike, Gap, Slowdown, Lava, Cannon};
 public class LevelCreator : MonoBehaviour
 {
     [SerializeField] GameObject player;
-    public GameObject buttonPrefab, plainPrefab, stairPrefab, spikePrefab, gapPrefab, slowdownPrefab, lavaPrefab;
+    public GameObject buttonPrefab, plainPrefab, stairPrefab, spikePrefab, gapPrefab, slowdownPrefab, lavaPrefab, cannonPrefab;
     public GameObject coinPrefab;
     bool noGap = true;
     bool left = false;
@@ -30,6 +30,17 @@ public class LevelCreator : MonoBehaviour
             if (i == 12)
                 transform.position = (pos + new Vector3(0, 1, 0));
 
+            // Cannon
+            if (random.Next(100) < 100) {
+                obj = (GameObject)Instantiate(cannonPrefab);
+                Vector3 disp = new Vector3(2, 0, 0);
+                if (left) disp = new Vector3(0, 0, 2);
+                obj.transform.Translate(pos + disp);
+                obj.transform.parent = chunk.transform;
+                if (left) obj.transform.Rotate(new Vector3(0, 90, 0));
+                else obj.transform.Rotate(new Vector3(0, 180, 0));
+            }
+
             // section generation
             int size = random.Next(2, 10);
             if (start) size = 15;
@@ -37,7 +48,7 @@ public class LevelCreator : MonoBehaviour
             else ++pos.z;
             noGap = true; // To not put a jump right after a turn
             for (uint j = 0; j < size; ++j) {
-                if (random.Next(100) < 15) {
+                if (random.Next(100) < 10) {
                     obj = (GameObject)Instantiate(coinPrefab);
                     obj.transform.Translate(pos + new Vector3(0, 1, 0));
                     obj.transform.parent = chunk.transform;
@@ -48,7 +59,7 @@ public class LevelCreator : MonoBehaviour
                 else if (rand < 30) {
                     type = TerrainType.Slowdown;
                 }
-                else if (!start && !noGap && rand < 40) {
+                else if (!start && !noGap && rand < 30) {
                     type = TerrainType.Gap;
                     noGap = true;
                 }
@@ -111,6 +122,7 @@ public class LevelCreator : MonoBehaviour
             case TerrainType.Gap: return gapPrefab;
             case TerrainType.Slowdown: return slowdownPrefab;
             case TerrainType.Lava: return lavaPrefab;
+            case TerrainType.Cannon: return cannonPrefab;
         }
         return null;
     }
