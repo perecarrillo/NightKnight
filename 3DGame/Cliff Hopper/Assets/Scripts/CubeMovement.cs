@@ -13,9 +13,11 @@ public class CubeMovement : MonoBehaviour
     GameObject player;
     float goDown = 0;
     Queue<Collider> alreadyCollided = new Queue<Collider>();
+    float time;
 
     private void Start() {
         rollSpeed = 100/rollSpeed;
+        time = 0f;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -50,7 +52,8 @@ public class CubeMovement : MonoBehaviour
     }
 
     private void FixedUpdate() {
-        if (!isMoving) {
+        time += Time.deltaTime;
+        if (!isMoving && time > 2f) {
             // Update velocity
             float distance = Vector3.Distance(transform.position, player.transform.position);
             //Debug.Log("roolSpeed: " + rollSpeed);

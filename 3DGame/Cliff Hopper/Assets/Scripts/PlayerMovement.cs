@@ -51,6 +51,7 @@ public class PlayerMovement : MonoBehaviour
         movement = new Vector3 (0, 0, 1);
         numCoins = 0;
 
+        time = 0f;
         jump = new Vector3(0.0f, 2.0f, 0.0f);
         angle = anglePrev = 0.0f;
     }
@@ -92,6 +93,10 @@ public class PlayerMovement : MonoBehaviour
                 Die();
                 //other.transform.gameObject.GetComponent<Animation>().Play("SpikeAnimation");
                 //SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
+                return;
+            case "Lava":
+            rb.AddForce(new Vector3(10, 300, 0), ForceMode.Impulse);
+                Die();
                 return;
             case "Stair":
                 ++isGrounded;
@@ -147,6 +152,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        time += Time.deltaTime;
         if (Input.GetKeyDown(KeyCode.G)) {
             godMode = !godMode;
             body.SetActive(!godMode);
@@ -161,7 +167,7 @@ public class PlayerMovement : MonoBehaviour
                 SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
             }
         }
-        else {
+        else if (time > 2f) {
             if(!hasFallen && (Input.GetKeyDown(KeyCode.Space) || jumpNext))  {
                 jumpNext = false;
                 initPos = transform.position;
