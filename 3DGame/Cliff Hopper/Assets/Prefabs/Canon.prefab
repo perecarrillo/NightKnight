@@ -58,6 +58,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11d8b2bfea40925428869652c0deac0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ballPrefab: {fileID: 0}
 --- !u!1 &2394849329280871302
 GameObject:
   m_ObjectHideFlags: 0
@@ -67,6 +68,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2809019552105271511}
+  - component: {fileID: 3735369870955567646}
   m_Layer: 0
   m_Name: Canon
   m_TagString: Untagged
@@ -92,6 +94,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3735369870955567646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2394849329280871302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11d8b2bfea40925428869652c0deac0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ballPrefab: {fileID: 4128512248605880337, guid: 376921ccad5d98d4baaf5821d54d4bae, type: 3}
 --- !u!1001 &4443736513406726948
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -25,8 +25,6 @@ public class CameraFollow : MonoBehaviour
         currentTime += Time.deltaTime;
         float alpha = currentTime/animationTime;
         float currentY = target.position.y;
-        Debug.Log("currentY" + currentY);
-        Debug.Log("lastY" + lastY);
         if (currentY < lastY) lastY = currentY;
         Vector3 targetPosition = new Vector3(target.position.x, lastY, target.position.z);
         //Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition + targetPosition, alpha);

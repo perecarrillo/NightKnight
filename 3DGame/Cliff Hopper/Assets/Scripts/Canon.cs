@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class Canon : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public GameObject ballPrefab;
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter(Collider other)
     {
-        
+        switch (other.gameObject.tag)
+        {
+            case "Player":
+                Debug.Log("Shoot ball");
+                GameObject ball = (GameObject)Instantiate(ballPrefab);
+                ball.transform.Translate(transform.position - new Vector3(-4,0,0));
+                ball.transform.parent = transform;
+                return;
+        }
     }
 }
