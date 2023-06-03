@@ -18,11 +18,12 @@ public class GodModeCollider : MonoBehaviour
         
     }
 
+
     void OnTriggerEnter(Collider other) {
         tag = other.gameObject.tag;
-        /*if (transform.parent.GetComponent<PlayerMovement>().godMode && (tag == "Spike" || tag == "Gap")) {
-            Debug.Log("Collided with " + tag);
+        if (transform.parent.GetComponent<PlayerMovement>().godMode && (tag == "Spike" || tag == "Gap")) {
+            //Debug.Log("Collided with " + tag);
             transform.parent.GetComponent<PlayerMovement>().jumpNext = true;
-        }*/
+        }
     }
 }
