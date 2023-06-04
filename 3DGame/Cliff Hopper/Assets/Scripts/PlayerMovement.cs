@@ -177,6 +177,8 @@ public class PlayerMovement : MonoBehaviour
         if (dying) {
             if (Time.time - deathTime >= 2) {
                 // SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
+                AudioController.instance.StopSounds();
+                if (PlayerPrefs.GetInt("silence") == 0) AudioController.instance.Play("Menu");
                 Lose.GetComponent<Animator>().SetTrigger("ShowLose");
             }
         }

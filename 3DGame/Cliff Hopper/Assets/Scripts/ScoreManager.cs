@@ -10,6 +10,7 @@ public class ScoreManager : MonoBehaviour
 
     public TMP_Text scoreText;
     public TMP_Text highScoreText;
+    public TMP_Text scoreTextLose;
     
     int score = 0;
     int highScore = 0;
@@ -24,6 +25,7 @@ public class ScoreManager : MonoBehaviour
         highScore = PlayerPrefs.GetInt("highscore");
         scoreText.text = score.ToString();
         highScoreText.text = "TOP: " + highScore.ToString();
+        scoreTextLose.text = score.ToString();
         
     }
 
@@ -35,5 +37,6 @@ public class ScoreManager : MonoBehaviour
         }
         scoreText.text = score.ToString();
         highScoreText.text = "TOP: " + highScore.ToString();
+        scoreTextLose.text = score.ToString();
     }
 }

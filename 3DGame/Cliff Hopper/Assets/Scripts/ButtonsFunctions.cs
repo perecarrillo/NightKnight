@@ -17,4 +17,5 @@ public class ButtonsFunctions : MonoBehaviour
     public void makeSound() {
         AudioController.instance.Play("Click");
     }
+
 }
