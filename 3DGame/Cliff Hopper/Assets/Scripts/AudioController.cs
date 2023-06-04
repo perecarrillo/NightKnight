@@ -49,7 +49,8 @@ public class AudioController : MonoBehaviour
 		s.source.volume = volume * s.volume * (1f + UnityEngine.Random.Range(-s.volumeVariance / 2f, s.volumeVariance / 2f));
 		s.source.pitch = volume * s.pitch * (1f + UnityEngine.Random.Range(-s.pitchVariance / 2f, s.pitchVariance / 2f));
 
-		s.source.PlayOneShot(s.source.clip);
+		//s.source.PlayOneShot(s.source.clip);
+		s.source.Play();
 	}
 
 	public void TurnOnVolume() {

@@ -453,7 +453,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1049166772}
-  m_RootOrder: 5
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -709,12 +709,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 352591604}
   m_LocalRotation: {x: -0.70654315, y: 0.028227005, z: 0.028227007, w: 0.7065432}
-  m_LocalPosition: {x: -5.94, y: 2.51, z: -4.71}
-  m_LocalScale: {x: 16.68878, y: 58.537, z: 148.64691}
+  m_LocalPosition: {x: -3.96, y: 1.015, z: -0.015000105}
+  m_LocalScale: {x: 11.102303, y: 29.315142, z: 74.323456}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_Father: {fileID: 5386583316055006582}
+  m_RootOrder: 111
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &369818080
 GameObject:
@@ -858,7 +858,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1049166772}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1061,7 +1061,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 401640861}
         m_TargetAssemblyTypeName: SettingsButton, Assembly-CSharp
-        m_MethodName: StopTime
+        m_MethodName: ActiveTime
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1496,12 +1496,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 599597967}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: 3.99, y: 1, z: -4.19}
-  m_LocalScale: {x: 28.05296, y: 37.71199, z: 52.584}
+  m_LocalPosition: {x: 2.66, y: 0.26, z: 0.24499989}
+  m_LocalScale: {x: 18.701973, y: 18.855993, z: 26.292}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_Father: {fileID: 5386583316055006582}
+  m_RootOrder: 110
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &617554471
 GameObject:
@@ -1538,7 +1538,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1049166772}
-  m_RootOrder: 2
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1558,7 +1558,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -1615,7 +1615,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 617554478}
         m_TargetAssemblyTypeName: SettingsButton, Assembly-CSharp
-        m_MethodName: StopTime
+        m_MethodName: ActiveTime
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2091,15 +2091,15 @@ RectTransform:
   m_GameObject: {fileID: 724981425}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.9633001, y: 1.9633001, z: 1.9633001}
+  m_LocalScale: {x: 1.9632998, y: 1.9632998, z: 1.9632998}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1049166772}
-  m_RootOrder: 6
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 185}
+  m_AnchoredPosition: {x: 0, y: 184.99991}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &724981427
@@ -2365,7 +2365,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1049166772}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2568,7 +2568,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 778359859}
         m_TargetAssemblyTypeName: SettingsButton, Assembly-CSharp
-        m_MethodName: StopTime
+        m_MethodName: ActiveTime
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2914,11 +2914,11 @@ RectTransform:
   m_Children:
   - {fileID: 794017638}
   - {fileID: 909821455}
-  - {fileID: 617554472}
-  - {fileID: 778359858}
-  - {fileID: 401640860}
   - {fileID: 276149054}
   - {fileID: 724981426}
+  - {fileID: 778359858}
+  - {fileID: 401640860}
+  - {fileID: 617554472}
   m_Father: {fileID: 1525815520}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3047,6 +3047,54 @@ MonoBehaviour:
     pitch: 1
     pitchVariance: 0
     loop: 0
+    source: {fileID: 0}
+  - name: Click
+    clip: {fileID: 8300000, guid: 1b4a5187cb64aa74790cb1697eb03f93, type: 3}
+    volume: 0.191
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: Lava
+    clip: {fileID: 8300000, guid: 4f951cf9cd606cd438efccb7e8180509, type: 3}
+    volume: 0.191
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: MainTheme
+    clip: {fileID: 8300000, guid: 3ce537d6881f4ae4f91218f403ac57bd, type: 3}
+    volume: 0.124
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 1
+    source: {fileID: 0}
+  - name: Menu
+    clip: {fileID: 8300000, guid: 226d5a2e163d1dd4fac7d23e04c8b387, type: 3}
+    volume: 0.124
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 1
+    source: {fileID: 0}
+  - name: Footsteps
+    clip: {fileID: 8300000, guid: 5ccf7ce15edbda74a8182e06079dd09e, type: 3}
+    volume: 0.124
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 1
+    source: {fileID: 0}
+  - name: Cannon
+    clip: {fileID: 8300000, guid: 1c35cf56f32638546bbb534054dc8e7d, type: 3}
+    volume: 0.124
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 1
     source: {fileID: 0}
   volume: 1
 --- !u!4 &1060708282
@@ -20746,6 +20794,8 @@ Transform:
   - {fileID: 4853547149820713436}
   - {fileID: 677717963}
   - {fileID: 144620072}
+  - {fileID: 599597970}
+  - {fileID: 352591607}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
