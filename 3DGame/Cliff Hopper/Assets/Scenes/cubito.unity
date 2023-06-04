@@ -233,7 +233,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 823707274219fb943a3dc8887b05384d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rollSpeed: 5
+  rollSpeed: 2
+  player: {fileID: 0}
 --- !u!1 &239292426
 GameObject:
   m_ObjectHideFlags: 0
@@ -343,7 +344,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9c4f7fa8b290b0b4f9645f3e0b8b088f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.808098
+      value: 4.37
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9c4f7fa8b290b0b4f9645f3e0b8b088f, type: 3}
       propertyPath: m_LocalPosition.y
@@ -760,7 +761,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1780418651}
   m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalPosition: {x: -1.438098, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

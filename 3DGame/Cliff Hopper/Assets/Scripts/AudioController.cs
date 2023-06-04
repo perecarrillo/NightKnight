@@ -13,6 +13,7 @@ public class AudioController : MonoBehaviour
 
 	//No es un diccionari pq unity no els pot dibuixar a l'inspector
 	public Sound[] sounds;
+	public float volume = 1f;
 
 	void Awake()
 	{
@@ -45,10 +46,18 @@ public class AudioController : MonoBehaviour
 			return;
 		}
 
-		s.source.volume = s.volume * (1f + UnityEngine.Random.Range(-s.volumeVariance / 2f, s.volumeVariance / 2f));
-		s.source.pitch = s.pitch * (1f + UnityEngine.Random.Range(-s.pitchVariance / 2f, s.pitchVariance / 2f));
+		s.source.volume = volume * s.volume * (1f + UnityEngine.Random.Range(-s.volumeVariance / 2f, s.volumeVariance / 2f));
+		s.source.pitch = volume * s.pitch * (1f + UnityEngine.Random.Range(-s.pitchVariance / 2f, s.pitchVariance / 2f));
 
 		s.source.PlayOneShot(s.source.clip);
+	}
+
+	public void TurnOnVolume() {
+		volume = 1;
+	}
+
+	public void TurnOffVolume() {
+		volume = 0;
 	}
 
 }

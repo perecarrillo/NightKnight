@@ -116,6 +116,7 @@ public class PlayerMovement : MonoBehaviour
                 ++numCoins;
                 other.gameObject.SetActive(false);
                 FindObjectOfType<AudioController>().Play("Coin");
+                ScoreManager.instance.addPoints(1);
                 return;
             default:
                 return;
