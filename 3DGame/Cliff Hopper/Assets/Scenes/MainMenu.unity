@@ -199,6 +199,164 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 54792365}
   m_CullTransparentMesh: 1
+--- !u!1 &85671377
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 85671379}
+  - component: {fileID: 85671378}
+  m_Layer: 0
+  m_Name: AudioController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &85671378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 85671377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 222e59ae044a60c47abea0d53f0f0130, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: laugh
+    clip: {fileID: 8300000, guid: 4bd5de5944cfb8e4682bc2de2509e7cf, type: 3}
+    volume: 0.413
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: Fall
+    clip: {fileID: 8300000, guid: 8ce5b8c5c6e46df499e997b3d962ec82, type: 3}
+    volume: 0.265
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: Jump
+    clip: {fileID: 8300000, guid: 196d37ddb57a2694387c3db0561f46b2, type: 3}
+    volume: 0.545
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: Coin
+    clip: {fileID: 8300000, guid: 84bff785529947940b7e7ddfeced1016, type: 3}
+    volume: 0.191
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: Click
+    clip: {fileID: 8300000, guid: 1b4a5187cb64aa74790cb1697eb03f93, type: 3}
+    volume: 0.191
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: Lava
+    clip: {fileID: 8300000, guid: 4f951cf9cd606cd438efccb7e8180509, type: 3}
+    volume: 0.191
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: MainTheme
+    clip: {fileID: 8300000, guid: 3ce537d6881f4ae4f91218f403ac57bd, type: 3}
+    volume: 0.048
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 1
+    source: {fileID: 0}
+  - name: Menu
+    clip: {fileID: 8300000, guid: 226d5a2e163d1dd4fac7d23e04c8b387, type: 3}
+    volume: 0.124
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 1
+    source: {fileID: 0}
+  - name: Footsteps
+    clip: {fileID: 8300000, guid: 5ccf7ce15edbda74a8182e06079dd09e, type: 3}
+    volume: 0.124
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 1
+    source: {fileID: 0}
+  - name: Cannon
+    clip: {fileID: 8300000, guid: 1c35cf56f32638546bbb534054dc8e7d, type: 3}
+    volume: 0.124
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: Button
+    clip: {fileID: 8300000, guid: b3b6638277c76a444836efc6d2ec94d8, type: 3}
+    volume: 0.49
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: Compress
+    clip: {fileID: 8300000, guid: 1b4a5187cb64aa74790cb1697eb03f93, type: 3}
+    volume: 0.49
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: Uncompress
+    clip: {fileID: 8300000, guid: 61e394bf6b3a8e149bf4b90777d5fe27, type: 3}
+    volume: 0.49
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: Death
+    clip: {fileID: 8300000, guid: f3c0f29ad3870064a8b8e0b4fcd89afb, type: 3}
+    volume: 0.49
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    source: {fileID: 0}
+  volume: 1
+--- !u!4 &85671379
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 85671377}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &113572226
 GameObject:
   m_ObjectHideFlags: 0
@@ -430,140 +588,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 397793009}
   m_CullTransparentMesh: 1
---- !u!1 &425155312
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 425155314}
-  - component: {fileID: 425155313}
-  m_Layer: 0
-  m_Name: AudioController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &425155313
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 425155312}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 222e59ae044a60c47abea0d53f0f0130, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sounds:
-  - name: laugh
-    clip: {fileID: 8300000, guid: 4bd5de5944cfb8e4682bc2de2509e7cf, type: 3}
-    volume: 0.413
-    volumeVariance: 0
-    pitch: 1
-    pitchVariance: 0
-    loop: 0
-    source: {fileID: 0}
-  - name: Fall
-    clip: {fileID: 8300000, guid: 8ce5b8c5c6e46df499e997b3d962ec82, type: 3}
-    volume: 0.265
-    volumeVariance: 0
-    pitch: 1
-    pitchVariance: 0
-    loop: 0
-    source: {fileID: 0}
-  - name: Jump
-    clip: {fileID: 8300000, guid: 196d37ddb57a2694387c3db0561f46b2, type: 3}
-    volume: 0.545
-    volumeVariance: 0
-    pitch: 1
-    pitchVariance: 0
-    loop: 0
-    source: {fileID: 0}
-  - name: Coin
-    clip: {fileID: 8300000, guid: 84bff785529947940b7e7ddfeced1016, type: 3}
-    volume: 0.191
-    volumeVariance: 0
-    pitch: 1
-    pitchVariance: 0
-    loop: 0
-    source: {fileID: 0}
-  - name: Click
-    clip: {fileID: 8300000, guid: 1b4a5187cb64aa74790cb1697eb03f93, type: 3}
-    volume: 0.191
-    volumeVariance: 0
-    pitch: 1
-    pitchVariance: 0
-    loop: 0
-    source: {fileID: 0}
-  - name: Lava
-    clip: {fileID: 8300000, guid: 4f951cf9cd606cd438efccb7e8180509, type: 3}
-    volume: 0.191
-    volumeVariance: 0
-    pitch: 1
-    pitchVariance: 0
-    loop: 0
-    source: {fileID: 0}
-  - name: MainTheme
-    clip: {fileID: 8300000, guid: 3ce537d6881f4ae4f91218f403ac57bd, type: 3}
-    volume: 0.048
-    volumeVariance: 0
-    pitch: 1
-    pitchVariance: 0
-    loop: 1
-    source: {fileID: 0}
-  - name: Menu
-    clip: {fileID: 8300000, guid: 226d5a2e163d1dd4fac7d23e04c8b387, type: 3}
-    volume: 0.124
-    volumeVariance: 0
-    pitch: 1
-    pitchVariance: 0
-    loop: 1
-    source: {fileID: 0}
-  - name: Footsteps
-    clip: {fileID: 8300000, guid: 5ccf7ce15edbda74a8182e06079dd09e, type: 3}
-    volume: 0.124
-    volumeVariance: 0
-    pitch: 1
-    pitchVariance: 0
-    loop: 1
-    source: {fileID: 0}
-  - name: Cannon
-    clip: {fileID: 8300000, guid: 1c35cf56f32638546bbb534054dc8e7d, type: 3}
-    volume: 0.124
-    volumeVariance: 0
-    pitch: 1
-    pitchVariance: 0
-    loop: 0
-    source: {fileID: 0}
-  - name: Button
-    clip: {fileID: 8300000, guid: b3b6638277c76a444836efc6d2ec94d8, type: 3}
-    volume: 0.49
-    volumeVariance: 0
-    pitch: 1
-    pitchVariance: 0
-    loop: 0
-    source: {fileID: 0}
-  volume: 1
---- !u!4 &425155314
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 425155312}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &436755650
 GameObject:
   m_ObjectHideFlags: 0
@@ -671,7 +695,6 @@ RectTransform:
   m_Children:
   - {fileID: 1943123985}
   - {fileID: 807529457}
-  - {fileID: 2146810166}
   - {fileID: 1559361061}
   m_Father: {fileID: 1686071409}
   m_RootOrder: 9
@@ -2240,11 +2263,11 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 549593241}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -88.70002, y: -39}
+  m_AnchoredPosition: {x: -88.70002, y: 9}
   m_SizeDelta: {x: 48.2892, y: 48.2892}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1559361062
@@ -3196,79 +3219,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4187405912bb5684bbbf40bd9dbb7355, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &2146810165
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2146810166}
-  - component: {fileID: 2146810168}
-  - component: {fileID: 2146810167}
-  m_Layer: 0
-  m_Name: Vibrate
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &2146810166
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2146810165}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 549593241}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -88.70002, y: 20.100006}
-  m_SizeDelta: {x: 48.2892, y: 48.2892}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2146810167
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2146810165}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 64c4ee99688ef1c4ba64f3954f615779, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &2146810168
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2146810165}
-  m_CullTransparentMesh: 1

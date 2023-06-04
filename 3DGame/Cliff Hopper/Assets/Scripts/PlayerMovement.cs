@@ -174,13 +174,16 @@ public class PlayerMovement : MonoBehaviour
             godBody.SetActive(godMode);
         }
         if (lastY - transform.position.y > 5 && !dying) {
-            Debug.Log("T'has caigut huhu");
+            //Debug.Log("T'has caigut huhu");
             Die();
         }
         if (dying) {
             if (Time.time - deathTime >= 1.5f) {
                 // SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
+                dying = false;
+                Time.timeScale = 0f;
                 AudioController.instance.StopSounds();
+                if (PlayerPrefs.GetInt("silence") == 0) AudioController.instance.Play("Death");
                 if (PlayerPrefs.GetInt("silence") == 0) AudioController.instance.Play("Menu");
                 Lose.GetComponent<Animator>().SetTrigger("ShowLose");
             }
