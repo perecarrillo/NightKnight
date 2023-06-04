@@ -7,6 +7,7 @@ enum MoveDirection { LEFT, RIGHT };
 
 public class PlayerMovement : MonoBehaviour
 {
+    public GameObject Lose;
     public float speed;
     [HideInInspector]
     public Vector3 jump;
@@ -175,7 +176,8 @@ public class PlayerMovement : MonoBehaviour
         }
         if (dying) {
             if (Time.time - deathTime >= 2) {
-                SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
+                // SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
+                Lose.GetComponent<Animator>().SetTrigger("ShowLose");
             }
         }
         else if (time > 2f) {
