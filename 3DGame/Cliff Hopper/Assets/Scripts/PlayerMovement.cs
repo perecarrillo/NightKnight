@@ -94,6 +94,7 @@ public class PlayerMovement : MonoBehaviour
                 return;
             case "Spike":
                 other.gameObject.transform.Find("pinxos").gameObject.GetComponent<Animator>().SetTrigger("ActivateSpikes");
+                rb.velocity = Vector3.zero;
                 rb.AddForce(new Vector3(100, 300, 0), ForceMode.Impulse);
                 Die();
                 //other.transform.gameObject.GetComponent<Animation>().Play("SpikeAnimation");
@@ -101,10 +102,12 @@ public class PlayerMovement : MonoBehaviour
                 return;
             case "Lava":
                 AudioController.instance.Play("Lava");
-                rb.AddForce(new Vector3(10, 10, 0), ForceMode.Impulse);
+                rb.velocity = Vector3.zero;
+                rb.AddForce(new Vector3(0, 300, 0), ForceMode.Impulse);
                 Die();
                 return;
             case "Ball":
+                rb.velocity = Vector3.zero;
                 rb.AddForce(new Vector3(0, 0, -20), ForceMode.Impulse);
                 Die();
                 return;
@@ -175,7 +178,7 @@ public class PlayerMovement : MonoBehaviour
             Die();
         }
         if (dying) {
-            if (Time.time - deathTime >= 2) {
+            if (Time.time - deathTime >= 1.5f) {
                 // SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
                 AudioController.instance.StopSounds();
                 if (PlayerPrefs.GetInt("silence") == 0) AudioController.instance.Play("Menu");
