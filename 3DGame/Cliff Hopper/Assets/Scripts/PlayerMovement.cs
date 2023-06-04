@@ -102,13 +102,13 @@ public class PlayerMovement : MonoBehaviour
                 return;
             case "Lava":
                 AudioController.instance.Play("Lava");
-                rb.velocity = Vector3.zero;
-                rb.AddForce(new Vector3(0, 300, 0), ForceMode.Impulse);
+                //rb.velocity = Vector3.zero;
+                //rb.AddForce(new Vector3(0, 300, 0), ForceMode.Impulse);
                 Die();
                 return;
             case "Ball":
                 rb.velocity = Vector3.zero;
-                rb.AddForce(new Vector3(0, 0, -20), ForceMode.Impulse);
+                rb.AddForce(new Vector3(0, 0, -50), ForceMode.Impulse);
                 Die();
                 return;
             case "Stair":
