@@ -11,13 +11,7 @@ public class Canon : MonoBehaviour
         switch (other.gameObject.tag)
         {
             case "Player":
-                Debug.Log("Shoot ball");
-                // GameObject ball = (GameObject)Instantiate(ballPrefab);
-                // ball.transform.Translate(transform.position - new Vector3(4,1,0));
-                // Quaternion q = transform.rotation;
-                // Vector3 v = q.ToEulerAngles();
-                // ball.transform.Rotate(v);
-                // ball.transform.parent = transform;
+                AudioController.instance.Play("Cannon");
 
                 transform.Find("Ball").gameObject.GetComponent<BallMovement>().activeBall();
                 return;

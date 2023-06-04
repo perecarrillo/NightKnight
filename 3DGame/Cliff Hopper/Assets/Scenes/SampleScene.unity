@@ -3066,7 +3066,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: MainTheme
     clip: {fileID: 8300000, guid: 3ce537d6881f4ae4f91218f403ac57bd, type: 3}
-    volume: 0.124
+    volume: 0.048
     volumeVariance: 0
     pitch: 1
     pitchVariance: 0
@@ -3094,7 +3094,15 @@ MonoBehaviour:
     volumeVariance: 0
     pitch: 1
     pitchVariance: 0
-    loop: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Button
+    clip: {fileID: 8300000, guid: b3b6638277c76a444836efc6d2ec94d8, type: 3}
+    volume: 0.49
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
     source: {fileID: 0}
   volume: 1
 --- !u!4 &1060708282

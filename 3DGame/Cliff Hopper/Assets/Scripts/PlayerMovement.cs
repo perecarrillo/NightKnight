@@ -46,6 +46,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        AudioController.instance.Play("MainTheme");
         initialSpeed = speed;
         currentDirection = MoveDirection.RIGHT;
         movement = new Vector3 (0, 0, 1);
@@ -85,7 +86,9 @@ public class PlayerMovement : MonoBehaviour
                     }
                     hasRotated = true;
                 }
+                ScoreManager.instance.addPoints(1);
                 isCorner = true;
+                AudioController.instance.Play("Button");
                 other.gameObject.transform.parent.gameObject.transform.Find("buttonNotPressed").gameObject.SetActive(false);
                 return;
             case "Spike":
@@ -96,6 +99,7 @@ public class PlayerMovement : MonoBehaviour
                 //SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
                 return;
             case "Lava":
+                AudioController.instance.Play("Lava");
                 rb.AddForce(new Vector3(10, 10, 0), ForceMode.Impulse);
                 Die();
                 return;
@@ -115,7 +119,8 @@ public class PlayerMovement : MonoBehaviour
                 //Debug.Log("entra");
                 ++numCoins;
                 other.gameObject.SetActive(false);
-                FindObjectOfType<AudioController>().Play("Coin");
+                //FindObjectOfType<AudioController>().Play("Coin");
+                AudioController.instance.Play("Coin");
                 ScoreManager.instance.addPoints(1);
                 return;
             default:

@@ -55,10 +55,19 @@ public class AudioController : MonoBehaviour
 
 	public void TurnOnVolume() {
 		volume = 1;
+		foreach (Sound s in sounds)
+		{
+			s.source.volume = volume * s.volume * (1f + UnityEngine.Random.Range(-s.volumeVariance / 2f, s.volumeVariance / 2f));
+		}
 	}
 
 	public void TurnOffVolume() {
 		volume = 0;
+		foreach (Sound s in sounds)
+		{
+			s.source.volume = 0;
+			s.source.Stop();
+		}
 	}
 
 }

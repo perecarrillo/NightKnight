@@ -12,6 +12,7 @@ public class SettingsButton : MonoBehaviour
     }
 
     public void ActiveTime() {
+        if (PlayerPrefs.GetInt("silence") == 0) AudioController.instance.Play("MainTheme");
         Time.timeScale = 1f;
     }
 }
